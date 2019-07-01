@@ -1,0 +1,457 @@
+/*
+ * Copyright (C) 2018 Information Retrieval Group at Universidad Autónoma
+ * de Madrid, http://ir.ii.uam.es
+ * 
+ *  This Source Code Form is subject to the terms of the Mozilla Public
+ *  License, v. 2.0. If a copy of the MPL was not distributed with this
+ *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+package es.uam.eps.ir.knnbandit.grid;
+
+import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
+import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
+import es.uam.eps.ir.knnbandit.recommendation.ReinforcementLearningRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.bandits.SimpleBanditRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.bandits.functions.ValueFunction;
+import es.uam.eps.ir.knnbandit.recommendation.bandits.functions.ValueFunctions;
+import es.uam.eps.ir.knnbandit.recommendation.bandits.item.*;
+import es.uam.eps.ir.knnbandit.recommendation.basic.*;
+import es.uam.eps.ir.knnbandit.recommendation.knn.similarities.ProbabilisticSimilarity;
+import es.uam.eps.ir.knnbandit.recommendation.knn.similarities.UpdateableSimilarity;
+import es.uam.eps.ir.knnbandit.recommendation.knn.similarities.VectorCosineSimilarity;
+import es.uam.eps.ir.knnbandit.recommendation.knn.similarities.stochastic.BetaStochasticSimilarity;
+import es.uam.eps.ir.knnbandit.recommendation.knn.users.IncrementalProbabilisticUserBasedkNN;
+import es.uam.eps.ir.knnbandit.recommendation.knn.users.IncrementalUserBasedKNN;
+import es.uam.eps.ir.knnbandit.recommendation.mf.IncrementalMF;
+import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
+import es.uam.eps.ir.ranksys.mf.Factorizer;
+import es.uam.eps.ir.ranksys.mf.als.HKVFactorizer;
+import es.uam.eps.ir.ranksys.mf.als.PZTFactorizer;
+import es.uam.eps.ir.ranksys.mf.plsa.PLSAFactorizer;
+import org.ranksys.formats.parsing.Parsers;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.DoubleUnaryOperator;
+
+/**
+ * Class for selecting the bandit algorithms to apply.
+ * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
+ * @author Pablo Castells (pablo.castells@uam.es)
+ * @param <U> Type of the users.
+ * @param <I> Type of the items.
+ */
+public class BanditGrid<U,I>
+{
+    /**
+     * A map of recommenders to apply
+     */
+    private final Map<String, ReinforcementLearningRecommender<U,I>> recs;
+    
+    /**
+     * A cursor for reading the line configuration.
+     */
+    private int cursor;
+    /**
+     * Indicates if the grid has been previously configured.
+     */
+    private boolean configured;
+    /**
+     * User index.
+     */
+    private FastUpdateableUserIndex<U> uIndex;
+    /**
+     * Item index.
+     */
+    private FastUpdateableItemIndex<I> iIndex;
+    /**
+     * Preference data.
+     */
+    private SimpleFastPreferenceData<U,I> prefData;
+    /**
+     * True if contact recommendation algorithms must be configured, false otherwise.
+     */
+    private boolean contactrec;
+    /**
+     * true if reciprocal links should not be recommended, false otherwise.
+     */
+    private boolean notReciprocal;
+    /**
+     * Relevance threshold.
+     */
+    private double threshold;
+    /**
+     * Constructor.
+     */
+    public BanditGrid()
+    {
+        recs = new HashMap<>();
+        notReciprocal = false;
+    }
+    
+    /**
+     * Resets the selection
+     */
+    public void reset()
+    {
+        this.recs.clear();
+        this.uIndex = null;
+        this.iIndex = null;
+        this.prefData = null;
+        this.contactrec = false;
+        this.notReciprocal = false;
+        this.configured = false;
+    }
+    
+    /**
+     * Configures the bandit grid.
+     * @param uIndex user index.
+     * @param iIndex item index.
+     * @param prefData preference data.
+     * @param threshold relevance threshold
+     */
+    public void configure(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, double threshold)
+    {
+        this.uIndex = uIndex;
+        this.iIndex = iIndex;
+        this.prefData = prefData;
+        this.notReciprocal = false;
+        this.contactrec = false;
+        this.threshold = threshold;        
+        this.configured = true;
+    }   
+    
+    /**
+     * Configures the bandit grid.
+     * @param uIndex user index.
+     * @param iIndex item index.
+     * @param prefData preference data.
+     * @param threshold relevance threshold
+     * @param notReciprocal true if we have to avoid recommending reciprocal items.
+     */
+    public void configure(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, double threshold, boolean notReciprocal)
+    {
+        this.uIndex = uIndex;
+        this.iIndex = iIndex;
+        this.prefData = prefData;
+        this.notReciprocal = notReciprocal;
+        this.contactrec = true;
+        this.threshold = threshold;
+        this.configured = true;
+    }   
+    
+    /**
+     * Given a string containing its configuration, obtains a reinforcement learning algorithm.
+     * @param algorithm the string containing the configuration of the algorithm.
+     * @return a reinforcement learning recommender.
+     * @throws es.uam.eps.ir.knnbandit.grid.UnconfiguredException if the grid is not configured.
+     */
+    public ReinforcementLearningRecommender<U,I> getAlgorithm(String algorithm) throws UnconfiguredException
+    {
+        if(!this.configured) throw new UnconfiguredException("The grid is not configured");
+        cursor = 0;
+        if(!algorithm.startsWith("//")) {
+            String[] split = algorithm.split("-");
+            List<String> fullalgorithm = new ArrayList<>(Arrays.asList(split));
+            boolean ignoreUnknown;
+            boolean unknownAlgorithm = false;
+            switch (fullalgorithm.get(0)) {
+                case AlgorithmIdentifiers.RANDOM: // Random recommendation
+                    cursor++;
+                    return !this.contactrec ? new RandomRecommender(uIndex, iIndex, prefData, true)
+                            : new RandomRecommender(uIndex, iIndex, prefData, true, notReciprocal);
+                case AlgorithmIdentifiers.POP: // Basic popularity recommendation
+                    cursor++;
+                    ignoreUnknown = fullalgorithm.get(cursor).equalsIgnoreCase("ignore");
+                    return !this.contactrec ? new PopRecommender(uIndex, iIndex, prefData, ignoreUnknown)
+                            : new PopRecommender(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal);
+                case AlgorithmIdentifiers.AVG: // Average rating recommendation
+                    cursor++;
+                    ignoreUnknown = fullalgorithm.get(cursor).equalsIgnoreCase("ignore");
+                    return !this.contactrec ? new AvgRecommender(uIndex, iIndex, prefData, ignoreUnknown)
+                            : new AvgRecommender(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal);
+                case AlgorithmIdentifiers.RELPOP: // Relevant popularity recommendation
+                    cursor++;
+                    return !this.contactrec ? new RelPopRecommender(uIndex, iIndex, prefData, true, threshold)
+                            : new RelPopRecommender(uIndex, iIndex, prefData, true, threshold, notReciprocal);
+                case AlgorithmIdentifiers.ORACLE: // Popularity oracle
+                    cursor++;
+                    return !this.contactrec ? new PopularityOracleRecommender(uIndex, iIndex, prefData, true)
+                            : new PopularityOracleRecommender(uIndex, iIndex, prefData, true, notReciprocal);
+                case AlgorithmIdentifiers.SIMPLEBANDIT: // Not-personalized bandits
+                    cursor++;
+                    ItemBandit<U, I> itemBandit = this.getItemBandit(fullalgorithm.subList(1, split.length), prefData.numItems());
+                    if (itemBandit == null) {
+                        unknownAlgorithm = true;
+                        break;
+                    }
+                    ValueFunction valFunc = this.getValueFunction(fullalgorithm.subList(cursor, split.length));
+                    if (valFunc == null) {
+                        unknownAlgorithm = true;
+                        break;
+                    }
+
+                    ignoreUnknown = fullalgorithm.get(cursor).equalsIgnoreCase("ignore");
+                    return !this.contactrec ? new SimpleBanditRecommender(uIndex, iIndex, prefData, ignoreUnknown, itemBandit, valFunc)
+                            : new SimpleBanditRecommender(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal, itemBandit, valFunc);
+                case AlgorithmIdentifiers.USERBASEDKNN: // Classic recommendation approaches.
+                    cursor++;
+                    String variant = fullalgorithm.get(cursor);
+                    cursor++;
+                    int k = Parsers.ip.parse(fullalgorithm.get(cursor));
+                    cursor++;
+                    UpdateableSimilarity sim = this.getUpdateableSimilarity(fullalgorithm.subList(cursor, split.length), prefData.numUsers(), prefData.numItems());
+                    if (sim == null) {
+                        unknownAlgorithm = true;
+                        break;
+                    }
+                    ignoreUnknown = fullalgorithm.get(cursor).equalsIgnoreCase("ignore");
+                    cursor++;
+                    boolean ignoreZeroes = fullalgorithm.get(cursor).equalsIgnoreCase("ignore");
+                    cursor++;
+                    switch (variant) {
+                        case "classic":
+                            return !this.contactrec ? new IncrementalUserBasedKNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, k, sim)
+                                    : new IncrementalUserBasedKNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, notReciprocal, k, sim);
+                        case "probabilistic":
+                            return !this.contactrec ? new IncrementalProbabilisticUserBasedkNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, sim, k)
+                                    : new IncrementalProbabilisticUserBasedkNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, notReciprocal, sim, k);
+                        default:
+                            unknownAlgorithm = true;
+                            break;
+                    }
+                case AlgorithmIdentifiers.MF:
+                    cursor++;
+                    k = new Integer(fullalgorithm.get(cursor));
+                    cursor++;
+                    Factorizer<U, I> factorizer = this.getFactorizer(fullalgorithm.subList(cursor, split.length));
+                    if (factorizer == null) {
+                        unknownAlgorithm = true;
+                        break;
+                    }
+                    ignoreUnknown = fullalgorithm.get(cursor).equalsIgnoreCase("ignore");
+                    cursor++;
+                    return !this.contactrec ? new IncrementalMF(uIndex, iIndex, prefData, ignoreUnknown, k, factorizer)
+                            : new IncrementalMF(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal, k, factorizer);
+                default:
+                    unknownAlgorithm = true;
+            }
+
+            if(unknownAlgorithm) return null;
+        }
+
+        return null;
+    }
+
+    /**
+     * Adds a single algorithm to the grid.
+     * @param algorithm the string of the algorithm.
+     * @throws es.uam.eps.ir.knnbandit.grid.UnconfiguredException
+     */
+    public void addAlgorithm(String algorithm) throws UnconfiguredException
+    {
+        if(!this.configured) throw new UnconfiguredException("BanditGrid");
+
+        ReinforcementLearningRecommender<U,I> rec = this.getAlgorithm(algorithm);
+        if(rec != null)
+        {
+            this.recs.put(algorithm, rec);
+        }
+    }
+    
+    /**
+     * Adds a set of algorithms.
+     * @param file file containing the configuration of the algorithms.
+     * @throws IOException
+     * @throws es.uam.eps.ir.knnbandit.grid.UnconfiguredException
+     */
+    public void addFile(String file) throws IOException, UnconfiguredException
+    {
+        if(!this.configured) throw new UnconfiguredException("BanditGrid");
+
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file))))
+        {
+            String line;
+            while((line = br.readLine()) != null)
+            {
+                this.addAlgorithm(line);
+            }
+        }       
+    }
+    
+    /**
+     * Obtains the selection of recommenders.
+     * @return the selection of recommenders.
+     */
+    public Map<String, ReinforcementLearningRecommender<U,I>> getRecs()
+    {
+        return this.recs;
+    }
+    
+    /**
+     * Get an item bandit.
+     * @param split a list containing the configuration.
+     * @param numItems the number of items in the system.
+     * @return the corresponding item bandit if everything is ok, null otherwise.
+     */
+    private ItemBandit<U,I> getItemBandit(List<String> split, int numItems)
+    {
+        ItemBandit<U,I> ib;
+        switch(split.get(0))
+        {
+            case ItemBanditIdentifiers.EGREEDY:
+                double epsilon = new Double(split.get(1));
+                cursor+=2;
+                EpsilonGreedyUpdateFunction updateFunc = this.getUpdateFunction(split.subList(2, split.size()));
+                ib = new EpsilonGreedyItemBandit<>(epsilon, numItems, updateFunc);
+                break;
+            case ItemBanditIdentifiers.UCB1:
+                ib = new UCB1ItemBandit(numItems);
+                cursor++;
+                break;
+            case ItemBanditIdentifiers.UCB1TUNED:
+                ib = new UCB1TunedItemBandit(numItems);
+                cursor++;
+                break;
+            case ItemBanditIdentifiers.THOMPSON:
+                double alpha = new Double(split.get(1));
+                double beta = new Double(split.get(2));
+                ib = new ThompsonSamplingItemBandit(numItems, alpha, beta);
+                cursor+=3;
+                break;
+            case ItemBanditIdentifiers.ETGREEDY:
+                alpha = new Double(split.get(1));
+                cursor+=2;
+                updateFunc = this.getUpdateFunction(split.subList(2, split.size()));
+                ib = new EpsilonTGreedyItemBandit<>(alpha, numItems, updateFunc);
+                break;
+            default:
+                cursor++;
+                return null;
+        }
+        return ib;
+    }
+    
+    /**
+     * Obtains a value function
+     * @param split strings containing the configuration.
+     * @return the selected value function if OK, null otherwise.
+     */
+    private ValueFunction getValueFunction(List<String> split)
+    {
+        switch(split.get(0))
+        {
+            case ValueFunctionIdentifiers.IDENTITY:
+                cursor++;
+                return ValueFunctions.identity();
+            case ValueFunctionIdentifiers.UNSEEN:
+                cursor++;
+                return ValueFunctions.unseenfunction();
+            default:
+                cursor++;
+                return null;
+        }
+    }
+    
+    /**
+     * Obtains a function to update an Epsilon-greedy algorithm.
+     * @param split strings containing the configuration.
+     * @return the update function if everything is OK, null otherwise.
+     */
+    private EpsilonGreedyUpdateFunction getUpdateFunction(List<String> split)
+    {
+        switch(split.get(0))
+        {
+            case EpsilonGreedyUpdateFunctionIdentifiers.STATIONARY:
+                cursor++;
+                return EpsilonGreedyUpdateFunctions.stationary();
+            case EpsilonGreedyUpdateFunctionIdentifiers.NONSTATIONARY:
+                cursor++;
+                cursor++;
+                return EpsilonGreedyUpdateFunctions.nonstationary(new Double(split.get(1)));
+            case EpsilonGreedyUpdateFunctionIdentifiers.USEALL:
+                cursor++;
+                return EpsilonGreedyUpdateFunctions.useall();
+            case EpsilonGreedyUpdateFunctionIdentifiers.COUNT:
+                cursor++;
+                return EpsilonGreedyUpdateFunctions.count();
+            default:
+                cursor++;
+                return null;
+        }
+    }
+        
+    /**
+     * Obtains an updateable user similarity for a user-based kNN recommender.
+     * @param split strings containing the configuration.
+     * @param numUsers the number of users.
+     * @param numItems the number of items.
+     * @return an updateable user similarity if everything is OK, null otherwise.
+     */
+    private UpdateableSimilarity getUpdateableSimilarity(List<String> split, int numUsers, int numItems) {
+        switch (split.get(0)) {
+            case UpdateableSimilarityIdentifiers.VECTORCOSINE:
+                cursor++;
+                return new VectorCosineSimilarity(numUsers);
+            case UpdateableSimilarityIdentifiers.PROBABILISTIC:
+                cursor++;
+                return new ProbabilisticSimilarity(numUsers);
+            case UpdateableSimilarityIdentifiers.BETAPROB:
+                cursor++;
+                double alpha = new Double(split.get(1));
+                double beta = new Double(split.get(2));
+                cursor += 2;
+                return new BetaStochasticSimilarity(numUsers, alpha, beta);
+            default:
+                cursor++;
+                return null;
+        }
+    }
+
+    /**
+     * Obtains a MF Factorizer.
+     * @param split strings containing the configuration.
+     * @return the factorizer if everything is OK, null otherwise.
+     */
+    private Factorizer<U, I> getFactorizer(List<String> split)
+    {
+        cursor++;
+        Factorizer<U,I> factorizer = null;
+        switch(split.get(0))
+        {
+            case FactorizerIdentifiers.HKV:
+                double alphaHKV = Parsers.dp.parse(split.get(1));new Double(split.get(1));
+                double lambdaHKV = new Double(split.get(2));
+                int numIterHKV = new Integer(split.get(3));
+                cursor+=3;
+                DoubleUnaryOperator confidence = (double x) -> 1 + alphaHKV*x;
+                factorizer = new HKVFactorizer<>(lambdaHKV, confidence, numIterHKV);
+                break;
+            case FactorizerIdentifiers.PZT:
+                double alphaPZT = new Double(split.get(1));
+                double lambdaPZT = new Double(split.get(2));
+                int numIterpzt = new Integer(split.get(3));
+                cursor+=3;
+                confidence = (double x) -> 1 + alphaPZT*x;
+                factorizer = new PZTFactorizer<>(lambdaPZT, confidence, numIterpzt);
+                break;
+            case FactorizerIdentifiers.PLSA:
+                int numIterPLSA = new Integer(split.get(1));
+                cursor++;
+                factorizer = new PLSAFactorizer<>(numIterPLSA);
+                break;
+            default:
+                return null;
+        }
+
+        return factorizer;
+    }
+}
