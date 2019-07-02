@@ -8,7 +8,7 @@ This repository contains the code needed to reproduce the experiments of the pap
 ### Algorithms
 
 The software contains the following algorithms:
-- **Bandits**:
+- **Not personalized multi-armed bandits**:
   - Epsilon greedy
   - UCB1
   - Thompson Sampling
@@ -29,8 +29,8 @@ The software contains the following algorithms:
   
 For the user-based kNN, we include three different similarities:
 - Cosine similarity
-- Probablistic similarity: the one used in the SIGIR 2017 paper above.
-- Beta stochastic similarity: Thompson-sampling based similarity, and the main contribution of this paper.
+- Probablistic similarity: the one used in [1].
+- **Beta stochastic similarity:** Thompson-sampling based similarity. When applied to the probabilistic kNN version, the algorithm corresponds to the kNN bandit introduced in the paper.
 ## Authors
 Information Retrieval Group at Universidad Autónoma de Madrid
 - Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
