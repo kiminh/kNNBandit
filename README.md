@@ -3,6 +3,11 @@ This repository contains the code needed to reproduce the experiments of the pap
 
 > J. Sanz-Cruzado, P. Castells, E. López. A Simple Multi-Armed Nearest-Neighbor Bandit for Interactive Recommendation. 13th ACM Conference on Recommender Systems (RecSys 2019). Copenhagen, Denmark, September 2019.
 
+## Authors
+Information Retrieval Group at Universidad Autónoma de Madrid
+- Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
+- Pablo Castells (pablo.castells@uam.es)
+
 ## Software description
 
 ### Algorithms
@@ -31,12 +36,8 @@ For the user-based kNN, we include three different similarities:
 - Cosine similarity
 - Probablistic similarity: the one used in [1].
 - **Beta stochastic similarity:** Thompson-sampling based similarity. When applied to the probabilistic kNN version, the algorithm corresponds to the kNN bandit introduced in the paper.
-## Authors
-Information Retrieval Group at Universidad Autónoma de Madrid
-- Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
-- Pablo Castells (pablo.castells@uam.es)
 
-## Requirements
+## System Requirements
 **Java JDK:** 1.8 or above (the software was tested using the version 1.8.0_181).
 
 **Maven:** tested with version 3.6.0.
@@ -51,6 +52,17 @@ If you do not want to use Maven, it is still possible to compile the code using 
 - Colt version 1.2.0: https://dst.lbl.gov/ACSSoftware/colt/
 - Google MTJ version 1.0.4: https://github.com/fommil/matrix-toolkits-java
 
+## Execution
+Once you have a generated .jar, you can execute the program. There are two different ways to execute this program: one for general recommendation (movies, songs, venues...) and another one for contact recommendation in social networks, since the evaluation protocols show slight differences between both tasks.
+
+- For general recommendation
+```
+java -jar knnbandit-jar-with-dependencies.jar generalrec algorithmsFile dataFile outputFolder numIter threshold recover useRatings
+```
+- For contact recommendation
+```
+java -jar knnbandit-jar-with-dependencies.jar contactrec algorithmsFile dataFile outputFolder numIter directed recover notReciprocal
+```
 ## References
 1. Cañamares, R. & Castells P. (2017). A Probabilistic Reformulation of Memory-Based Collaborative Filtering – Implications on Popularity Biases. 40th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR 2017). Tokyo, Japan, August 2017, pp. 215-224.
 2. Hu, Y., Koren, Y., & Volinsky, C. (2008). Collaborative Filtering for Implicit Feedback Datasets. In 2008 Eighth IEEE International Conference on Data Mining (pp. 263–272).
