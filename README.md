@@ -42,14 +42,30 @@ If you do not want to use Maven, it is still possible to compile the code using 
 ## Execution
 Once you have a generated .jar, you can execute the program. There are two different ways to execute this program: one for general recommendation (movies, songs, venues...) and another one for contact recommendation in social networks, since the evaluation protocols show slight differences between both tasks.
 
-- For general recommendation
+### General recommendation
 ```
 java -jar knnbandit-jar-with-dependencies.jar generalrec algorithmsFile dataFile outputFolder numIter threshold recover useRatings
 ```
-- For contact recommendation
+where
+  - `algorithmsFile`: File indicating which algorithms have to be executed
+  - `dataFile`: The ratings data. Format: on each line: `user \t item \t rating`.
+  - `outputFolder` is the directory where the output files will be stored.
+  - `numIter` is the number of iterations to execute for each algorithm. Use value `0` for executing until no new items can be recommended.
+  - `threshold`: relevance threshold. Ratings equal or greater than this value will be considered as relevant.
+  - `recover`: true if we want to retrieve the previous computed values (if any) or false to overwrite them and start from the beginning.
+  - `useRatings`: true for using the real ratings, false for binary ratings.
+### Contact recommendation
 ```
 java -jar knnbandit-jar-with-dependencies.jar contactrec algorithmsFile dataFile outputFolder numIter directed recover notReciprocal
 ```
+where
+  - `algorithmsFile`: File indicating which algorithms have to be executed
+  - `dataFile`: The graph data. Format: on each line: `originUser \t destUser \t weight`.
+  - `outputFolder` is the directory where the output files will be stored.
+  - `numIter` is the number of iterations to execute for each algorithm. Use value `0` for executing until no new items can be recommended.
+  - `directed`: true if the graph is directed, false otherwise.
+  - `recover`: true if we want to retrieve the previous computed values (if any) or false to overwrite them and start from the beginning.
+  - `notReciprocal`: true if we do not want to recommend reciprocal links, false otherwise.
 ## References
 1. Cañamares, R. & Castells P. (2017). A Probabilistic Reformulation of Memory-Based Collaborative Filtering – Implications on Popularity Biases. 40th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR 2017). Tokyo, Japan, August 2017, pp. 215-224.
 2. Hu, Y., Koren, Y., & Volinsky, C. (2008). Collaborative Filtering for Implicit Feedback Datasets. In 2008 Eighth IEEE International Conference on Data Mining (pp. 263–272).
