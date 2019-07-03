@@ -11,31 +11,18 @@ Information Retrieval Group at Universidad Autónoma de Madrid
 ## Software description
 
 ### Algorithms
+The software allows the use of several recommendation algorithms. 
+#### Myopic approaches:
+These approaches are just an updateable version of classical recommendation algorithms, baselines. The algorithms included in this comparison are:
+- **Baselines:** Random, popularity-based recommendation, relevant popularity-base recommendation, average rating.
+- **Matrix factorization:** Implicit matrix factorization (iMF) [2], fast iMF [3], pLSA.
+- **User-based kNN:** Not normalized versions of classic user-based kNN and probablistic user-based kNN.
+We include two different myopic similarities: cosine similarity and the probabilistic similarity described in [1].
 
-The software contains the following algorithms:
-- **Not personalized multi-armed bandits**:
-  - Epsilon greedy
-  - UCB1
-  - Thompson Sampling
-  - Epsilon t-greedy
-  - UCB1-tuned
-- **User-based kNN**:
-  - Classic user-based kNN without normalization
-  - Probabilistic user-based kNN without normalization [1]
-- **Matrix factorization**:
-  - Implicit Matrix Factorization: [2]
-  - Fast Implicit Matrix Factorization: [3] 
-  - pLSA
-- **Baselines**:
-  - Popularity-based recommendation
-  - Relevant popularity-based recommendation
-  - Average rating recommendation
-  - Random recommendation
-  
-For the user-based kNN, we include three different similarities:
-- Cosine similarity
-- Probablistic similarity: the one used in [1].
-- **Beta stochastic similarity:** Thompson-sampling based similarity. When applied to the probabilistic kNN version, the algorithm corresponds to the kNN bandit introduced in the paper.
+#### Reinforcement learning approaches:
+These approaches introduce the exploration-exploitation concept from Reinforcement learning:
+- **Not personalized multi-armed bandits:**: Epsilon-greedy, epsilon t-greedy, UCB1, UCB1-tuned, Thompson sampling
+- **User-based kNN:** The main contribution of this paper: we include an stochastic similarity that uses Thompson sampling to estimate the similarities between users. 
 
 ## System Requirements
 **Java JDK:** 1.8 or above (the software was tested using the version 1.8.0_181).
