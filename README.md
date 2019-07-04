@@ -18,11 +18,11 @@ This repository contains all the necessary classes to execute the experiments ex
 - `es.uam.eps.ir.knnbandit.utils`: additional classes, useful for the rest of the program
 
 ### Algorithms
-The software allows the use of several recommendation algorithms. 
+The software allows the use of several recommendation algorithms:
 #### Myopic approaches:
 These approaches are just an updateable version of classical recommendation algorithms, baselines. The algorithms included in this comparison are:
 - **Baselines:** Random, popularity-based recommendation, relevant popularity-base recommendation, average rating.
-- **Matrix factorization:** Implicit matrix factorization (iMF) [2], fast iMF [3], pLSA.
+- **Matrix factorization:** Implicit matrix factorization (iMF) [2], fast iMF [3], pLSA [4].
 - **User-based kNN:** Not normalized versions of classic user-based kNN and probablistic user-based kNN.
 We include two different myopic similarities: cosine similarity and the probabilistic similarity described in [1].
 
@@ -78,7 +78,9 @@ where
   - `directed`: true if the graph is directed, false otherwise.
   - `recover`: true if we want to retrieve the previous computed values (if any) or false to overwrite them and start from the beginning.
   - `notReciprocal`: true if we do not want to recommend reciprocal links, false otherwise.
+
 ## References
 1. Cañamares, R. & Castells P. (2017). A Probabilistic Reformulation of Memory-Based Collaborative Filtering – Implications on Popularity Biases. 40th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR 2017). Tokyo, Japan, August 2017, pp. 215-224.
-2. Hu, Y., Koren, Y., & Volinsky, C. (2008). Collaborative Filtering for Implicit Feedback Datasets. In 2008 Eighth IEEE International Conference on Data Mining (pp. 263–272).
-3. Pilászy, I., Zibriczky, D., & Tikk, D. (2010). Fast als-based matrix factorization for explicit and implicit feedback datasets. In Proceedings of the fourth ACM conference on Recommender systems - RecSys ’10 (p. 71).
+2. Hofmann, T. (2004). Latent semantic models for collaborative filtering. ACM Transactions on Information Systems, 22(1), pp. 89–115
+3. Hu, Y., Koren, Y., & Volinsky, C. (2008). Collaborative Filtering for Implicit Feedback Datasets. In 2008 Eighth IEEE International Conference on Data Mining (ICDM 2008). Pisa, Italy, December 2008, pp. 263–272.
+4. Pilászy, I., Zibriczky, D., & Tikk, D. (2010). Fast ALS-based matrix factorization for explicit and implicit feedback datasets. In Proceedings of the 4th ACM conference on Recommender systems (Recsys 2010). Barcelona, Spain, September 2010, pp. 71-78.
