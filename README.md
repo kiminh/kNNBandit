@@ -5,8 +5,8 @@ This repository contains the code needed to reproduce the experiments of the pap
 
 ## Authors
 Information Retrieval Group at Universidad Autónoma de Madrid
-- Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
-- Pablo Castells (pablo.castells@uam.es)
+- Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es). Github: @JavierSanzCruza
+- Pablo Castells (pablo.castells@uam.es) Github: @pcastells
 
 ## Software description
 This repository contains all the necessary classes to execute the experiments explained in the paper. The software contains the following packages:
