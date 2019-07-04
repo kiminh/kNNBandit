@@ -5,9 +5,8 @@ This repository contains the code needed to reproduce the experiments of the pap
 
 ## Authors
 Information Retrieval Group at Universidad Autónoma de Madrid
-- Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es). Github: @JavierSanzCruza
-- Pablo Castells (pablo.castells@uam.es) Github: @pcastells
-
+- Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
+- Pablo Castells (pablo.castells@uam.es)
 ## Software description
 This repository contains all the necessary classes to execute the experiments explained in the paper. The software contains the following packages:
 - `es.uam.eps.ir.knnbandit.data`: classes for managing the ratings of the users to the items. Extension of the RankSys preference data classes to allow the addition of new users, items and ratings.
