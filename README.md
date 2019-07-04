@@ -9,6 +9,14 @@ Information Retrieval Group at Universidad Autónoma de Madrid
 - Pablo Castells (pablo.castells@uam.es)
 
 ## Software description
+This repository contains all the necessary classes to execute the experiments explained in the paper. The software contains the following packages:
+- `es.uam.eps.ir.knnbandit.data`: classes for managing the ratings of the users to the items. Extension of the RankSys preference data classes to allow the addition of new users, items and ratings.
+- `es.uam.eps.ir.knnbandit.graph`: classes for managing graphs for contact recommendation.
+- `es.uam.eps.ir.knnbandit.grid`: classes for reading the list of algorithms to execute
+- `es.uam.eps.ir.knnbandit.metrics`: the set of cumulative metrics used in the algorithm.
+- `es.uam.eps.ir.knnbandit.recommendation`: implementation of the different algorithms and similarities which are included in this software.
+- `es.uam.eps.ir.knnbandit.stats`: probability distributions.
+- `es.uam.eps.ir.knnbandit.utils`: additional classes, useful for the rest of the program
 
 ### Algorithms
 The software allows the use of several recommendation algorithms. 
@@ -18,6 +26,11 @@ These approaches are just an updateable version of classical recommendation algo
 - **Matrix factorization:** Implicit matrix factorization (iMF) [2], fast iMF [3], pLSA.
 - **User-based kNN:** Not normalized versions of classic user-based kNN and probablistic user-based kNN.
 We include two different myopic similarities: cosine similarity and the probabilistic similarity described in [1].
+
+### Metrics
+In order to evaluate the different proposals, we include two different metrics:
+- **Incremental Recall:** Measures the proportion of the dataset which has been discovered at a certain point of time.
+- **Incremental Gini:** Measures how imbalanced is the distribution of the number of times each item has been recommended over time.
 
 #### Reinforcement learning approaches:
 These approaches introduce the exploration-exploitation concept from Reinforcement learning:
