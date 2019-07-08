@@ -139,7 +139,7 @@ public class ReinforcementLearningRecommendation
             String line;
             while((line = br.readLine()) != null)
             {
-                String split[] = line.split("::");
+                String split[] = line.split("\t");
                 Long user = Parsers.lp.parse(split[0]);
                 Long item = Parsers.lp.parse(split[1]);
                 double val = Parsers.dp.parse(split[2]);
