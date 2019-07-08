@@ -78,12 +78,16 @@ where
   - `directed`: true if the graph is directed, false otherwise.
   - `recover`: true if we want to retrieve the previous computed values (if any) or false to overwrite them and start from the beginning.
   - `notReciprocal`: true if we do not want to recommend reciprocal links, false otherwise.
+  
+### Algorithm files
+In order to execute different configurations, we include in the folder `configs` the optimal configurations for the different datasets we used in the paper. Each row represents the configuration for a single algorithm.
+
 ### Output example
 The output of both programs is the same: for each algorithm in the comparison, a file will be created, which has the following format:
 
 Separated by tabs the first line contains the header.
 
-Then, each row contains the information of a single iteration: the number of the iteration, the selected user, the selected item, the value of the metrics and the time needed to execute the iteration.
+Then, each row contains the information of a single iteration: the number of the iteration, the selected user, the selected item, the value of the metrics and the time needed to execute the iteration (in ms.)
 
 Next, we show an example file:
 ```
