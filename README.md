@@ -91,6 +91,9 @@ For reproducing the experiments of the paper, arguments were
 ### Algorithm files
 In order to execute different configurations, we include in the folder `configs` the optimal configurations for the different datasets we used in the paper. Each row represents the configuration for a single algorithm.
 
+### Random seed
+It is possible to set a random seed for the experiments, so that the selection of users, as well as the selection of items when selected at random, is the same when the experiment is repeated. For that, in the output directory, just add a file named `rngseed` containing the seed in the first line.
+
 ### Output example
 The output of both programs is the same: for each algorithm in the comparison, a file will be created. 
 The name of the file will be the same as the chosen algorithm configuration. Each of the output files has the following format:
