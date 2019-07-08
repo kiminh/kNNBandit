@@ -83,11 +83,10 @@ where
 In order to execute different configurations, we include in the folder `configs` the optimal configurations for the different datasets we used in the paper. Each row represents the configuration for a single algorithm.
 
 ### Output example
-The output of both programs is the same: for each algorithm in the comparison, a file will be created, which has the following format:
+The output of both programs is the same: for each algorithm in the comparison, a file will be created. 
+The name of the file will be the same as the chosen algorithm configuration. Each of the output files has the following format:
 
-Separated by tabs the first line contains the header.
-
-Then, each row contains the information of a single iteration: the number of the iteration, the selected user, the selected item, the value of the metrics and the time needed to execute the iteration (in ms.)
+Separated by tabs, the first line contains the header of the file. Then, each row contains the information of a single iteration: the number of the iteration, the selected user, the selected item, the value of the metrics and the time needed to execute the iteration (in ms.)
 
 Next, we show an example file:
 ```
