@@ -78,7 +78,30 @@ where
   - `directed`: true if the graph is directed, false otherwise.
   - `recover`: true if we want to retrieve the previous computed values (if any) or false to overwrite them and start from the beginning.
   - `notReciprocal`: true if we do not want to recommend reciprocal links, false otherwise.
+### Output example
+The output of both programs is the same: for each algorithm in the comparison, a file will be created, which has the following format:
 
+Separated by tabs the first line contains the header.
+
+Then, each row contains the information of a single iteration: the number of the iteration, the selected user, the selected item, the value of the metrics and the time needed to execute the iteration.
+
+Next, we show an example file:
+```
+iter	user	item	recall	gini	time
+0	1713	4901	0.0	1.0	27
+1	1880	1477	0.0	0.9999838334195551	13
+2	1626	56725	0.0	0.9999676668391102	3
+3	2002	34539	0.0	0.9999515002586653	3
+4	477	5085	0.0	0.9999353336782204	6
+5	2012	44312	0.0	0.9999191670977755	5
+6	1526	60448	0.0	0.9999030005173306	45
+7	528	9392	0.0	0.9998868339368857	46
+8	887	2878	0.0	0.9998706673564408	31
+9	1313	22947	0.0	0.9998545007759959	56
+10	2274	45478	0.0	0.9998383341955509	1
+11	1615	7493	0.0	0.999822167615106	2
+12	1481	58528	0.0	0.9998060010346611	0
+```
 ## References
 1. Cañamares, R. & Castells P. (2017). A Probabilistic Reformulation of Memory-Based Collaborative Filtering – Implications on Popularity Biases. 40th Annual International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR 2017). Tokyo, Japan, August 2017, pp. 215-224.
 2. Hofmann, T. (2004). Latent semantic models for collaborative filtering. ACM Transactions on Information Systems, 22(1), pp. 89–115
