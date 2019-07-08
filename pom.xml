@@ -25,7 +25,7 @@
         </dependency>
         <dependency>
             <groupId>org.ranksys</groupId>
-            <artifactId>Ranksys-mf</artifactId>
+            <artifactId>RankSys-mf</artifactId>
             <version>0.4.3</version>
         </dependency>
         <dependency>
