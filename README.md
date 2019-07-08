@@ -66,6 +66,11 @@ where
   - `threshold`: relevance threshold. Ratings equal or greater than this value will be considered as relevant.
   - `recover`: true if we want to retrieve the previous computed values (if any) or false to overwrite them and start from the beginning.
   - `useRatings`: true for using the real ratings, false for binary ratings.
+  
+For reproducing the experiments of the paper, arguments were
+- `numIter = 500000` for Foursquare-NY, `numIter = 1000000` for Foursquare-Tokyo and `numIter = 3000000` for MovieLens1M.
+- `threshold = 1` for Foursquare and `threshold = 4` for MovieLens1M
+- `useRatings = false` for all of them.
 ### Contact recommendation
 ```
 java -jar knnbandit-jar-with-dependencies.jar contactrec algorithmsFile dataFile outputFolder numIter directed recover notReciprocal
@@ -79,6 +84,10 @@ where
   - `recover`: true if we want to retrieve the previous computed values (if any) or false to overwrite them and start from the beginning.
   - `notReciprocal`: true if we do not want to recommend reciprocal links, false otherwise.
   
+For reproducing the experiments of the paper, arguments were 
+- `numIter = 5000000`
+- `directed = true`
+- `notReciprocal = true`.
 ### Algorithm files
 In order to execute different configurations, we include in the folder `configs` the optimal configurations for the different datasets we used in the paper. Each row represents the configuration for a single algorithm.
 
