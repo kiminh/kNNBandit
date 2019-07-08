@@ -37,7 +37,7 @@ These approaches introduce the exploration-exploitation concept from Reinforceme
 - **User-based kNN:** The main contribution of this paper: we include an stochastic similarity that uses Thompson sampling to estimate the similarities between users. 
 
 ## System Requirements
-**Java JDK:** 1.8 or above (the software was tested using the version 1.8.0_181).
+**Java JDK:** 1.8 or above (the software was tested using the version 1.8.0_112).
 
 **Maven:** tested with version 3.6.0.
 
