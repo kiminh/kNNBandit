@@ -91,6 +91,30 @@ For reproducing the experiments of the paper, arguments were
 ### Algorithm files
 In order to execute different configurations, we include in the folder `configs` the optimal configurations for the different datasets we used in the paper. Each row represents the configuration for a single algorithm.
 
+Example:
+```
+pop-ignore
+relpop
+random
+avg-all
+ub-classic-100-cosine-ignore-ignore
+ub-probabilistic-1-betaprob-1-100-ignore-ignore
+mf-20-pzt-1-0.1-20-ignore
+bandit-epsilon-0.05-stationary-identity-all
+bandit-thompson-1-100-identity-all
+```
+
+In the previous configuration file, we include the configurations for different algorithms. In order: popularity, relevant popularity, random recommendation, average rating, classic user-based, our knn bandit, matrix factorization, epsilon-greedy and thompson sampling.
+
+#### Testing different configurations for our bandit:
+In order to test the different configurations of our bandit, the format of the line to add in the configuration file is:
+
+ub-probabilistic-`num. neighbors`-betaprob-`alpha`-`beta`-ignore-ignore
+
+where
+-`num-neighbors` is the number of neighbors to use
+-`alpha` is the initial number of hits of the algorithm (high value for optimistic start)
+-`beta` is the initial number of errors of the algorithm (high value for pessimistic start)
 ### Random seed
 It is possible to set a random seed for the experiments, so that the selection of users, as well as the selection of items when selected at random, is the same when the experiment is repeated. For that, in the output directory, just add a file named `rngseed` containing the seed in the first line.
 
