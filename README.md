@@ -87,9 +87,9 @@ where
   - `notReciprocal`: true if we do not want to recommend reciprocal links, false otherwise.
   
 For reproducing the experiments of the paper, arguments were 
-- `numIter = 5000000`
-- `directed = true`
-- `notReciprocal = true`.
+ - `numIter = 5000000`
+ - `directed = true`
+ - `notReciprocal = true`.
 ### Algorithm files
 In order to execute different configurations, we include in the folder `configs` the optimal configurations for the different datasets we used in the paper. Each row represents the configuration for a single algorithm.
 
@@ -114,9 +114,9 @@ In order to test the different configurations of our bandit, the format of the l
 ub-probabilistic-`num. neighbors`-betaprob-`alpha`-`beta`-ignore-ignore
 
 where
--`num-neighbors` is the number of neighbors to use
--`alpha` is the initial number of hits of the algorithm (high value for optimistic start)
--`beta` is the initial number of errors of the algorithm (high value for pessimistic start)
+ - `num-neighbors` is the number of neighbors to use
+ - `alpha` is the initial number of hits of the algorithm (high value for optimistic start)
+ - `beta` is the initial number of errors of the algorithm (high value for pessimistic start)
 ### Random seed
 It is possible to set a random seed for the experiments, so that the selection of users, as well as the selection of items when selected at random, is the same when the experiment is repeated. For that, in the output directory, just add a file named `rngseed` containing the seed in the first line.
 
