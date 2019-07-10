@@ -43,7 +43,7 @@ In order to evaluate and analyze the different algorithms, we implement two metr
 **Maven:** tested with version 3.6.0.
 
 ## Installation
-In order to install this program, you need to have Maven (https://maven.apache.org/) installed on your system. Then, download the files into a directory, and execute the following command:
+In order to install this program, you need to have Maven (https://maven.apache.org) installed on your system. Then, download the files into a directory, and execute the following command:
 ```
 mvn compile assembly::single
 ```
