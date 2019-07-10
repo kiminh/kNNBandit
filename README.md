@@ -109,7 +109,7 @@ bandit-thompson-1-100-identity-all
 In the above configuration file, we include the configurations for different algorithms: popularity, random recommendation, average rating, myopic user-based kNN, kNN bandit, matrix factorization, epsilon-greedy and thompson sampling.
 
 #### Testing different configurations for the bandit kNN
-In order to test the different configurations of the bandit algorithms, the format of the line to add in the configuration file is:
+To test the different settings for this algorithms, the format of the line to add in the configuration file is:
 
 ```
 ub-probabilistic-`k`-betaprob-`alpha`-`beta`-ignore-ignore
