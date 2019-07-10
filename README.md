@@ -101,7 +101,7 @@ random
 average-all
 ubknn-100-cosine-ignore-ignore
 knnbndit-1-betaprob-1-100-ignore-ignore
-mf-20-pzt-1-0.1-20-ignore
+mf-20-fastimf-1-0.1-20-ignore
 itembandit-epsilon-0.05-stationary-identity-all
 itembandit-thompson-1-100-identity-all
 ```
