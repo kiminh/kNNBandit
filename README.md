@@ -53,7 +53,7 @@ If you do not want to use Maven, it is still possible to compile the code using 
 - Google MTJ version 1.0.4: https://github.com/fommil/matrix-toolkits-java
 
 ## Execution
-Once you have generated a .jar, you can execute the program. There are two different ways to run this program: one for general recommendation (movies, songs, venues...) and one for contact recommendation in social networks, since the evaluation protocols have slight differences between both tasks.
+Once you have generated a .jar, you can execute the program. There are two different ways to run this program: one for general recommendation (movies, songs, venues...) and one for contact recommendation in social networks, since the respective evaluation protocols have slight differences between them.
 
 ### General recommendation
 ```
