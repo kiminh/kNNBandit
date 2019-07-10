@@ -23,7 +23,7 @@ This repository contains all the needed classes to repeat the experiments explai
 The software includes the implementation of several recommendation algorithms.
 
 #### Multi-armed bandits for recommendation
-- **Bandit kNN:** The main contribution of this paper: we implement our proposed approach by defining a user-based kNN recommender with the appropriate item scoring function, to be used with a stochastic similarity that uses Thompson sampling to estimate the similarities between users. 
+- **kNN bandit:** The main contribution of this paper: we implement our proposed approach by defining a user-based kNN recommender with the appropriate item scoring function, to be used with a stochastic similarity that uses Thompson sampling to estimate the similarities between users. 
 - **Item-oriented, non-personalized multi-armed bandits:** &epsilon;-greedy, &epsilon; t-greedy, UCB1, UCB1-tuned, Thompson sampling. They are used as baseline bandit algorithms in the paper.
 
 #### Myopic recommendation algorithms
@@ -108,10 +108,10 @@ bandit-thompson-1-100-identity-all
 
 In the above configuration file, we include the configurations for different algorithms: popularity, random recommendation, average rating, myopic user-based kNN, kNN bandit, matrix factorization, epsilon-greedy and thompson sampling.
 
-#### Testing different configurations for the bandit kNN
+#### Testing different configurations for the kNN bandit
 To test the different settings for this algorithm, the format of the line to add in the configuration file is:
 
-   ub-probabilistic-'k'-betaprob-'alpha'-'beta'-ignore-ignore
+   knnbandit-'k'-betaprob-'alpha'-'beta'-ignore-ignore
 
 where:
  - `k` is the number of neighbors to use.
