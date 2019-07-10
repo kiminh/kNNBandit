@@ -1,5 +1,5 @@
 # kNN Bandit
-This repository contains the code needed to reproduce the experiments of the paper
+This repository contains the code needed to reproduce the experiments of the paper:
 
 > J. Sanz-Cruzado, P. Castells, E. López. A Simple Multi-Armed Nearest-Neighbor Bandit for Interactive Recommendation. 13th ACM Conference on Recommender Systems (RecSys 2019). Copenhagen, Denmark, September 2019.
 
@@ -10,7 +10,7 @@ Information Retrieval Group at Universidad Autónoma de Madrid
 - Esther López
 
 ## Software description
-This repository contains all the needed classes to repeat the experiments explained in the paper. The software contains the following packages:
+This repository contains all the needed classes to reproduce the experiments explained in the paper. The software contains the following packages:
 - `es.uam.eps.ir.knnbandit.data`: Classes for handling the ratings by users for items. Extension of the RankSys preference data classes to allow the addition of new users, items and ratings.
 - `es.uam.eps.ir.knnbandit.graph`: Classes for handling graph data for contact recommendation.
 - `es.uam.eps.ir.knnbandit.grid`: Classes for reading the list of algorithms to execute.
