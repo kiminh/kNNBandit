@@ -22,7 +22,7 @@ This repository contains all the needed classes to repeat the experiments explai
 ### Algorithms
 The software includes the implementation of several recommendation algorithms.
 
-#### Multi-armed bandit algorithms for recommendation
+#### Multi-armed bandits for recommendation
 - **Bandit kNN:** The main contribution of this paper: we implement our proposed approach by defining a user-based kNN recommender with the appropriate item scoring function, to be used with a stochastic similarity that uses Thompson sampling to estimate the similarities between users. 
 - **Item-oriented, non-personalized multi-armed bandits:**: &epsilon;-greedy, &epsilon; t-greedy, UCB1, UCB1-tuned, Thompson sampling. They are used as baseline bandit algorithms in the paper.
 
