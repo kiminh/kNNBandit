@@ -57,7 +57,7 @@ Once you have generated a .jar, you can execute the program. There are two diffe
 
 ### General recommendation
 ```
-java -jar knnbandit-jar-with-dependencies.jar generalrec algorithmsFile dataFile outputFolder numIter threshold recover useRatings
+java -jar knnbandit-jar-with-dependencies.jar generalrec algorithmsFile dataFile outputFolder numIter threshold resume binarize
 ```
 where
   - `algorithmsFile`: A file indicating which algorithms have to be executed.
