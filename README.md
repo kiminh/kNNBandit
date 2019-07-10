@@ -20,9 +20,15 @@ This repository contains all the necessary classes to execute the experiments ex
 - `es.uam.eps.ir.knnbandit.utils`: additional classes, useful for the rest of the program
 
 ### Algorithms
-The software allows the use of several recommendation algorithms:
-#### Myopic approaches:
-These approaches are just an updateable version of classical recommendation algorithms, baselines. The algorithms included in this comparison are:
+The software allows the use of several recommendation algorithms.
+
+#### Reinforcement learning algorithms
+These approaches introduce the exploration-exploitation concept from Reinforcement learning:
+- **Non-personalized multi-armed bandits:**: &epsilon;-greedy, epsilon t-greedy, UCB1, UCB1-tuned, Thompson sampling
+- **User-based kNN:** The main contribution of this paper: we include an stochastic similarity that uses Thompson sampling to estimate the similarities between users. 
+
+#### Myopic approaches
+These approaches are just an updateable version of classical recommendation algorithms, used as baselines. The algorithms included in this comparison are:
 - **Baselines:** Random, popularity-based recommendation, relevant popularity-base recommendation, average rating.
 - **Matrix factorization:** Implicit matrix factorization (iMF) [2], fast iMF [3], pLSA [4].
 - **User-based kNN:** Not normalized versions of classic user-based kNN and probablistic user-based kNN.
@@ -32,11 +38,6 @@ We include two different myopic similarities: cosine similarity and the probabil
 In order to evaluate the different proposals, we include two different metrics:
 - **Incremental Recall:** Measures the proportion of the dataset which has been discovered at a certain point of time.
 - **Incremental Gini:** Measures how imbalanced is the distribution of the number of times each item has been recommended over time.
-
-#### Reinforcement learning approaches:
-These approaches introduce the exploration-exploitation concept from Reinforcement learning:
-- **Not personalized multi-armed bandits:**: Epsilon-greedy, epsilon t-greedy, UCB1, UCB1-tuned, Thompson sampling
-- **User-based kNN:** The main contribution of this paper: we include an stochastic similarity that uses Thompson sampling to estimate the similarities between users. 
 
 ## System Requirements
 **Java JDK:** 1.8 or above (the software was tested using the version 1.8.0_112).
