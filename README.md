@@ -15,7 +15,7 @@ This repository contains all the needed classes to repeat the experiments explai
 - `es.uam.eps.ir.knnbandit.graph`: Classes for handling graph data for contact recommendation.
 - `es.uam.eps.ir.knnbandit.grid`: Classes for reading the list of algorithms to execute.
 - `es.uam.eps.ir.knnbandit.metrics`: Classes implementing the cumulative metrics used in the experiments.
-- `es.uam.eps.ir.knnbandit.recommendation`: Implementation of recommendation algorithms and similarities included in this software.
+- `es.uam.eps.ir.knnbandit.recommendation`: Implementation of recommendation algorithms and similarities.
 - `es.uam.eps.ir.knnbandit.stats`: Probability distributions.
 - `es.uam.eps.ir.knnbandit.utils`: Additional classes, useful for the rest of the program.
 
