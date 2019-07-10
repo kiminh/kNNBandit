@@ -111,9 +111,11 @@ In the above configuration file, we include the configurations for different alg
 #### Testing different configurations for the bandit kNN
 In order to test the different configurations of the bandit algorithms, the format of the line to add in the configuration file is:
 
+```
 ub-probabilistic-`k`-betaprob-`alpha`-`beta`-ignore-ignore
+```
 
-where
+where:
  - `k` is the number of neighbors to use.
  - `alpha` is the initial number of hits of the algorithm (high value for optimistic start).
  - `beta` is the initial number of errors of the algorithm (high value for pessimistic start).
