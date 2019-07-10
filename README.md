@@ -65,7 +65,7 @@ where
   - `outputFolder`: The directory where the output files will be stored.
   - `numIter`: The number of iterations to run for each algorithm. Use value `0` for running until no new items can be recommended.
   - `threshold`: Relevance threshold. Ratings greater than or equal to this value will be considered as relevant.
-  - `recover`: Set value to 'true' if we want to resume execution following up from the output of a previous execution (if any) or 'false' to overwrite and start the interactive recommendation cycle from scratch.
+  - `resume`: Set value to 'true' to resume execution following up from the output of a previous execution (if any) or 'false' to overwrite and start the interactive recommendation cycle from scratch.
   - `binarize`: Set value to 'true' for using binarized rating values (1 for relevant, 0 for non-relevant), 'false' to leave rating values as are.
   
 For reproducing the exact experiments of the paper, program arguments are:
@@ -83,7 +83,7 @@ where
   - `outputFolder`: The directory where the output files will be stored.
   - `numIter`: The number of iterations to run for each algorithm. Use value `0` for running until no new items can be recommended.
   - `directed`: Set value to 'true' if the social network is directed, false otherwise.
-  - `recover`:  Set value to 'true' if we want to resume execution following up from the output of a previous execution (if any) or 'false' to overwrite and start the interactive recommendation cycle from scratch.
+  - `resume`: Set value to 'true' to resume execution following up from the output of a previous execution (if any) or 'false' to overwrite and start the interactive recommendation cycle from scratch.
   - `notReciprocal`: Set value to 'true' if the algorithms should not recommend reciprocal links, 'false' otherwise.
   
 For reproducing the exact experiments of the paper, the arguments are:
