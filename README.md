@@ -112,7 +112,7 @@ In the above configuration file, we include the configurations for different alg
 To test the different settings for this algorithm, the format of the line to add in the configuration file is:
 
 ```
-ub-probabilistic-`k`-betaprob-`alpha`-`beta`-ignore-ignore
+ub-probabilistic-*k*-betaprob-*alpha*-*beta*-ignore-ignore
 ```
 
 where:
