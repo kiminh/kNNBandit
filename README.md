@@ -102,8 +102,8 @@ avg-all
 ub-classic-100-cosine-ignore-ignore
 ub-probabilistic-1-betaprob-1-100-ignore-ignore
 mf-20-pzt-1-0.1-20-ignore
-bandit-epsilon-0.05-stationary-identity-all
-bandit-thompson-1-100-identity-all
+itembandit-epsilon-0.05-stationary-identity-all
+itembandit-thompson-1-100-identity-all
 ```
 
 In the above configuration file, we include the configurations for different algorithms: popularity, random recommendation, average rating, myopic user-based kNN, kNN bandit, matrix factorization, epsilon-greedy and thompson sampling.
@@ -144,6 +144,7 @@ iter	user	item	recall	gini	time
 11	1615	7493	0.0	0.999822167615106	2
 12	1481	58528	0.0	0.9998060010346611	0
 ```
+
 ## References
 1. Hofmann, T. (2004). Latent semantic models for collaborative filtering. ACM Transactions on Information Systems, 22(1), pp. 89–115
 2. Hu, Y., Koren, Y., & Volinsky, C. (2008). Collaborative Filtering for Implicit Feedback Datasets. In 2008 Eighth IEEE International Conference on Data Mining (ICDM 2008). Pisa, Italy, December 2008, pp. 263–272.
