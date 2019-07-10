@@ -10,7 +10,7 @@ Information Retrieval Group at Universidad Autónoma de Madrid
 - Esther López
 
 ## Software description
-This repository contains all the necessary classes to execute the experiments explained in the paper. The software contains the following packages:
+This repository contains all the needed classes to repeat the experiments explained in the paper. The software contains the following packages:
 - `es.uam.eps.ir.knnbandit.data`: classes for managing the ratings of the users to the items. Extension of the RankSys preference data classes to allow the addition of new users, items and ratings.
 - `es.uam.eps.ir.knnbandit.graph`: classes for managing graphs for contact recommendation.
 - `es.uam.eps.ir.knnbandit.grid`: classes for reading the list of algorithms to execute
@@ -20,27 +20,25 @@ This repository contains all the necessary classes to execute the experiments ex
 - `es.uam.eps.ir.knnbandit.utils`: additional classes, useful for the rest of the program
 
 ### Algorithms
-The software allows the use of several recommendation algorithms.
+The software includes the implementation of several recommendation algorithms.
 
-#### Reinforcement learning algorithms
-These approaches introduce the exploration-exploitation concept from Reinforcement learning:
-- **Non-personalized multi-armed bandits:**: &epsilon;-greedy, epsilon t-greedy, UCB1, UCB1-tuned, Thompson sampling
-- **User-based kNN:** The main contribution of this paper: we include an stochastic similarity that uses Thompson sampling to estimate the similarities between users. 
+#### Multi-armed bandit algorithms for recommendation
+- **kNN bandit:** The main contribution of this paper: we implement our proposed approach by defining a user-based kNN recommender with the appropriate item scoring function, to be used with a stochastic similarity that uses Thompson sampling to estimate the similarities between users. 
+- **Item-oriented, non-personalized multi-armed bandits:**: &epsilon;-greedy, &epsilon; t-greedy, UCB1, UCB1-tuned, Thompson sampling. They are used as baseline bandit algorithms in the paper.
 
-#### Myopic approaches
-These approaches are just an updateable version of classical recommendation algorithms, used as baselines. The algorithms included in this comparison are:
-- **Baselines:** Random, popularity-based recommendation, relevant popularity-base recommendation, average rating.
+#### Myopic recommendation algorithms
+These approaches are just an incrementally-updateable version of classical recommendation algorithms, used as baselines. The algorithms included in this comparison are:
+- **Non-personalized baselines:** Random recommendation, popularity-based recommendation, average rating.
 - **Matrix factorization:** Implicit matrix factorization (iMF) [2], fast iMF [3], pLSA [4].
-- **User-based kNN:** Not normalized versions of classic user-based kNN and probablistic user-based kNN.
-We include two different myopic similarities: cosine similarity and the probabilistic similarity described in [1].
+- **User-based kNN:** Non-normalized implementations of classic user-based cosine kNN.
 
 ### Metrics
-In order to evaluate the different proposals, we include two different metrics:
-- **Incremental Recall:** Measures the proportion of the dataset which has been discovered at a certain point of time.
+In order to evaluate and analyze the different algorithms, we implement two metrics:
+- **Incremental Recall:** The proportion of  relevant ratings that have been discovered at a certain point in time.
 - **Incremental Gini:** Measures how imbalanced is the distribution of the number of times each item has been recommended over time.
 
 ## System Requirements
-**Java JDK:** 1.8 or above (the software was tested using the version 1.8.0_112).
+**Java JDK:** 1.8 or above (the software was tested using version 1.8.0_112).
 
 **Maven:** tested with version 3.6.0.
 
@@ -50,46 +48,47 @@ In order to install this program, you need to have Maven (https://maven.apache.o
 mvn compile assembly::single
 ```
 If you do not want to use Maven, it is still possible to compile the code using any Java compiler. In that case, you will need the following libraries:
-- Ranksys version 0.4.3: http://ranksys.org/
-- Colt version 1.2.0: https://dst.lbl.gov/ACSSoftware/colt/
+- Ranksys version 0.4.3: http://ranksys.org
+- Colt version 1.2.0: https://dst.lbl.gov/ACSSoftware/colt
 - Google MTJ version 1.0.4: https://github.com/fommil/matrix-toolkits-java
 
 ## Execution
-Once you have a generated .jar, you can execute the program. There are two different ways to execute this program: one for general recommendation (movies, songs, venues...) and another one for contact recommendation in social networks, since the evaluation protocols show slight differences between both tasks.
+Once you have generated a .jar, you can execute the program. There are two different ways to run this program: one for general recommendation (movies, songs, venues...) and one for contact recommendation in social networks, since the evaluation protocols have slight differences between both tasks.
 
 ### General recommendation
 ```
 java -jar knnbandit-jar-with-dependencies.jar generalrec algorithmsFile dataFile outputFolder numIter threshold recover useRatings
 ```
 where
-  - `algorithmsFile`: File indicating which algorithms have to be executed
-  - `dataFile`: The ratings data. Format: on each line: `user \t item \t rating`.
-  - `outputFolder` is the directory where the output files will be stored.
-  - `numIter` is the number of iterations to execute for each algorithm. Use value `0` for executing until no new items can be recommended.
-  - `threshold`: relevance threshold. Ratings equal or greater than this value will be considered as relevant.
-  - `recover`: true if we want to retrieve the previous computed values (if any) or false to overwrite them and start from the beginning.
-  - `useRatings`: true for using the real ratings, false for binary ratings.
+  - `algorithmsFile`: A file indicating which algorithms have to be executed.
+  - `dataFile`: The rating data, including one rating per line with the format: `user \t item \t rating`.
+  - `outputFolder`: The directory where the output files will be stored.
+  - `numIter`: The number of iterations to run for each algorithm. Use value `0` for running until no new items can be recommended.
+  - `threshold`: Relevance threshold. Ratings greater than or equal to this value will be considered as relevant.
+  - `recover`: Set value to 'true' if we want to resume execution following up from the output of a previous execution (if any) or 'false' to overwrite and start the interactive recommendation cycle from scratch.
+  - `useRatings`: Set value to 'true' for using graded rating values, 'false' for binary ratings.
   
-For reproducing the experiments of the paper, arguments were
+For reproducing the exact experiments of the paper, program arguments are:
 - `numIter = 500000` for Foursquare-NY, `numIter = 1000000` for Foursquare-Tokyo and `numIter = 3000000` for MovieLens1M.
-- `threshold = 1` for Foursquare and `threshold = 4` for MovieLens1M
-- `useRatings = false` for all of them.
+- `threshold = 1` for Foursquare and `threshold = 4` for MovieLens1M.
+- `useRatings = false` for all datasets.
+
 ### Contact recommendation
 ```
 java -jar knnbandit-jar-with-dependencies.jar contactrec algorithmsFile dataFile outputFolder numIter directed recover notReciprocal
 ```
 where
-  - `algorithmsFile`: File indicating which algorithms have to be executed
-  - `dataFile`: The graph data. Format: on each line: `originUser \t destUser \t weight`.
-  - `outputFolder` is the directory where the output files will be stored.
-  - `numIter` is the number of iterations to execute for each algorithm. Use value `0` for executing until no new items can be recommended.
-  - `directed`: true if the graph is directed, false otherwise.
-  - `recover`: true if we want to retrieve the previous computed values (if any) or false to overwrite them and start from the beginning.
-  - `notReciprocal`: true if we do not want to recommend reciprocal links, false otherwise.
+  - `algorithmsFile`: A file indicating which algorithms have to be executed
+  - `dataFile`: The graph data, including one edge per line with the format: `originUser \t destUser \t weight`.
+  - `outputFolder`: The directory where the output files will be stored.
+  - `numIter`: The number of iterations to run for each algorithm. Use value `0` for running until no new items can be recommended.
+  - `directed`: Set value to 'true' if the social network is directed, false otherwise.
+  - `recover`:  Set value to 'true' if we want to resume execution following up from the output of a previous execution (if any) or 'false' to overwrite and start the interactive recommendation cycle from scratch.
+  - `notReciprocal`: Set value to 'true' if we do not want to recommend reciprocal links, false otherwise.
   
-For reproducing the experiments of the paper, arguments were 
- - `numIter = 5000000`
- - `directed = true`
+For reproducing the exact experiments of the paper, the arguments are:
+ - `numIter = 5000000`.
+ - `directed = true`.
  - `notReciprocal = true`.
 ### Algorithm files
 In order to execute different configurations, we include in the folder `configs` the optimal configurations for the different datasets we used in the paper. Each row represents the configuration for a single algorithm.
