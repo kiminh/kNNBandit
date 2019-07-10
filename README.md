@@ -98,9 +98,9 @@ Example:
 ```
 popularity
 random
-avg-all
-ub-classic-100-cosine-ignore-ignore
-ub-probabilistic-1-betaprob-1-100-ignore-ignore
+average-all
+ubknn-100-cosine-ignore-ignore
+knnbndit-1-betaprob-1-100-ignore-ignore
 mf-20-pzt-1-0.1-20-ignore
 itembandit-epsilon-0.05-stationary-identity-all
 itembandit-thompson-1-100-identity-all
@@ -111,7 +111,7 @@ In the above configuration file, we include the configurations for different alg
 #### Testing different configurations for the kNN bandit
 To test the different settings for this algorithm, the format of the line to add in the configuration file is:
 
-   knnbandit-'k'-betaprob-'alpha'-'beta'-ignore-ignore
+   knnbandit-`k`-betaprob-`alpha`-`beta`-ignore-ignore
 
 where:
  - `k` is the number of neighbors to use.
