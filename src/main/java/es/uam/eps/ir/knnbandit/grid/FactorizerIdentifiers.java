@@ -16,7 +16,7 @@ package es.uam.eps.ir.knnbandit.grid;
  */
 public class FactorizerIdentifiers 
 {
-    public final static String HKV = "hkv";
-    public final static String PZT = "pzt";
+    public final static String IMF = "imf";
+    public final static String FASTIMF = "fastimf";
     public final static String PLSA = "plsa";
 }
