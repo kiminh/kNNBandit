@@ -98,12 +98,12 @@ Example:
 ```
 popularity
 random
-average-all
-ubknn-100-cosine-ignore-ignore
-knnbndit-1-betaprob-1-100-ignore-ignore
-mf-20-fastimf-1-0.1-20-ignore
-itembandit-epsilon-0.05-stationary-identity-all
-itembandit-thompson-1-100-identity-all
+average
+ubknn-100
+knnbandit-1-1-10
+mf-10-fastimf-10-10-20
+bandit-epsilon-0.2-stationary
+bandit-thompson-1-100
 ```
 
 In the above configuration file, we include the configurations for different algorithms: popularity, random recommendation, average rating, myopic user-based kNN, kNN bandit, matrix factorization, epsilon-greedy and thompson sampling.
@@ -111,13 +111,13 @@ In the above configuration file, we include the configurations for different alg
 #### Testing different configurations for the kNN bandit
 To test the different settings for this algorithm, the format of the line to add in the configuration file is:
 
-   knnbandit-`k`-betaprob-`alpha`-`beta`-ignore-ignore
-
+   knnbandit-`k`-`alpha`-`beta`
+   
 where:
  - `k` is the number of neighbors to use.
  - `alpha` is the initial number of hits of the algorithm (high value for optimistic start).
  - `beta` is the initial number of errors of the algorithm (high value for pessimistic start).
- 
+  
 ### Random seed
 It is possible to set a random seed for the experiments, so that the selection of users and other random choices are the same when the experiment is repeated. For that, in the output directory, just add a file named `rngseed` containing the seed in the first line.
 
