@@ -29,36 +29,4 @@ public class ValueFunctions
             return currentValue;
         };
     }
-
-    /**
-     * Function that takes the neighbors into account.
-     * @param values similarities between the user
-     * @return
-     */
-    public static ValueFunction neighbor(Int2DoubleMap values)
-    {
-        return (int uidx, int iidx, double currentValue, double numtimes) -> 
-        {
-            if(values.containsKey(iidx))
-            {
-                return values.get(iidx)*currentValue;
-            }
-            else
-            {
-                return currentValue*currentValue;
-            }
-        };
-    }
-
-    /**
-     * A value function which takes the reward as val*(1-val)
-     * @return
-     */
-    public static ValueFunction unseenfunction()
-    {
-        return (int uidx, int iidx, double currentValue, double numtimes) ->
-        {
-            return currentValue*(1.0-currentValue);
-        };
-    }
 }

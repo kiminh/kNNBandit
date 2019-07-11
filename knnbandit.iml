@@ -11,15 +11,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.ranksys:Ranksys-mf:0.4.3" level="project" />
     <orderEntry type="library" name="Maven: org.ranksys:RankSys-core:0.4.3" level="project" />
     <orderEntry type="library" name="Maven: it.unimi.dsi:fastutil:7.0.6" level="project" />
     <orderEntry type="library" name="Maven: org.jooq:jool:0.9.10" level="project" />
     <orderEntry type="library" name="Maven: org.ranksys:RankSys-fast:0.4.3" level="project" />
-    <orderEntry type="library" name="Maven: org.ranksys:Ranksys-mf:0.4.3" level="project" />
+    <orderEntry type="library" name="Maven: org.ranksys:RankSys-mf:0.4.3" level="project" />
     <orderEntry type="library" name="Maven: org.ranksys:RankSys-rec:0.4.3" level="project" />
     <orderEntry type="library" name="Maven: org.ranksys:Ranksys-nn:0.4.3" level="project" />
     <orderEntry type="library" name="Maven: org.ranksys:RankSys-formats:0.4.3" level="project" />
-    <orderEntry type="library" name="Maven: org.ranksys:RankSys-mf:0.4.3" level="project" />
     <orderEntry type="library" name="Maven: org.ranksys:RankSys-fm:0.4.3" level="project" />
     <orderEntry type="library" name="Maven: org.ranksys:JavaFM:0.4" level="project" />
     <orderEntry type="library" name="Maven: colt:colt:1.2.0" level="project" />

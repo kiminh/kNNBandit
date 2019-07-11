@@ -18,14 +18,14 @@ public class AlgorithmIdentifiers
 {
     // Simple algorithms
     public static final String RANDOM = "random";
-    public static final String POP = "pop";
     public static final String AVG = "avg";
-    public static final String RELPOP = "relpop";
+    public static final String POP = "pop";
     public static final String ORACLE = "oracle";
     // Not-personalized bandits
-    public static final String SIMPLEBANDIT = "bandit";
+    public static final String ITEMBANDIT = "itembandit";
     // User based
-    public static final String USERBASEDKNN = "ub";
+    public static final String USERBASEDKNN = "ubknn";
+    public static final String BANDITKNN = "banditknn";
     // Matrix factorization.
     public static final String MF = "mf";
 }

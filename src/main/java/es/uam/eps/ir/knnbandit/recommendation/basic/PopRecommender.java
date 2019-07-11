@@ -17,24 +17,31 @@ import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
 import org.jooq.lambda.tuple.Tuple3;
 
 /**
- * Reinforcement learning version of a Popularity algorithm.
+ * Reinforcement learning version of a relevant popularity algorithm algorithm.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class PopRecommender<U,I> extends AbstractBasicReinforcementLearningRecommender<U,I> 
+public class PopRecommender<U,I> extends AbstractBasicReinforcementLearningRecommender<U,I>
 {
+    /**
+     * Relevance threshold. 
+     */
+    public final double threshold;
+    
     /**
      * Constructor.
      * @param uIndex user index.
      * @param iIndex item index.
      * @param prefData preference data.
      * @param ignoreUnknown true if we must ignore unknown items when updating.
+     * @param threshold relevance threshold
      */
-    public PopRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown)
+    public PopRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown, double threshold)
     {
-        super(uIndex, iIndex, prefData, ignoreUnknown);
+        super(uIndex, iIndex, prefData,ignoreUnknown);
+        this.threshold = threshold;
     }
     
     /**
@@ -43,22 +50,26 @@ public class PopRecommender<U,I> extends AbstractBasicReinforcementLearningRecom
      * @param iIndex item index.
      * @param prefData preference data.
      * @param ignoreUnknown true if we must ignore unknown items when updating.
+     * @param threshold relevance threshold
      * @param notReciprocal true if we do not recommend reciprocal users, false otherwise
      */
-    public PopRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown, boolean notReciprocal)
+    public PopRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown, double threshold, boolean notReciprocal)
     {
-        super(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal);
+        super(uIndex, iIndex, prefData,ignoreUnknown, notReciprocal);
+        this.threshold = threshold;
     }
     
     @Override
     public void updateMethod(int uidx, int iidx, double value)
     {
-        this.values[iidx]++;
+        this.values[iidx] += (value >= threshold ? 1.0 : 0.0);
     }
-
+    
     @Override
     public void updateMethod(List<Tuple3<Integer,Integer,Double>> train)
     {
-        for(int i = 0; i < prefData.numItems(); ++i) this.values[i] = trainData.numUsers(i);
+        for(int iidx = 0; iidx < this.prefData.numItems(); ++iidx)
+        this.values[iidx] = this.trainData.getIidxPreferences(iidx).filter(vidx -> vidx.v2 > 0).count();
     }
+
 }
