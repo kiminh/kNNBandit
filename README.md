@@ -28,14 +28,14 @@ The software includes the implementation of several recommendation algorithms.
 
 #### Myopic recommendation algorithms
 These approaches are just an incrementally-updateable version of classical recommendation algorithms, used as baselines. The algorithms included in this comparison are:
-- **Non-personalized baselines:** Random recommendation, popularity-based recommendation, average rating.
+- **Non-personalized recommendation:** Random recommendation, popularity-based recommendation, average rating.
 - **Matrix factorization:** Implicit matrix factorization (iMF) [1], fast iMF [2], pLSA [3].
 - **User-based kNN:** Non-normalized implementations of classic user-based cosine kNN.
 
 ### Metrics
-In order to evaluate and analyze the different algorithms, we implement two metrics:
-- **Incremental Recall:** The proportion of  relevant ratings that have been discovered at a certain point in time.
-- **Incremental Gini:** Measures how imbalanced is the distribution of the number of times each item has been recommended over time.
+To evaluate and analyze the different algorithms, we implement two metrics:
+- **Cumulative Recall:** The proportion of  relevant ratings that have been discovered at a certain point in time.
+- **Cumulative Gini:** Measures how imbalanced is the distribution of the number of times each item has been recommended up to some point in time.
 
 ## System Requirements
 **Java JDK:** 1.8 or above (the software was tested using version 1.8.0_112).
@@ -59,16 +59,16 @@ Once you have generated a .jar, you can execute the program. There are two diffe
 ```
 java -jar knnbandit-jar-with-dependencies.jar generalrec algorithmsFile dataFile outputFolder numIter threshold resume binarize
 ```
-where
+where the command line arguments are:
   - `algorithmsFile`: A file indicating which algorithms have to be executed.
   - `dataFile`: The rating data, including one rating per line with the format: `user \t item \t rating`.
   - `outputFolder`: The directory where the output files will be stored.
   - `numIter`: The number of iterations to run for each algorithm. Use value `0` for running until no new items can be recommended.
   - `threshold`: Relevance threshold. Ratings greater than or equal to this value will be considered as relevant.
-  - `resume`: Set value to 'true' to resume execution following up from the output of a previous execution (if any) or 'false' to overwrite and start the interactive recommendation cycle from scratch.
-  - `binarize`: Set value to 'true' for using binarized rating values (1 for relevant, 0 for non-relevant), 'false' to leave rating values as are.
+  - `resume`: Set value to `true` to resume execution following up from the output of a previous execution (if any) or `false` to overwrite and start the interactive recommendation cycle from scratch.
+  - `binarize`: Set value to `true` for using binarized rating values (1 for relevant, 0 for non-relevant), `false` to leave rating values as are.
   
-For reproducing the exact experiments of the paper, program arguments are:
+For reproducing the exact experiments of the paper, program argument values are:
 - `numIter = 500000` for Foursquare-NY, `numIter = 1000000` for Foursquare-Tokyo and `numIter = 3000000` for MovieLens1M.
 - `threshold = 1` for Foursquare and `threshold = 4` for MovieLens1M.
 - `binarize = true` for all datasets.
@@ -82,9 +82,9 @@ where
   - `dataFile`: The graph data, including one edge per line with the format: `originUser \t destUser \t weight`.
   - `outputFolder`: The directory where the output files will be stored.
   - `numIter`: The number of iterations to run for each algorithm. Use value `0` for running until no new items can be recommended.
-  - `directed`: Set value to 'true' if the social network is directed, false otherwise.
-  - `resume`: Set value to 'true' to resume execution following up from the output of a previous execution (if any) or 'false' to overwrite and start the interactive recommendation cycle from scratch.
-  - `notReciprocal`: Set value to 'true' if the algorithms should not recommend reciprocal links, 'false' otherwise.
+  - `directed`: Set value to `true` if the social network is directed, `false` otherwise.
+  - `resume`: Set value to `true` to resume execution following up from the output of a previous execution (if any) or `false` to overwrite and start the interactive recommendation cycle from scratch.
+  - `notReciprocal`: Set value to `true` if the algorithms should not recommend reciprocal links, `false` otherwise.
   
 For reproducing the exact experiments of the paper, the arguments are:
  - `numIter = 5000000`.
@@ -106,7 +106,7 @@ bandit-epsilon-0.2-stationary
 bandit-thompson-1-100
 ```
 
-In the above configuration file, we include the configurations for different algorithms: popularity, random recommendation, average rating, myopic user-based kNN, kNN bandit, matrix factorization, epsilon-greedy and thompson sampling.
+In the above configuration file example, we choose different algorithms ot be run (each with specific parameter settings): popularity, random recommendation, average rating, myopic user-based kNN, kNN bandit, matrix factorization, &epsilon;-greedy and thompson sampling.
 
 #### Testing different configurations for the kNN bandit
 To test the different settings for this algorithm, the format of the line to add in the configuration file is:
@@ -119,13 +119,10 @@ where:
  - `beta` is the initial number of errors of the algorithm (high value for pessimistic start).
   
 ### Random seed
-It is possible to set a random seed for the experiments, so that the selection of users and other random choices are the same when the experiment is repeated. For that, in the output directory, just add a file named `rngseed` containing the seed in the first line.
+It is possible to set a random seed for the experiments, so that the selection of users and other random choices are the same when the experiment is repeated. For that purpose, in the output directory, just add a file named `rngseed` containing the seed in the first line.
 
-### Output example
-The output of both programs is the same: for each algorithm in the comparison, a file will be created. 
-The name of the file will be the same as the chosen algorithm configuration. Each of the output files has the following format:
-
-Separated by tabs, the first line contains the header of the file. Then, each row contains the information of a single iteration: the number of the iteration, the selected user, the selected item, the value of the metrics and the time taken to execute the iteration (in ms.)
+### Output format
+The output of both programs is the same: for each algorithm in the comparison, a file will be created. The name of the file will be the same as the chosen algorithm configuration. Each of the output files has the following format: separated by tabs, the first line contains the header of the file. Then, each row contains the information of a single iteration: the number of the iteration, the selected user, the selected item, the value of the metrics and the time taken to execute the iteration (in ms.)
 
 This is an example of the content format of this file:
 ```

@@ -39,8 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.DoubleUnaryOperator;
 
-import static es.uam.eps.ir.knnbandit.selector.AlgorithmIdentifiers.BANDITKNN;
-
 /**
  * Class for selecting the bandit algorithms to apply.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
