@@ -232,7 +232,7 @@ public class AlgorithmSelector<U,I>
                     return !this.contactRec ? new IncrementalUserBasedKNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, k, sim)
                             : new IncrementalUserBasedKNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, notReciprocal, k, sim);
 
-                case BANDITKNN:
+                case AlgorithmIdentifiers.BANDITKNN:
                     cursor++;
                     k = Parsers.ip.parse(fullAlgorithm.get(cursor));
                     cursor++;
