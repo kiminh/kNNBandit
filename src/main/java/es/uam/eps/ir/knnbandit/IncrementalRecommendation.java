@@ -54,7 +54,7 @@ public class IncrementalRecommendation
      *     <li>Output: folder in which to store the output</li>
      *     <li>Num. Iter: Number of iterations. 0 if we want to apply until full coverage.</li>
      *     <li>Threshold: relevance threshold</li>
-     *     <li>Recover: true if we want to retrieve data from previous executions, false to overwrite</li>
+     *     <li>resume: true if we want to retrieve data from previous executions, false to overwrite</li>
      *     <li>Use ratings: true if we want to use ratings, false for binary values</li>
      * </ol>
      * @throws IOException if something fails while reading / writing.
@@ -71,7 +71,7 @@ public class IncrementalRecommendation
             System.err.println("\tOutput: Folder in which to store the output");
             System.err.println("\tNum. Iter.: Number of iterations. 0 if we want to run until we run out of recommendable items");
             System.err.println("\tThreshold: relevance threshold");
-            System.err.println("\tRecover: true if we want to resume from previous executions, false if we want to overwrite");
+            System.err.println("\tresume: true if we want to resume previous executions, false if we want to overwrite");
             System.err.println("\tUse ratings: true if we want to take the true value of the ratings, false if we want to use binary values");
             return;
         }
@@ -83,7 +83,7 @@ public class IncrementalRecommendation
         String output = args[2];
         int numIter = Parsers.ip.parse(args[3]);
         double threshold = Parsers.dp.parse(args[4]);
-        boolean recover = args[5].equalsIgnoreCase("true");
+        boolean resume = args[5].equalsIgnoreCase("true");
         boolean useRatings = args[6].equalsIgnoreCase("true");
 
         DoubleUnaryOperator weightFunction = useRatings ? (double x) -> x :
@@ -93,7 +93,7 @@ public class IncrementalRecommendation
         // First, we identify and find the random seed which will be used for unties.
         // This is stored in a file in the output folder named "rngseed". If it does not exist,
         // the number is created.
-        if(recover)
+        if(resume)
         {
             File f = new File(output + "rngseed");
             if(f.exists())
@@ -181,10 +181,10 @@ public class IncrementalRecommendation
             List<Tuple3<Long,Long,Long>> list = new ArrayList<>();
             String fileName = output + re.getKey() + ".txt";
 
-            if(recover)
+            if(resume)
             {
                 File f = new File(fileName);
-                if(f.exists()) // if the file exists, then recover:
+                if(f.exists()) // if the file exists, then resume:
                 {
                     try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName))))
                     {
@@ -216,7 +216,7 @@ public class IncrementalRecommendation
 
             try(BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output + re.getKey() + ".txt"))))
             {
-                if(recover && !list.isEmpty())
+                if(resume && !list.isEmpty())
                 {
                     for(Tuple3<Long,Long,Long> triplet : list)
                     {

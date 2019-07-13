@@ -67,7 +67,7 @@ public class IncrementalContactRecommendation
      *     <li>Output: folder in which to store the output</li>
      *     <li>Num. Iter: Number of iterations. 0 if we want to apply until full coverage.</li>
      *     <li>Directed: true if the graph is directed, false otherwise</li>
-     *     <li>Recover: true if we want to retrieve data from previous executions, false to overwrite</li>
+     *     <li>resume: true if we want to retrieve data from previous executions, false to overwrite</li>
      *     <li>Not reciprocal: true if we don't want to recommend reciprocal edges, false otherwise</li>
      * </ol>
      * @throws IOException if something fails while reading / writing.
@@ -84,7 +84,7 @@ public class IncrementalContactRecommendation
             System.err.println("\tOutput: Folder in which to store the output");
             System.err.println("\tNum. Iter.: Number of iterations. 0 if we want to run until we run out of recommendable items");
             System.err.println("\tDirected: true if the graph is directed, false otherwise");
-            System.err.println("\tRecover: true if we want to resume from previous executions, false if we want to overwrite");
+            System.err.println("\tresume: true if we want to resume previous executions, false if we want to overwrite");
             System.err.println("\tNot Reciprocal: true if we want to recommend reciprocal edges, false otherwise");
             return;
         }
@@ -93,7 +93,7 @@ public class IncrementalContactRecommendation
         String input = args[1];
         String output = args[2];
         int auxIter = Parsers.ip.parse(args[3]);
-        boolean recover = args[4].equalsIgnoreCase("true");
+        boolean resume = args[4].equalsIgnoreCase("true");
         int numIter = (auxIter == 0) ? Integer.MAX_VALUE : auxIter;
         
         boolean directed = args[5].equalsIgnoreCase("true");
@@ -101,7 +101,7 @@ public class IncrementalContactRecommendation
 
 
         // First, we identify and find the random seed which will be used for unties.
-        if(recover)
+        if(resume)
         {
             File f = new File(output + "rngseed");
             if(f.exists())
@@ -182,10 +182,10 @@ public class IncrementalContactRecommendation
             List<Tuple3<Long,Long,Long>> list = new ArrayList<>();
             String fileName = output + re.getKey() + ".txt";
 
-            if(recover)
+            if(resume)
             {
                 File f = new File(fileName);
-                if(f.exists()) // if the file exists, then recover:
+                if(f.exists()) // if the file exists, then resume:
                 {
                     try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName))))
                     {
@@ -217,7 +217,7 @@ public class IncrementalContactRecommendation
 
             try(BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output + re.getKey() + ".txt"))))
             {
-                if(recover && !list.isEmpty())
+                if(resume && !list.isEmpty())
                 {
                     for(Tuple3<Long,Long,Long> triplet : list)
                     {
