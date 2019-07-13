@@ -1,7 +1,7 @@
 /*
- *  Copyright (C) 2019 Information Retrieval Group at Universidad Autï¿½noma
- *  de Madrid, http://ir.ii.uam.es
- * 
+ * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
+ * de Madrid, http://ir.ii.uam.es.
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -12,8 +12,9 @@ import org.jooq.lambda.tuple.Tuple2;
 import org.jooq.lambda.tuple.Tuple3;
 
 /**
- * Preference data that allows updating over time
- * @author Javier Sanz-Cruzado Puig
+ * Preference data that allows updating over time.
+ * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
+ * @author Pablo Castells (pablo.castells@uam.es)
  * @param <U> Type of the users
  * @param <I> Type of the items
  */
@@ -35,26 +36,26 @@ public interface Updateable<U,I>
      */
     public void update(U u, I i, double val);
     /**
-     * Updates the preference data given a set of preferences to delete
+     * Updates the preference data given a set of preferences to delete.
      * @param tuples the tuples
      */
     public void updateDelete(Stream<Tuple2<U, I>> tuples);
     
     /**
-     * Deletes an invidivual preference
+     * Deletes an invidivual preference.
      * @param u user
      * @param i item
      */
     public void updateDelete(U u, I i);
     
     /**
-     * Adds a user
+     * Adds a user.
      * @param u user
      */
     public void updateAddUser(U u);
     
     /**
-     * Adds an item
+     * Adds an item.
      * @param i item
      */
     public void updateAddItem(I i);

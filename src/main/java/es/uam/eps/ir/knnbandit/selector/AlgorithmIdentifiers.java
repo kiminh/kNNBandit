@@ -1,13 +1,12 @@
 /*
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
- * de Madrid, http://ir.ii.uam.es
- * 
+ * de Madrid, http://ir.ii.uam.es.
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
-package es.uam.eps.ir.knnbandit.grid;
+package es.uam.eps.ir.knnbandit.selector;
 
 /**
  * Identifiers of the algorithms which can be used.
@@ -20,8 +19,7 @@ public class AlgorithmIdentifiers
     public static final String RANDOM = "random";
     public static final String AVG = "average";
     public static final String POP = "popularity";
-    public static final String ORACLE = "oracle";
-    // Not-personalized bandits
+    // Non-personalized bandits
     public static final String ITEMBANDIT = "itembandit";
     // User based
     public static final String USERBASEDKNN = "ubknn";

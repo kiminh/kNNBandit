@@ -34,7 +34,7 @@ import org.jooq.lambda.tuple.Tuple3;
  * @param <U> type of the users.
  * @param <I> type of the items.
  */
-public abstract class ReinforcementLearningRecommender<U,I>
+public abstract class IncrementalRecommender<U,I>
 {
     /**
      * Preference data.
@@ -66,9 +66,9 @@ public abstract class ReinforcementLearningRecommender<U,I>
      * @param uIndex user index.
      * @param iIndex item index.
      * @param prefData preference data.
-     * @param ignoreUnknown false if we treat missing ratings as failures, true otherwise.
+     * @param ignoreUnknown false to treat missing ratings as failures, true otherwise.
      */
-    public ReinforcementLearningRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown)
+    public IncrementalRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown)
     {
         this.prefData = prefData;
         this.trainData = SimpleFastUpdateablePreferenceData.load(Stream.empty(), uIndex, iIndex);
@@ -84,10 +84,10 @@ public abstract class ReinforcementLearningRecommender<U,I>
      * @param uIndex user index.
      * @param iIndex item index.
      * @param prefData preference data.
-     * @param ignoreUnknown false if we treat missing ratings as failures, true otherwise.
-     * @param notReciprocal false if we treat missing ratings as failures, true otherwise.
+     * @param ignoreUnknown false to treat missing ratings as failures, true otherwise.
+     * @param notReciprocal false to treat missing ratings as failures, true otherwise.
      */
-    public ReinforcementLearningRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown, boolean notReciprocal)
+    public IncrementalRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown, boolean notReciprocal)
     {
         this.prefData = prefData;
         this.trainData = SimpleFastUpdateablePreferenceData.load(Stream.empty(), uIndex, iIndex);
@@ -247,14 +247,21 @@ public abstract class ReinforcementLearningRecommender<U,I>
     }
 
 
+    /**
+     * Updates the method.
+     * @param train training data.
+     */
     public void updateMethod(List<Tuple3<Integer,Integer,Double>> train)
     {
         train.forEach(tuple -> this.updateMethod(tuple.v1, tuple.v2, tuple.v3));
     }
 
+    /**
+     * Checks if the recommender uses all the received information, or only known data.
+     * @return true if the recommender uses all the received information, false otherwise
+     */
     public boolean usesAll()
     {
-        return this.ignoreUnknown;
+        return !this.ignoreUnknown;
     }
-    
 }

@@ -1,17 +1,16 @@
 /*
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
- * de Madrid, http://ir.ii.uam.es
- * 
+ * de Madrid, http://ir.ii.uam.es.
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
-package es.uam.eps.ir.knnbandit.recommendation.knn.users;
+package es.uam.eps.ir.knnbandit.recommendation.knn.user;
 
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
-import es.uam.eps.ir.knnbandit.recommendation.ReinforcementLearningRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.IncrementalRecommender;
 
 import es.uam.eps.ir.knnbandit.recommendation.knn.similarities.UpdateableSimilarity;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
@@ -31,7 +30,7 @@ import org.ranksys.core.util.tuples.Tuple2id;
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  */
-public abstract class AbstractIncrementalUserBasedKNN<U,I> extends ReinforcementLearningRecommender<U,I>
+public abstract class AbstractIncrementalUserBasedKNN<U,I> extends IncrementalRecommender<U,I>
 {
     /**
      * Updateable similarity
@@ -90,7 +89,7 @@ public abstract class AbstractIncrementalUserBasedKNN<U,I> extends Reinforcement
      * @param prefData preference data.
      * @param ignoreUnknown true if we must ignore unknown items when updating.
      * @param ignoreZeroes true if we ignore zero ratings when updating.
-     * @param notReciprocal true if we do not recommend reciprocal users, false otherwise
+     * @param notReciprocal true if we do not recommend reciprocal social links, false otherwise
      * @param k number of neighbors to use.
      * @param sim updateable similarity
      */

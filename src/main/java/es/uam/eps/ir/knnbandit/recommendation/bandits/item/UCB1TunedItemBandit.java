@@ -1,12 +1,11 @@
 /*
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
- * de Madrid, http://ir.ii.uam.es
- * 
+ * de Madrid, http://ir.ii.uam.es.
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 package es.uam.eps.ir.knnbandit.recommendation.bandits.item;
 
 import es.uam.eps.ir.knnbandit.recommendation.bandits.functions.ValueFunction;
@@ -33,7 +32,7 @@ public class UCB1TunedItemBandit<U,I> extends ItemBandit<U,I>
     /**
      * The number of times each item has been selected
      */
-    double[] numtimes;
+    double[] numTimes;
     /**
      * The number of iterations.
      */
@@ -51,12 +50,12 @@ public class UCB1TunedItemBandit<U,I> extends ItemBandit<U,I>
     {
         this.numItems = numItems;
         this.values = new double[numItems];
-        this.numtimes = new double[numItems];
+        this.numTimes = new double[numItems];
         this.variances = new double[numItems];
     }
     
     @Override
-    public int next(int uidx, int[] available, ValueFunction valf)
+    public int next(int uidx, int[] available, ValueFunction ValF)
     {
         if(available == null || available.length == 0)
             return -1;
@@ -71,14 +70,14 @@ public class UCB1TunedItemBandit<U,I> extends ItemBandit<U,I>
             for(int i : available)
             {
                 double val;
-                if(this.numtimes[i] == 0)
+                if(this.numTimes[i] == 0)
                 {
                     val = Double.POSITIVE_INFINITY;
                 }
                 else
                 {
-                    double ucb = this.variances[i] - values[i]*values[i] + Math.sqrt(2*Math.log(numIter+1)/(numtimes[i]));
-                    val = valf.apply(uidx, i,values[i] + Math.sqrt((Math.log(numIter+1)/numtimes[i]) * Math.min(0.25, ucb)), numtimes[i]);
+                    double ucb = this.variances[i] - values[i]*values[i] + Math.sqrt(2*Math.log(numIter+1)/(numTimes[i]));
+                    val = ValF.apply(uidx, i,values[i] + Math.sqrt((Math.log(numIter+1)/numTimes[i]) * Math.min(0.25, ucb)), numTimes[i]);
                 }
                 
                 if(val > max)
@@ -102,7 +101,7 @@ public class UCB1TunedItemBandit<U,I> extends ItemBandit<U,I>
     }
     
     @Override
-    public int next(int uidx, IntList available, ValueFunction valf)
+    public int next(int uidx, IntList available, ValueFunction ValF)
     {
         if(available == null || available.isEmpty())
             return -1;
@@ -117,14 +116,14 @@ public class UCB1TunedItemBandit<U,I> extends ItemBandit<U,I>
             for(int i : available)
             {
                 double val;
-                if(this.numtimes[i] == 0)
+                if(this.numTimes[i] == 0)
                 {
                     val = Double.POSITIVE_INFINITY;
                 }
                 else
                 {
-                    double ucb = this.variances[i] - values[i]*values[i] + Math.sqrt(2*Math.log(numIter+1)/(numtimes[i]));
-                    val = valf.apply(uidx, i,values[i] + Math.sqrt((Math.log(numIter+1)/numtimes[i]) * Math.min(0.25, ucb)), numtimes[i]);
+                    double ucb = this.variances[i] - values[i]*values[i] + Math.sqrt(2*Math.log(numIter+1)/(numTimes[i]));
+                    val = ValF.apply(uidx, i,values[i] + Math.sqrt((Math.log(numIter+1)/numTimes[i]) * Math.min(0.25, ucb)), numTimes[i]);
                 }
                 
                 if(val > max)
@@ -152,10 +151,10 @@ public class UCB1TunedItemBandit<U,I> extends ItemBandit<U,I>
     {
         double oldM = values[i];
         double oldS = variances[i];
-        numtimes[i]++;
+        numTimes[i]++;
         numIter++;
 
-        values[i] = oldM + (value - oldM)/(numtimes[i]);
+        values[i] = oldM + (value - oldM)/(numTimes[i]);
         variances[i] = oldS + (value - oldM)*(value - values[i]);
     }
     

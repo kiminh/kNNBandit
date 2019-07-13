@@ -1,12 +1,11 @@
 /*
- * Copyright (C) 2018 Information Retrieval Group at Universidad Autónoma
- * de Madrid, http://ir.ii.uam.es
- * 
+ * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
+ * de Madrid, http://ir.ii.uam.es.
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 package es.uam.eps.ir.knnbandit.metrics;
 
 import java.util.Optional;
@@ -16,12 +15,12 @@ import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
 
 
 /**
- * Incremental implementation of the global recall of the system.
+ * Cumulative implementation of the global recall of the system.
  * @author Javier Sanz-Cruzado Puig (javier.sanz-cruzado@uam.es)
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class IncrementalRecall<U,I> implements IncrementalRecommendationMetric<U,I>
+public class CumulativeRecall<U,I> implements CumulativeMetric<U,I>
 {
     /**
      * Number of relevant (user,item) pairs
@@ -46,7 +45,7 @@ public class IncrementalRecall<U,I> implements IncrementalRecommendationMetric<U
      * @param numRel number of relevant (user, item) pairs. 
      * @param threshold relevance threshold.
      */
-    public IncrementalRecall(SimpleFastPreferenceData<U,I> prefData, int numRel, double threshold)
+    public CumulativeRecall(SimpleFastPreferenceData<U,I> prefData, int numRel, double threshold)
     {
         this.prefData = prefData;
         this.numRel = numRel;

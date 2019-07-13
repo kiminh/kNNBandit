@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
  * de Madrid, http://ir.ii.uam.es
- * 
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -52,17 +52,17 @@ public class ThompsonSamplingItemBandit<U,I> extends ItemBandit<U,I>
     /**
      * Constructor.
      * @param numItems number of items.
-     * @param initialalphas the initial values for the alpha parameters of Beta distributions.
-     * @param initialbetas the initial values for the beta parameters of Beta distributions.
+     * @param initialAlphas the initial values for the alpha parameters of Beta distributions.
+     * @param initialBetas the initial values for the beta parameters of Beta distributions.
      */
-    public ThompsonSamplingItemBandit(int numItems, double[] initialalphas, double[] initialbetas)
+    public ThompsonSamplingItemBandit(int numItems, double[] initialAlphas, double[] initialBetas)
     {
         this.betas = new BetaDistribution[numItems];
-        for(int i = 0; i < numItems; ++i) betas[i] = new BetaDistribution(initialalphas[i], initialbetas[i]);
+        for(int i = 0; i < numItems; ++i) betas[i] = new BetaDistribution(initialAlphas[i], initialBetas[i]);
     }
     
     @Override
-    public int next(int uidx, int[] available, ValueFunction valf)
+    public int next(int uidx, int[] available, ValueFunction ValF)
     {
         if(available == null || available.length == 0)
             return -1;
@@ -74,7 +74,7 @@ public class ThompsonSamplingItemBandit<U,I> extends ItemBandit<U,I>
             IntList top = new IntArrayList();
             for(int i : available)
             {
-                double val = valf.apply(uidx, i, this.betas[i].sample(),0);
+                double val = ValF.apply(uidx, i, this.betas[i].sample(),0);
                 if(val > max)
                 {
                     max = val;
@@ -94,7 +94,7 @@ public class ThompsonSamplingItemBandit<U,I> extends ItemBandit<U,I>
     }
     
     @Override
-    public int next(int uidx, IntList available, ValueFunction valf)
+    public int next(int uidx, IntList available, ValueFunction ValF)
     {
         if(available == null || available.isEmpty())
             return -1;
@@ -106,7 +106,7 @@ public class ThompsonSamplingItemBandit<U,I> extends ItemBandit<U,I>
             IntList top = new IntArrayList();
             for(int i : available)
             {
-                double val = valf.apply(uidx, i, this.betas[i].sample(),0);
+                double val = ValF.apply(uidx, i, this.betas[i].sample(),0);
                 if(val > max)
                 {
                     max = val;

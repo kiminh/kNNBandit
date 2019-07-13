@@ -1,15 +1,12 @@
 /*
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
- * de Madrid, http://ir.ii.uam.es
- * 
+ * de Madrid, http://ir.ii.uam.es.
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 package es.uam.eps.ir.knnbandit.recommendation.bandits.functions;
-
-import it.unimi.dsi.fastutil.ints.Int2DoubleMap;
 
 /**
  * Functions that determine the value of arms.
@@ -24,9 +21,6 @@ public class ValueFunctions
      */
     public static ValueFunction identity()
     {
-        return (int uidx, int iidx, double currentValue, double numtimes) -> 
-        {
-            return currentValue;
-        };
+        return (int uidx, int iidx, double currentValue, double numTimes) -> currentValue;
     }
 }

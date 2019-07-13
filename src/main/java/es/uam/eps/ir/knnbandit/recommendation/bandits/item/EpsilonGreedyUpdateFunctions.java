@@ -1,12 +1,11 @@
 /*
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
- * de Madrid, http://ir.ii.uam.es
- * 
+ * de Madrid, http://ir.ii.uam.es.
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 package es.uam.eps.ir.knnbandit.recommendation.bandits.item;
 
 /**
@@ -23,10 +22,10 @@ public class EpsilonGreedyUpdateFunctions
      */
     public static EpsilonGreedyUpdateFunction stationary()
     {
-        return (double oldvalue, double reward, double oldsum, double increment, double numtimes) -> 
+        return (double oldValue, double reward, double oldSum, double increment, double numTimes) ->
         {
-            if(numtimes == 0) return reward;
-            else return oldvalue + (reward - oldvalue)/(numtimes + 0.0);
+            if(numTimes == 0) return reward;
+            else return oldValue + (reward - oldValue)/(numTimes + 0.0);
         };
     }
     
@@ -35,9 +34,9 @@ public class EpsilonGreedyUpdateFunctions
      * @param alpha the weight of the new value compared with the old (1-alpha)
      * @return the Epsilon-Greedy update function for non-stationary rewards.
      */
-    public static EpsilonGreedyUpdateFunction nonstationary(double alpha)
+    public static EpsilonGreedyUpdateFunction nonStationary(double alpha)
     {
-        return (double oldvalue, double reward, double oldsum, double increment, double numtimes) -> oldvalue + alpha*(reward-oldvalue);
+        return (double oldValue, double reward, double oldSum, double increment, double numTimes) -> oldValue + alpha*(reward-oldValue);
     }
     
     /**
@@ -46,7 +45,7 @@ public class EpsilonGreedyUpdateFunctions
      */
     public static EpsilonGreedyUpdateFunction useall()
     {
-        return (double oldvalue, double reward, double oldsum, double increment, double numtimes) -> (oldvalue*oldsum + reward)/(oldsum + increment);
+        return (double oldValue, double reward, double oldSum, double increment, double numTimes) -> (oldValue*oldSum + reward)/(oldSum + increment);
     }
     
     /**
@@ -55,7 +54,7 @@ public class EpsilonGreedyUpdateFunctions
      */
     public static EpsilonGreedyUpdateFunction count()
     {
-        return (double oldvalue, double reward, double oldsum, double increment, double numtimes) -> (oldvalue + reward);
+        return (double oldValue, double reward, double oldSum, double increment, double numTimes) -> (oldValue + reward);
     }
     
 }

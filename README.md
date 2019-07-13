@@ -75,7 +75,7 @@ For reproducing the exact experiments of the paper, program arguments are:
 
 ### Contact recommendation
 ```
-java -jar knnbandit-jar-with-dependencies.jar contactrec algorithmsFile dataFile outputFolder numIter directed recover notReciprocal
+java -jar knnbandit-jar-with-dependencies.jar contactRec algorithmsFile dataFile outputFolder numIter directed recover notReciprocal
 ```
 where
   - `algorithmsFile`: A file indicating which algorithms have to be executed

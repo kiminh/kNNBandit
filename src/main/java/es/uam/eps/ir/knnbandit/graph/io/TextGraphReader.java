@@ -1,7 +1,7 @@
-/* 
- *  Copyright (C) 2015 Information Retrieval Group at Universidad AutÃ³noma
- *  de Madrid, http://ir.ii.uam.es
- * 
+/*
+ * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
+ * de Madrid, http://ir.ii.uam.es.
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -36,15 +36,12 @@ import org.ranksys.formats.parsing.Parsers;
  * Every column appart from that ones will be ignored at loading
  * the graph. Columns are separated by a certain delimiter. By defect, this delimiter
  * is a tab space.
- * @author Javier Sanz-Cruzado Puig.
+ * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
+ * @author Pablo Castells (pablo.castells@uam.es)
  * @param <U> The type of the user nodes.
  */
 public class TextGraphReader<U> implements GraphReader<U>
 {
-    /**
-     * Indicates if the graph to read is a multigraph (true) or not (false)
-     */
-    private final boolean multigraph;
     /**
      * Indicates if the graph to read is directed (true) or not (false)
      */
@@ -68,16 +65,14 @@ public class TextGraphReader<U> implements GraphReader<U>
     
     /**
      * Constructor
-     * @param multigraph Indicates if the graph to read is a multigraph (true) or not (false)
      * @param directed Indicates if the graph to read is directed (true) or not (false)
      * @param weighted Indicates if the graph to read is weighted (true) or not (false)
      * @param selfloops Indicates if the graph to read allows autoloops (true) or not (false)
      * @param delimiter File delimiter
      * @param uParser Parser for reading the users
      */
-    public TextGraphReader(boolean multigraph, boolean directed, boolean weighted, boolean selfloops, String delimiter, Parser<U> uParser)
+    public TextGraphReader(boolean directed, boolean weighted, boolean selfloops, String delimiter, Parser<U> uParser)
     {
-        this.multigraph = multigraph;
         this.directed = directed;
         this.weighted = weighted;
         this.selfloops = selfloops;

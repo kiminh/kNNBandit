@@ -1,35 +1,27 @@
 /*
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
- * de Madrid, http://ir.ii.uam.es
- * 
+ * de Madrid, http://ir.ii.uam.es.
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 package es.uam.eps.ir.knnbandit;
 
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.SimpleFastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.SimpleFastUpdateableUserIndex;
-import es.uam.eps.ir.knnbandit.grid.BanditGrid;
-import es.uam.eps.ir.knnbandit.grid.UnconfiguredException;
-import es.uam.eps.ir.knnbandit.metrics.IncrementalGini;
-import es.uam.eps.ir.knnbandit.metrics.IncrementalRecall;
-import es.uam.eps.ir.knnbandit.metrics.IncrementalRecommendationMetric;
-import es.uam.eps.ir.knnbandit.recommendation.ReinforcementLearningRecommender;
+import es.uam.eps.ir.knnbandit.selector.AlgorithmSelector;
+import es.uam.eps.ir.knnbandit.selector.UnconfiguredException;
+import es.uam.eps.ir.knnbandit.metrics.CumulativeGini;
+import es.uam.eps.ir.knnbandit.metrics.CumulativeRecall;
+import es.uam.eps.ir.knnbandit.metrics.CumulativeMetric;
+import es.uam.eps.ir.knnbandit.recommendation.RecommendationLoop;
+import es.uam.eps.ir.knnbandit.recommendation.IncrementalRecommender;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntList;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,7 +34,8 @@ import java.util.function.DoubleUnaryOperator;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
+
+import org.jooq.lambda.tuple.Tuple2;
 import org.jooq.lambda.tuple.Tuple3;
 import org.ranksys.formats.parsing.Parsers;
 
@@ -50,7 +43,7 @@ import org.ranksys.formats.parsing.Parsers;
  * Class for executing reinforcement learning algorithms.
  * @author Javier Sanz-Cruzado Puig (javier.sanz-cruzado@uam.es)
  */
-public class ReinforcementLearningRecommendation
+public class IncrementalRecommendation
 {
     /**
      * Executes reinforcement learning algorithms in general recommendation.
@@ -76,9 +69,9 @@ public class ReinforcementLearningRecommendation
             System.err.println("\tAlgorithms: Reinforcement learning algorithms list");
             System.err.println("\tInput: Preference data input");
             System.err.println("\tOutput: Folder in which to store the output");
-            System.err.println("\tNum. Iter.: Number of iterations. 0 if we want to apply it until the end");
+            System.err.println("\tNum. Iter.: Number of iterations. 0 if we want to run until we run out of recommendable items");
             System.err.println("\tThreshold: relevance threshold");
-            System.err.println("\tRecover: true if we want to recover data from previous executions, false if we want to overwrite");
+            System.err.println("\tRecover: true if we want to resume from previous executions, false if we want to overwrite");
             System.err.println("\tUse ratings: true if we want to take the true value of the ratings, false if we want to use binary values");
             return;
         }
@@ -88,10 +81,9 @@ public class ReinforcementLearningRecommendation
         String algorithms = args[0];
         String input = args[1];
         String output = args[2];
-        int auxIter = Parsers.ip.parse(args[3]);
+        int numIter = Parsers.ip.parse(args[3]);
         double threshold = Parsers.dp.parse(args[4]);
         boolean recover = args[5].equalsIgnoreCase("true");
-        int numIter = (auxIter == 0) ? Integer.MAX_VALUE : auxIter;
         boolean useRatings = args[6].equalsIgnoreCase("true");
 
         DoubleUnaryOperator weightFunction = useRatings ? (double x) -> x :
@@ -165,37 +157,36 @@ public class ReinforcementLearningRecommendation
         int numRel = numrel;
 
         // Initialize the metrics to compute.
-        Map<String, Supplier<IncrementalRecommendationMetric<Long,Long>>> metrics = new HashMap<>();
-        metrics.put("recall", () -> new IncrementalRecall(prefData, numRel, 0.5));
-        metrics.put("gini", () -> new IncrementalGini(items.size()));
+        Map<String, Supplier<CumulativeMetric<Long,Long>>> metrics = new HashMap<>();
+        metrics.put("recall", () -> new CumulativeRecall(prefData, numRel, 0.5));
+        metrics.put("gini", () -> new CumulativeGini(items.size()));
         List<String> metricNames = new ArrayList<>(metrics.keySet());
 
         // Select the algorithms
         long a = System.currentTimeMillis();
-        BanditGrid<Long, Long> banditgrid = new BanditGrid<>();
-        banditgrid.configure(uIndex, iIndex, prefData, useRatings ? threshold : 0.5);
-        banditgrid.addFile(algorithms);        
-        Map<String, ReinforcementLearningRecommender<Long,Long>> recs = banditgrid.getRecs();
+        AlgorithmSelector<Long, Long> algorithmSelector = new AlgorithmSelector<>();
+        algorithmSelector.configure(uIndex, iIndex, prefData, useRatings ? threshold : 0.5);
+        algorithmSelector.addFile(algorithms);
+        Map<String, IncrementalRecommender<Long,Long>> recs = algorithmSelector.getRecs();
         long b = System.currentTimeMillis();
         
         System.out.println("Recommenders prepared (" + (b-a) + " ms.)");
         recs.entrySet().parallelStream().forEach(re -> 
         {
-            Random rng = new Random(0);
+            IncrementalRecommender<Long,Long> rec = re.getValue();
+            Map<String, CumulativeMetric<Long,Long>> localMetrics = new HashMap<>();
+            metricNames.forEach(name -> localMetrics.put(name, metrics.get(name).get()));
+            RecommendationLoop<Long, Long> loop = new RecommendationLoop<>(uIndex, iIndex, rec, localMetrics, numIter,0);
 
-            IntList userList = uIndex.getAllUidx().boxed().collect(Collectors.toCollection(IntArrayList::new));
-            int numUsers = uIndex.numUsers();
-            
-            ReinforcementLearningRecommender<Long,Long> rec = re.getValue();
-            String filename = output + re.getKey() + ".txt";
-            
-            List<Tuple3<Integer,Integer,Long>> list = new ArrayList<>();
+            List<Tuple3<Long,Long,Long>> list = new ArrayList<>();
+            String fileName = output + re.getKey() + ".txt";
+
             if(recover)
             {
-                File f = new File(filename);
+                File f = new File(fileName);
                 if(f.exists()) // if the file exists, then recover:
                 {
-                    try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename))))
+                    try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName))))
                     {
                         String line = br.readLine();
                         int len;
@@ -203,117 +194,82 @@ public class ReinforcementLearningRecommendation
                         {
                             String[] split = line.split("\t");
                             len = split.length;
-                            
+
                             while((line = br.readLine()) != null)
                             {
                                 split = line.split("\t");
                                 if(split.length < len) break;
 
-                                int uidx = Parsers.ip.parse(split[1]);
-                                int iidx = Parsers.ip.parse(split[2]);
+                                long u = Parsers.lp.parse(split[1]);
+                                long i = Parsers.lp.parse(split[2]);
                                 long time = Parsers.lp.parse(split[len-1]);
-                                list.add(new Tuple3<>(uidx, iidx, time));
+                                list.add(new Tuple3<>(u, i, time));
                             }
-                        }                       
+                        }
                     }
                     catch (IOException ex)
                     {
-                        Logger.getLogger(ReinforcementLearningRecommendation.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(IncrementalRecommendation.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
-            
+
             try(BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output + re.getKey() + ".txt"))))
             {
-                double val = 0.0;
-                int i = 0;
-                
-                Map<String, IncrementalRecommendationMetric> localMetrics = new HashMap<>();
-                
-                
-                bw.write("iter\tuser\titem");
-                for(String name : metricNames)
-                {
-                    bw.write("\t" + name);
-                    localMetrics.put(name, metrics.get(name).get());
-                }
-                bw.write("\ttime\n");
-                
                 if(recover && !list.isEmpty())
                 {
-                    long timea = System.currentTimeMillis();
-
-                    int j = 0;
-                    for(Tuple3<Integer,Integer, Long> tuple : list)
+                    for(Tuple3<Long,Long,Long> triplet : list)
                     {
-                        int uidx = tuple.v1;
-                        int iidx = tuple.v2;
-                        long time = tuple.v3;
-                        
-                        bw.write(j + "\t" + uidx + "\t" + iidx);
+                        StringBuilder builder = new StringBuilder();
+                        loop.update(new Tuple2<>(triplet.v1, triplet.v2));
+                        int iter = loop.getCurrentIteration();
+                        builder.append(iter);
+                        builder.append("\t");
+                        builder.append(triplet.v1);
+                        builder.append("\t");
+                        builder.append(triplet.v2);
+                        Map<String, Double> metricVals = loop.getMetrics();
                         for(String name : metricNames)
                         {
-                            IncrementalRecommendationMetric metric = localMetrics.get(name);
-                            metric.update(uidx, iidx);
-                            bw.write("\t" + metric.compute());
+                            builder.append("\t");
+                            builder.append(metricVals.get(name));
                         }
-                        rec.update(uidx, iidx);
-                        
-                        bw.write("\t" + time + "\n");
-                        
-                        ++j;
-                        if(j % 1000 == 0)
-                        {
-                            long timeb = System.currentTimeMillis();
-                            System.out.println(re.getKey() + ": recovered " + j + " iterations (" + (timeb-timea) + " ms.)");
-                            bw.flush();
-                        }
+                        builder.append("\t");
+                        builder.append(triplet.v3);
+                        builder.append("\n");
+                        bw.write(builder.toString());
                     }
-                    i = j;
                 }
-                
-                
-                long longtimea = System.currentTimeMillis();
-                while(i < numIter && numUsers > 0)
+
+                while(!loop.hasEnded())
                 {
-                    int index = rng.nextInt(numUsers);
-                    int uidx = userList.get(index);
-                    long timea = System.currentTimeMillis();
-                    int nextitem = rec.next(uidx);
-                    if(nextitem == -1)
-                    {
-                        userList.removeInt(index);
-                        numUsers--;
-                        continue;
-                    }
-                    
-                    rec.update(uidx, nextitem);
-                    long timeb = System.currentTimeMillis();
-                    
-                    bw.write(i + "\t" + uidx + "\t" + nextitem);
+                    StringBuilder builder = new StringBuilder();
+                    long aa = System.currentTimeMillis();
+                    Tuple2<Long,Long> tuple = loop.nextIteration();
+                    long bb = System.currentTimeMillis();
+                    if(tuple == null) break; // The loop has finished
+                    int iter = loop.getCurrentIteration();
+                    builder.append(iter);
+                    builder.append("\t");
+                    builder.append(tuple.v1);
+                    builder.append("\t");
+                    builder.append(tuple.v2);
+                    Map<String, Double> metricVals = loop.getMetrics();
                     for(String name : metricNames)
                     {
-                        IncrementalRecommendationMetric metric = localMetrics.get(name);
-                        metric.update(uidx, nextitem);
-                        bw.write("\t" + metric.compute());
+                        builder.append("\t");
+                        builder.append(metricVals.get(name));
                     }
-                   
-                    bw.write("\t" + (timeb-timea) + "\n");
-                    ++i;
-                    if(i % 1000 == 0)
-                    {
-                        long longtimeb = System.currentTimeMillis();
-                        bw.flush();
-                        System.out.println(re.getKey() + ": iteration " + i + " finished (" + (longtimeb - longtimea) + " ms.)");
-                        longtimea = System.currentTimeMillis();
-                    }
+                    builder.append("\t");
+                    builder.append((bb-aa));
+                    builder.append("\n");
+                    bw.write(builder.toString());
                 }
             }
-            catch (IOException ex)
+            catch (IOException e)
             {
-                System.err.println("Something failed while writing file for " + re.getKey());
+                e.printStackTrace();
             }
         });
-        
     }
 }

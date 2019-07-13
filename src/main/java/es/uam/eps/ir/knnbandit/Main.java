@@ -1,6 +1,6 @@
 /*
- *  Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
- *  de Madrid, http://ir.ii.uam.es
+ * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
+ * de Madrid, http://ir.ii.uam.es.
  *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12,7 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 /**
- * Class for applying the main methods to the executions.
+ * Main class for running experiments.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  */
@@ -29,10 +29,10 @@ public class Main
 
     /**
      * Main method. Executes the main method in the class specified by the first
-     * argument with the rest of execution arguments.
+     * argument with the rest of run time arguments.
      *
-     * @param args Arguments to select the class whose main method's execute and
-     * arguments to execute it.
+     * @param args Arguments to select the class to run and arguments for its main method
+     *
      */
     public static void main(String[] args)
     {
@@ -43,10 +43,10 @@ public class Main
             switch(main)
             {
                 case GENERAL:
-                    className = "es.uam.eps.ir.knnbandit.ReinforcementLearningRecommendation";
+                    className = "es.uam.eps.ir.knnbandit.IncrementalRecommendation";
                     break;
                 case CONTACT:
-                    className = "es.uam.eps.ir.knnbandit.ReinforcementLearningContactRecommendation";
+                    className = "es.uam.eps.ir.knnbandit.IncrementalContactRecommendation";
                     break;
                 default:
                     System.err.println("ERROR: Invalid configuration.");
@@ -60,7 +60,7 @@ public class Main
         }
         catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex)
         {
-            System.err.println("The execution arguments were not right");
+            System.err.println("The run time arguments were not right");
             ex.printStackTrace();
         }
     }

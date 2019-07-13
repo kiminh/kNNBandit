@@ -1,12 +1,11 @@
 /*
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
- * de Madrid, http://ir.ii.uam.es
- * 
+ * de Madrid, http://ir.ii.uam.es.
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 package es.uam.eps.ir.knnbandit.recommendation.bandits.item;
 
 import es.uam.eps.ir.knnbandit.recommendation.bandits.functions.ValueFunction;
@@ -34,11 +33,11 @@ public class EpsilonGreedyItemBandit<U,I> extends ItemBandit<U,I>
     /**
      * Number of times a bandit has been selected.
      */
-    double[] numtimes;
+    double[] numTimes;
     /**
      * The sum of the values.
      */
-    double sumvalues;
+    double sumValues;
     /**
      * The number of items.
      */
@@ -51,27 +50,27 @@ public class EpsilonGreedyItemBandit<U,I> extends ItemBandit<U,I>
     /**
      * Epsilon greedy update function.
      */
-    private final EpsilonGreedyUpdateFunction updatefunct;
+    private final EpsilonGreedyUpdateFunction updateFunction;
     
     /**
      * Constructor.
      * @param epsilon exploration probability. 
      * @param numItems number of items in the collection (number of arms in the bandit).
-     * @param updatefunct an update function.
+     * @param updateFunction an update function.
      */
-    public EpsilonGreedyItemBandit(double epsilon, int numItems, EpsilonGreedyUpdateFunction updatefunct)
+    public EpsilonGreedyItemBandit(double epsilon, int numItems, EpsilonGreedyUpdateFunction updateFunction)
     {
         super();
         this.epsilon = epsilon;
         this.numItems = numItems;
-        this.sumvalues = 0.0;
+        this.sumValues = 0.0;
         this.values = new double[numItems];
-        this.numtimes = new double[numItems];
-        this.updatefunct = updatefunct;
+        this.numTimes = new double[numItems];
+        this.updateFunction = updateFunction;
     }
     
     @Override
-    public int next(int uidx, int[] available, ValueFunction valf)
+    public int next(int uidx, int[] available, ValueFunction ValF)
     {
         if(available == null || available.length == 0)
             return -1;
@@ -93,7 +92,7 @@ public class EpsilonGreedyItemBandit<U,I> extends ItemBandit<U,I>
                 
                 for(int i : available)
                 {
-                    double val = valf.apply(uidx, i, values[i], numtimes[i]);
+                    double val = ValF.apply(uidx, i, values[i], numTimes[i]);
                     if(val > max)
                     {
                         max = val;
@@ -123,7 +122,7 @@ public class EpsilonGreedyItemBandit<U,I> extends ItemBandit<U,I>
     }
     
     @Override
-    public int next(int uidx, IntList available, ValueFunction valf)
+    public int next(int uidx, IntList available, ValueFunction ValF)
     {
         if(available == null || available.isEmpty())
             return -1;
@@ -146,7 +145,7 @@ public class EpsilonGreedyItemBandit<U,I> extends ItemBandit<U,I>
                 
                 for(int i : available)
                 {
-                    double val = valf.apply(uidx, i, values[i], numtimes[i]);
+                    double val = ValF.apply(uidx, i, values[i], numTimes[i]);
                     if(val > max)
                     {
                         max = val;
@@ -178,14 +177,14 @@ public class EpsilonGreedyItemBandit<U,I> extends ItemBandit<U,I>
     @Override
     public void update(int i, double value)
     {
-        double oldsum = this.sumvalues;
+        double oldSum = this.sumValues;
         double increment = value;
-        double nTimes = this.numtimes[i]+1;
-        double oldval = this.values[i];
+        double nTimes = this.numTimes[i]+1;
+        double oldVal = this.values[i];
      
-        numtimes[i]++;
-        double newval = this.updatefunct.apply(oldval, value, oldsum, increment, nTimes);
-        this.values[i] = newval;
-        this.sumvalues += (newval - oldval);
+        numTimes[i]++;
+        double newVal = this.updateFunction.apply(oldVal, value, oldSum, increment, nTimes);
+        this.values[i] = newVal;
+        this.sumValues += (newVal - oldVal);
     }
 }

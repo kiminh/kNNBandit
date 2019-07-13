@@ -1,7 +1,7 @@
-/* 
- *  Copyright (C) 2015 Information Retrieval Group at Universidad AutÃ³noma
- *  de Madrid, http://ir.ii.uam.es
- * 
+/*
+ * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
+ * de Madrid, http://ir.ii.uam.es.
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -10,13 +10,14 @@ package es.uam.eps.ir.knnbandit.graph.generator;
 
 /**
  * Exception for bad configured generators.
- * @author Javier Sanz-Cruzado Puig
+ * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
+ * @author Pablo Castells (pablo.castells@uam.es)
  */
 public class GeneratorBadConfiguredException extends Exception
 {
     /**
-     * Constructs a TwitterCollectorException with the given detail message.
-     * @param message The detail message of the TwitterCollectorException.
+     * Constructs a GeneratorBadConfiguredException with the given detail message.
+     * @param message The detail message of the GeneratorBadConfiguredException.
      */
     public GeneratorBadConfiguredException(String message) 
     {
@@ -24,8 +25,8 @@ public class GeneratorBadConfiguredException extends Exception
     }
 
     /**
-     * Constructs a TwitterCollectorException with the given root cause.
-     * @param cause The root cause of the TwitterCollectorException.
+     * Constructs a GeneratorBadConfiguredException with the given root cause.
+     * @param cause The root cause of the GeneratorBadConfiguredException.
      */
     public GeneratorBadConfiguredException(Throwable cause) 
     {
@@ -33,9 +34,9 @@ public class GeneratorBadConfiguredException extends Exception
     }
 
     /**
-     * Constructs a TwitterCollectorException with the given detail message and root cause.
-     * @param message The detail message of the TwitterCollectorException.
-     * @param cause The root cause of the TwitterCollectorException.
+     * Constructs a GeneratorBadConfiguredException with the given detail message and root cause.
+     * @param message The detail message of the GeneratorBadConfiguredException.
+     * @param cause The root cause of the GeneratorBadConfiguredException.
      */
     public GeneratorBadConfiguredException(String message, Throwable cause) 
     {

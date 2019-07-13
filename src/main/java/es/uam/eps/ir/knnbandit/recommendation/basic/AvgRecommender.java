@@ -24,12 +24,12 @@ import org.jooq.lambda.tuple.Tuple3;
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class AvgRecommender<U,I> extends AbstractBasicReinforcementLearningRecommender<U,I> 
+public class AvgRecommender<U,I> extends AbstractBasicIncrementalRecommender<U,I>
 {  
     /**
      * Number of times a bandit has been selected.
      */
-    private double[] numtimes;
+    private double[] numTimes;
    
     /**
      * Constructor.
@@ -41,8 +41,8 @@ public class AvgRecommender<U,I> extends AbstractBasicReinforcementLearningRecom
     public AvgRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown);
-        this.numtimes = new double[prefData.numItems()];
-        IntStream.range(0, prefData.numItems()).forEach(iidx -> this.numtimes[iidx] =0);
+        this.numTimes = new double[prefData.numItems()];
+        IntStream.range(0, prefData.numItems()).forEach(iidx -> this.numTimes[iidx] =0);
     }
     
     /**
@@ -51,24 +51,24 @@ public class AvgRecommender<U,I> extends AbstractBasicReinforcementLearningRecom
      * @param iIndex item index.
      * @param prefData preference data.
      * @param ignoreUnknown true if (user, item) pairs without training must be ignored
-     * @param notReciprocal true if we do not recommend reciprocal users, false otherwise
+     * @param notReciprocal true if we do not recommend reciprocal social links, false otherwise
      */
     public AvgRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown, boolean notReciprocal)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal);
-        this.numtimes = new double[prefData.numItems()];
-        IntStream.range(0, prefData.numItems()).forEach(iidx -> this.numtimes[iidx] =0);
+        this.numTimes = new double[prefData.numItems()];
+        IntStream.range(0, prefData.numItems()).forEach(iidx -> this.numTimes[iidx] =0);
     }
     
     @Override
     public void updateMethod(int uidx, int iidx, double value)
     {
-        double oldvalue = values[iidx];
-        if(numtimes[iidx] <= 0.0)
+        double oldValue = values[iidx];
+        if(numTimes[iidx] <= 0.0)
             this.values[iidx] = value;
         else
-            this.values[iidx] = oldvalue + (value-oldvalue)/(numtimes[iidx]+1.0);
-        this.numtimes[iidx]++;
+            this.values[iidx] = oldValue + (value-oldValue)/(numTimes[iidx]+1.0);
+        this.numTimes[iidx]++;
     }
     
     @Override
@@ -77,8 +77,8 @@ public class AvgRecommender<U,I> extends AbstractBasicReinforcementLearningRecom
         for(int i = 0; i < this.prefData.numItems();++i)
         {
             this.values[i] = this.prefData.getIidxPreferences(i).mapToDouble(v -> v.v2).sum();
-            this.numtimes[i] = this.prefData.numUsers(i);
-            if(this.numtimes[i] > 0) this.values[i]/=(this.numtimes[i] + 0.0);
+            this.numTimes[i] = this.prefData.numUsers(i);
+            if(this.numTimes[i] > 0) this.values[i]/=(this.numTimes[i] + 0.0);
         }
     }
 }

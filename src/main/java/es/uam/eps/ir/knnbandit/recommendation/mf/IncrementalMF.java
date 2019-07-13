@@ -12,7 +12,7 @@ package es.uam.eps.ir.knnbandit.recommendation.mf;
 import cern.colt.matrix.DoubleMatrix1D;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
-import es.uam.eps.ir.knnbandit.recommendation.ReinforcementLearningRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.IncrementalRecommender;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
 import es.uam.eps.ir.ranksys.mf.Factorization;
 import es.uam.eps.ir.ranksys.mf.Factorizer;
@@ -32,7 +32,7 @@ import org.jooq.lambda.tuple.Tuple3;
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class IncrementalMF<U,I> extends ReinforcementLearningRecommender<U,I>
+public class IncrementalMF<U,I> extends IncrementalRecommender<U,I>
 {
     /**
      * Element for obtaining the factorized matrices.

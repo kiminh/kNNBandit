@@ -12,7 +12,7 @@ package es.uam.eps.ir.knnbandit.recommendation.basic;
 import es.uam.eps.ir.knnbandit.UntieRandomNumber;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
-import es.uam.eps.ir.knnbandit.recommendation.ReinforcementLearningRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.IncrementalRecommender;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
 import it.unimi.dsi.fastutil.ints.IntList;
 import java.util.Random;
@@ -25,7 +25,7 @@ import java.util.Random;
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class RandomRecommender<U,I> extends ReinforcementLearningRecommender<U,I>
+public class RandomRecommender<U,I> extends IncrementalRecommender<U,I>
 {
     /**
      * Random number generator.
@@ -50,7 +50,7 @@ public class RandomRecommender<U,I> extends ReinforcementLearningRecommender<U,I
      * @param iIndex item index.
      * @param prefData preference data.
      * @param ignoreUnknown true if we want to ignore missing ratings at updating, false if we want to treat them as failures.
-     * @param notReciprocal true if we do not recommend reciprocal users, false otherwise
+     * @param notReciprocal true if we do not recommend reciprocal social links, false otherwise
      */
     public RandomRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown, boolean notReciprocal)
     {

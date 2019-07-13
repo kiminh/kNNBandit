@@ -23,7 +23,7 @@ import org.jooq.lambda.tuple.Tuple3;
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class PopRecommender<U,I> extends AbstractBasicReinforcementLearningRecommender<U,I>
+public class PopRecommender<U,I> extends AbstractBasicIncrementalRecommender<U,I>
 {
     /**
      * Relevance threshold. 
@@ -51,7 +51,7 @@ public class PopRecommender<U,I> extends AbstractBasicReinforcementLearningRecom
      * @param prefData preference data.
      * @param ignoreUnknown true if we must ignore unknown items when updating.
      * @param threshold relevance threshold
-     * @param notReciprocal true if we do not recommend reciprocal users, false otherwise
+     * @param notReciprocal true if we do not recommend reciprocal social links, false otherwise
      */
     public PopRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown, double threshold, boolean notReciprocal)
     {

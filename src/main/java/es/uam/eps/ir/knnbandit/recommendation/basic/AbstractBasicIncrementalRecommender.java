@@ -11,7 +11,7 @@ package es.uam.eps.ir.knnbandit.recommendation.basic;
 
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
-import es.uam.eps.ir.knnbandit.recommendation.ReinforcementLearningRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.IncrementalRecommender;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public abstract class AbstractBasicReinforcementLearningRecommender<U,I> extends ReinforcementLearningRecommender<U,I>
+public abstract class AbstractBasicIncrementalRecommender<U,I> extends IncrementalRecommender<U,I>
 {
     /**
      * Values of each item
@@ -38,7 +38,7 @@ public abstract class AbstractBasicReinforcementLearningRecommender<U,I> extends
      * @param prefData preference data.
      * @param ignoreUnknown true if (user, item) pairs without training must be ignored.
      */
-    public AbstractBasicReinforcementLearningRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown)
+    public AbstractBasicIncrementalRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown);
         this.values = new double[prefData.numItems()];
@@ -51,9 +51,9 @@ public abstract class AbstractBasicReinforcementLearningRecommender<U,I> extends
      * @param iIndex item index.
      * @param prefData preference data.
      * @param ignoreUnknown true if (user, item) pairs without training must be ignored.
-     * @param notReciprocal true if we do not recommend reciprocal users, false otherwise.
+     * @param notReciprocal true if we do not recommend reciprocal social links, false otherwise.
      */
-    public AbstractBasicReinforcementLearningRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean notReciprocal)
+    public AbstractBasicIncrementalRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean notReciprocal)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal);
         this.values = new double[prefData.numItems()];

@@ -10,19 +10,19 @@ package es.uam.eps.ir.knnbandit.recommendation.bandits;
 
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
-import es.uam.eps.ir.knnbandit.recommendation.ReinforcementLearningRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.IncrementalRecommender;
 import es.uam.eps.ir.knnbandit.recommendation.bandits.functions.ValueFunction;
 import es.uam.eps.ir.knnbandit.recommendation.bandits.item.ItemBandit;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
 
 /**
- * Simple not-personalized multiarmed bandit recommender.
+ * Simple non-personalized multiarmed bandit recommender.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class SimpleBanditRecommender<U,I> extends ReinforcementLearningRecommender<U,I>
+public class ItemBanditRecommender<U,I> extends IncrementalRecommender<U,I>
 {
     /**
      * Implementation of an item bandit.
@@ -31,7 +31,7 @@ public class SimpleBanditRecommender<U,I> extends ReinforcementLearningRecommend
     /**
      * Function for evaluating the value.
      */
-    private final ValueFunction valFunc;
+    private final ValueFunction ValFunc;
     
     /**
      * Constructor.
@@ -40,13 +40,13 @@ public class SimpleBanditRecommender<U,I> extends ReinforcementLearningRecommend
      * @param prefData preference data.
      * @param ignoreUnknown true if we want to ignore missing ratings when updating, false if we want to count them as failures.
      * @param itemBandit an item bandit.
-     * @param valFunc a value function of the reward.
+     * @param ValFunc a value function of the reward.
      */
-    public SimpleBanditRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, ItemBandit<U,I> itemBandit, ValueFunction valFunc)
+    public ItemBanditRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, ItemBandit<U,I> itemBandit, ValueFunction ValFunc)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown);
         this.itemBandit = itemBandit;
-        this.valFunc = valFunc;
+        this.ValFunc = ValFunc;
     }
     
     /**
@@ -56,19 +56,19 @@ public class SimpleBanditRecommender<U,I> extends ReinforcementLearningRecommend
      * @param prefData preference data.
      * @param ignoreUnknown true if we want to ignore missing ratings when updating, false if we want to count them as failures.
      * @param itemBandit an item bandit.
-     * @param valFunc a value function of the reward.
+     * @param ValFunc a value function of the reward.
      */
-    public SimpleBanditRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean notReciprocal, ItemBandit<U,I> itemBandit, ValueFunction valFunc)
+    public ItemBanditRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean notReciprocal, ItemBandit<U,I> itemBandit, ValueFunction ValFunc)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal);
         this.itemBandit = itemBandit;
-        this.valFunc = valFunc;
+        this.ValFunc = ValFunc;
     }
     
     @Override
     public int next(int uidx)
     {
-        int iidx = this.itemBandit.next(uidx, availability.get(uidx).toIntArray(), valFunc);
+        int iidx = this.itemBandit.next(uidx, availability.get(uidx).toIntArray(), ValFunc);
         return iidx;
     }
 

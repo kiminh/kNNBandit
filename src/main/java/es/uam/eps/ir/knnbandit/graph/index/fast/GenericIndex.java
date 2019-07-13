@@ -1,7 +1,7 @@
-/* 
- *  Copyright (C) 2015 Information Retrieval Group at Universidad AutÃ³noma
- *  de Madrid, http://ir.ii.uam.es
- * 
+/*
+ * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
+ * de Madrid, http://ir.ii.uam.es.
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -18,8 +18,9 @@ import java.util.stream.Stream;
 /**
  * Bi-map-like structure to back fast version of indexes. It keeps to maps: id-to-index and index-to-id.
  * Value of indexes go from 0 (included) to the number of elements (excluded).
- * @author Javier Sanz-Cruzado Puig
- * @author Saúl Vargas
+ * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
+ * @author Pablo Castells (pablo.castells@uam.es)
+ * @author Saúl Vargas (saul.vargas@uam.es)
  * @param <T> type of the element
  */
 public class GenericIndex<T> implements Serializable 
