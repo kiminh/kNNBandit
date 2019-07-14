@@ -102,9 +102,10 @@ public interface DirectedGraph<V> extends Graph<V>
      * @param node The node.
      * @return the in-degree of the node.
      */
+    @Override
     public default int inDegree(V node)
     {
-        return this.containsVertex(node) ? this.getIncidentEdgesCount(node) : 0;
+        return this.containsVertex(node) ? this.getIncidentEdgesCount(node) : -1;
     }
     
     /**
@@ -112,14 +113,16 @@ public interface DirectedGraph<V> extends Graph<V>
      * @param node The node.
      * @return the out-degree of the node.
      */
+    @Override
     public default int outDegree(V node)
     {
-        return this.containsVertex(node) ? this.getAdjacentEdgesCount(node) : 0;
+        return this.containsVertex(node) ? this.getAdjacentEdgesCount(node) : -1;
     }
      
     @Override
     public default int degree(V node, EdgeOrientation orientation)
     {
+        if(!this.containsVertex(node)) return -1;
         switch (orientation) {
             case IN:
                 return this.inDegree(node);

@@ -11,7 +11,7 @@ package es.uam.eps.ir.knnbandit.recommendation.basic;
 
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
-import es.uam.eps.ir.knnbandit.recommendation.IncrementalRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.InteractiveRecommender;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public abstract class AbstractBasicIncrementalRecommender<U,I> extends IncrementalRecommender<U,I>
+public abstract class AbstractBasicInteractiveRecommender<U,I> extends InteractiveRecommender<U,I>
 {
     /**
      * Values of each item
@@ -38,7 +38,7 @@ public abstract class AbstractBasicIncrementalRecommender<U,I> extends Increment
      * @param prefData preference data.
      * @param ignoreUnknown true if (user, item) pairs without training must be ignored.
      */
-    public AbstractBasicIncrementalRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown)
+    public AbstractBasicInteractiveRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown);
         this.values = new double[prefData.numItems()];
@@ -53,7 +53,7 @@ public abstract class AbstractBasicIncrementalRecommender<U,I> extends Increment
      * @param ignoreUnknown true if (user, item) pairs without training must be ignored.
      * @param notReciprocal true if we do not recommend reciprocal social links, false otherwise.
      */
-    public AbstractBasicIncrementalRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean notReciprocal)
+    public AbstractBasicInteractiveRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean notReciprocal)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal);
         this.values = new double[prefData.numItems()];

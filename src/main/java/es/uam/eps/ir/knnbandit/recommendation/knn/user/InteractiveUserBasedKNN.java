@@ -21,7 +21,7 @@ import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class IncrementalUserBasedKNN<U,I> extends AbstractIncrementalUserBasedKNN<U,I>
+public class InteractiveUserBasedKNN<U,I> extends AbstractInteractiveUserBasedKNN<U,I>
 {
    
     
@@ -35,7 +35,7 @@ public class IncrementalUserBasedKNN<U,I> extends AbstractIncrementalUserBasedKN
      * @param k number of neighbors to use.
      * @param sim updateable similarity
      */
-    public IncrementalUserBasedKNN(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean ignoreZeroes, int k, UpdateableSimilarity sim)
+    public InteractiveUserBasedKNN(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean ignoreZeroes, int k, UpdateableSimilarity sim)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, k, sim);
     }
@@ -49,7 +49,7 @@ public class IncrementalUserBasedKNN<U,I> extends AbstractIncrementalUserBasedKN
      * @param k number of neighbors to use.
      * @param sim updateable similarity
      */
-    public IncrementalUserBasedKNN(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean ignoreZeroes, boolean notReciprocal, int k, UpdateableSimilarity sim)
+    public InteractiveUserBasedKNN(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean ignoreZeroes, boolean notReciprocal, int k, UpdateableSimilarity sim)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, notReciprocal, k, sim);
     }

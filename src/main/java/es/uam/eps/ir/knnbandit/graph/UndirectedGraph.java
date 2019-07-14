@@ -226,4 +226,12 @@ public interface UndirectedGraph<V> extends Graph<V>
     {
         return this.degree(node);
     }
+
+    @Override
+    public default int inDegree(V node) { return this.degree(node);}
+
+    @Override
+    public default int outDegree(V node) { return this.degree(node);}
+
+
 }

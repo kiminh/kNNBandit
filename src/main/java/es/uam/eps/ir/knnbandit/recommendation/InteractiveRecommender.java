@@ -34,7 +34,7 @@ import org.jooq.lambda.tuple.Tuple3;
  * @param <U> type of the users.
  * @param <I> type of the items.
  */
-public abstract class IncrementalRecommender<U,I>
+public abstract class InteractiveRecommender<U,I>
 {
     /**
      * Preference data.
@@ -68,7 +68,7 @@ public abstract class IncrementalRecommender<U,I>
      * @param prefData preference data.
      * @param ignoreUnknown false to treat missing ratings as failures, true otherwise.
      */
-    public IncrementalRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown)
+    public InteractiveRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown)
     {
         this.prefData = prefData;
         this.trainData = SimpleFastUpdateablePreferenceData.load(Stream.empty(), uIndex, iIndex);
@@ -87,7 +87,7 @@ public abstract class IncrementalRecommender<U,I>
      * @param ignoreUnknown false to treat missing ratings as failures, true otherwise.
      * @param notReciprocal false to treat missing ratings as failures, true otherwise.
      */
-    public IncrementalRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown, boolean notReciprocal)
+    public InteractiveRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, boolean ignoreUnknown, boolean notReciprocal)
     {
         this.prefData = prefData;
         this.trainData = SimpleFastUpdateablePreferenceData.load(Stream.empty(), uIndex, iIndex);

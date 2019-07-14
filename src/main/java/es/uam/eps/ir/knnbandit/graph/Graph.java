@@ -172,12 +172,27 @@ public interface Graph<V> extends Serializable, ReducedIndex<V>
     /**
      * Calculates the degree of a node.
      * @param node The node
-     * @return the degree of the node if it is contained in the graph, -1 if not.
+     * @return the degree of the node if it is contained in the graph, -1 otherwise.
      */
     public default int degree(V node)
     {
+        if(!this.containsVertex(node)) return -1;
         return this.getNeighbourEdgesCount(node);
     }
+
+    /**
+     * Calculates the in-degree of a node.
+     * @param node The node.
+     * @return the in-degree of the node if it is contained in the graph, -1 otherwise.
+     */
+    public int inDegree(V node);
+
+    /**
+     * Calculates the out-degree of a node.
+     * @param node the node.
+     * @return the out-degree of the node if it is contained in the graph, -1 otherwise.
+     */
+    public int outDegree(V node);
     
     /**
      * Obtains the degree of a node, depending on the neighborhood selection

@@ -12,7 +12,7 @@ package es.uam.eps.ir.knnbandit.recommendation.mf;
 import cern.colt.matrix.DoubleMatrix1D;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
-import es.uam.eps.ir.knnbandit.recommendation.IncrementalRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.InteractiveRecommender;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
 import es.uam.eps.ir.ranksys.mf.Factorization;
 import es.uam.eps.ir.ranksys.mf.Factorizer;
@@ -32,7 +32,7 @@ import org.jooq.lambda.tuple.Tuple3;
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class IncrementalMF<U,I> extends IncrementalRecommender<U,I>
+public class InteractiveMF<U,I> extends InteractiveRecommender<U,I>
 {
     /**
      * Element for obtaining the factorized matrices.
@@ -64,7 +64,7 @@ public class IncrementalMF<U,I> extends IncrementalRecommender<U,I>
      * @param k number of neighbors to use.
      * @param factorizer element for obtaining the factorized matrices.
      */
-    public IncrementalMF(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, int k, Factorizer<U,I> factorizer)
+    public InteractiveMF(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, int k, Factorizer<U,I> factorizer)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown);
         this.factorizer = factorizer;
@@ -83,7 +83,7 @@ public class IncrementalMF<U,I> extends IncrementalRecommender<U,I>
      * @param k number of neighbors to use.
      * @param factorizer element for obtaining the factorized matrices.
      */
-    public IncrementalMF(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean notReciprocal, int k, Factorizer<U,I> factorizer)
+    public InteractiveMF(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean notReciprocal, int k, Factorizer<U,I> factorizer)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal);
         this.factorizer = factorizer;

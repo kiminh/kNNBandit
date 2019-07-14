@@ -10,7 +10,7 @@ package es.uam.eps.ir.knnbandit.recommendation.knn.user;
 
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
-import es.uam.eps.ir.knnbandit.recommendation.IncrementalRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.InteractiveRecommender;
 
 import es.uam.eps.ir.knnbandit.recommendation.knn.similarities.UpdateableSimilarity;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
@@ -30,7 +30,7 @@ import org.ranksys.core.util.tuples.Tuple2id;
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  */
-public abstract class AbstractIncrementalUserBasedKNN<U,I> extends IncrementalRecommender<U,I>
+public abstract class AbstractInteractiveUserBasedKNN<U,I> extends InteractiveRecommender<U,I>
 {
     /**
      * Updateable similarity
@@ -65,7 +65,7 @@ public abstract class AbstractIncrementalUserBasedKNN<U,I> extends IncrementalRe
      * @param k number of neighbors to use.
      * @param sim updateable similarity
      */
-    public AbstractIncrementalUserBasedKNN(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean ignoreZeroes, int k, UpdateableSimilarity sim)
+    public AbstractInteractiveUserBasedKNN(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean ignoreZeroes, int k, UpdateableSimilarity sim)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown);
         this.sim = sim;
@@ -93,7 +93,7 @@ public abstract class AbstractIncrementalUserBasedKNN<U,I> extends IncrementalRe
      * @param k number of neighbors to use.
      * @param sim updateable similarity
      */
-    public AbstractIncrementalUserBasedKNN(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean ignoreZeroes, boolean notReciprocal, int k, UpdateableSimilarity sim)
+    public AbstractInteractiveUserBasedKNN(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean ignoreZeroes, boolean notReciprocal, int k, UpdateableSimilarity sim)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal);
         this.sim = sim;

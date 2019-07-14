@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2018 Information Retrieval Group at Universidad Autónoma
+ * de Madrid, http://ir.ii.uam.es
+ *
+ *  This Source Code Form is subject to the terms of the Mozilla Public
+ *  License, v. 2.0. If a copy of the MPL was not distributed with this
+ *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 package es.uam.eps.ir.knnbandit.recommendation;
 
 import es.uam.eps.ir.knnbandit.metrics.CumulativeMetric;
@@ -28,7 +36,7 @@ public class RecommendationLoop<U,I>
     /**
      * The recommendation algorithm.
      */
-    private final IncrementalRecommender<U,I> recommender;
+    private final InteractiveRecommender<U,I> recommender;
     /**
      * The metrics we want to find.
      */
@@ -52,7 +60,7 @@ public class RecommendationLoop<U,I>
     /**
      * Total number of iterations
      */
-    private final int totalIters;
+    private final int nIter;
 
     /**
      * Constructor. Uses 0 as the default random seed.
@@ -60,9 +68,9 @@ public class RecommendationLoop<U,I>
      * @param itemIndex Index containing the items.
      * @param recommender The incremental recommendation algorithm.
      * @param metrics the map of metrics.
-     * @param totalIters total number of iterations. 0 for iterating until no more recommendations can be done.
+     * @param nIter total number of iterations. 0 for iterating until no more recommendations can be done.
      */
-    public RecommendationLoop(FastUserIndex<U> userIndex, FastItemIndex<I> itemIndex, IncrementalRecommender<U,I> recommender, Map<String, CumulativeMetric<U,I>> metrics, int totalIters)
+    public RecommendationLoop(FastUserIndex<U> userIndex, FastItemIndex<I> itemIndex, InteractiveRecommender<U,I> recommender, Map<String, CumulativeMetric<U,I>> metrics, int nIter)
     {
         this.userIndex = userIndex;
         this.itemIndex = itemIndex;
@@ -71,7 +79,7 @@ public class RecommendationLoop<U,I>
         this.numUsers = userIndex.numUsers();
         this.rngSeed = 0;
 
-        this.totalIters = totalIters;
+        this.nIter = nIter;
         rng = new Random(rngSeed);
         this.iteration = 0;
     }
@@ -82,10 +90,10 @@ public class RecommendationLoop<U,I>
      * @param itemIndex Index containing the items.
      * @param recommender The incremental recommendation algorithm.
      * @param metrics the map of metrics.
-     * @param totalIters total number of iterations. 0 for iterating until no more recommendations can be done.
+     * @param nIter total number of iterations. 0 for iterating until no more recommendations can be done.
      * @param rngSeed seed for a random number generator.
      */
-    public RecommendationLoop(FastUserIndex<U> userIndex, FastItemIndex<I> itemIndex, IncrementalRecommender<U,I> recommender, Map<String, CumulativeMetric<U,I>> metrics, int totalIters, int rngSeed)
+    public RecommendationLoop(FastUserIndex<U> userIndex, FastItemIndex<I> itemIndex, InteractiveRecommender<U,I> recommender, Map<String, CumulativeMetric<U,I>> metrics, int nIter, int rngSeed)
     {
         this.userIndex = userIndex;
         this.itemIndex = itemIndex;
@@ -94,7 +102,7 @@ public class RecommendationLoop<U,I>
         this.numUsers = userIndex.numUsers();
         this.rngSeed = 0;
         rng = new Random(rngSeed);
-        this.totalIters = totalIters;
+        this.nIter = nIter;
         this.iteration = 0;
     }
 
@@ -105,7 +113,7 @@ public class RecommendationLoop<U,I>
     public boolean hasEnded()
     {
         if(numUsers == 0) return true;
-        if(totalIters > 0 && this.iteration >= totalIters) return true;
+        if(nIter > 0 && this.iteration >= nIter) return true;
         return false;
     }
 

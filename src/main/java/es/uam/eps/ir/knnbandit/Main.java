@@ -43,10 +43,10 @@ public class Main
             switch(main)
             {
                 case GENERAL:
-                    className = "es.uam.eps.ir.knnbandit.IncrementalRecommendation";
+                    className = "es.uam.eps.ir.knnbandit.InteractiveRecommendation";
                     break;
                 case CONTACT:
-                    className = "es.uam.eps.ir.knnbandit.IncrementalContactRecommendation";
+                    className = "es.uam.eps.ir.knnbandit.InteractiveContactRecommendation";
                     break;
                 default:
                     System.err.println("ERROR: Invalid configuration.");

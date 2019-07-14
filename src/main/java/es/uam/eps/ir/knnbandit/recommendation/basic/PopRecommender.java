@@ -23,7 +23,7 @@ import org.jooq.lambda.tuple.Tuple3;
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class PopRecommender<U,I> extends AbstractBasicIncrementalRecommender<U,I>
+public class PopRecommender<U,I> extends AbstractBasicInteractiveRecommender<U,I>
 {
     /**
      * Relevance threshold. 

@@ -12,7 +12,7 @@ package es.uam.eps.ir.knnbandit.recommendation.basic;
 import es.uam.eps.ir.knnbandit.UntieRandomNumber;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
-import es.uam.eps.ir.knnbandit.recommendation.IncrementalRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.InteractiveRecommender;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
 import it.unimi.dsi.fastutil.ints.IntList;
 import java.util.Random;
@@ -25,7 +25,7 @@ import java.util.Random;
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class RandomRecommender<U,I> extends IncrementalRecommender<U,I>
+public class RandomRecommender<U,I> extends InteractiveRecommender<U,I>
 {
     /**
      * Random number generator.

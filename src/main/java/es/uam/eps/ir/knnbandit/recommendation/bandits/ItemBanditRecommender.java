@@ -10,7 +10,7 @@ package es.uam.eps.ir.knnbandit.recommendation.bandits;
 
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
-import es.uam.eps.ir.knnbandit.recommendation.IncrementalRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.InteractiveRecommender;
 import es.uam.eps.ir.knnbandit.recommendation.bandits.functions.ValueFunction;
 import es.uam.eps.ir.knnbandit.recommendation.bandits.item.ItemBandit;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
@@ -22,7 +22,7 @@ import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class ItemBanditRecommender<U,I> extends IncrementalRecommender<U,I>
+public class ItemBanditRecommender<U,I> extends InteractiveRecommender<U,I>
 {
     /**
      * Implementation of an item bandit.

@@ -24,7 +24,7 @@ import org.jooq.lambda.tuple.Tuple3;
  * @param <U> Type of the users.
  * @param <I> Type of the items.
  */
-public class AvgRecommender<U,I> extends AbstractBasicIncrementalRecommender<U,I>
+public class AvgRecommender<U,I> extends AbstractBasicInteractiveRecommender<U,I>
 {  
     /**
      * Number of times a bandit has been selected.

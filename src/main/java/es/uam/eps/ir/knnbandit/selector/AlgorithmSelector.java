@@ -10,7 +10,7 @@ package es.uam.eps.ir.knnbandit.selector;
 
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
-import es.uam.eps.ir.knnbandit.recommendation.IncrementalRecommender;
+import es.uam.eps.ir.knnbandit.recommendation.InteractiveRecommender;
 import es.uam.eps.ir.knnbandit.recommendation.bandits.ItemBanditRecommender;
 import es.uam.eps.ir.knnbandit.recommendation.bandits.functions.ValueFunction;
 import es.uam.eps.ir.knnbandit.recommendation.bandits.functions.ValueFunctions;
@@ -19,8 +19,8 @@ import es.uam.eps.ir.knnbandit.recommendation.basic.*;
 import es.uam.eps.ir.knnbandit.recommendation.knn.similarities.UpdateableSimilarity;
 import es.uam.eps.ir.knnbandit.recommendation.knn.similarities.VectorCosineSimilarity;
 import es.uam.eps.ir.knnbandit.recommendation.knn.similarities.stochastic.BetaStochasticSimilarity;
-import es.uam.eps.ir.knnbandit.recommendation.knn.user.IncrementalUserBasedKNN;
-import es.uam.eps.ir.knnbandit.recommendation.mf.IncrementalMF;
+import es.uam.eps.ir.knnbandit.recommendation.knn.user.InteractiveUserBasedKNN;
+import es.uam.eps.ir.knnbandit.recommendation.mf.InteractiveMF;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
 import es.uam.eps.ir.ranksys.mf.Factorizer;
 import es.uam.eps.ir.ranksys.mf.als.HKVFactorizer;
@@ -51,7 +51,7 @@ public class AlgorithmSelector<U,I>
     /**
      * A map of recommenders to apply
      */
-    private final Map<String, IncrementalRecommender<U,I>> recs;
+    private final Map<String, InteractiveRecommender<U,I>> recs;
     
     /**
      * A cursor for reading the line configuration.
@@ -151,7 +151,7 @@ public class AlgorithmSelector<U,I>
      * @return a reinforcement learning recommender.
      * @throws es.uam.eps.ir.knnbandit.selector.UnconfiguredException if the grid is not configured.
      */
-    public IncrementalRecommender<U,I> getAlgorithm(String algorithm) throws UnconfiguredException
+    public InteractiveRecommender<U,I> getAlgorithm(String algorithm) throws UnconfiguredException
     {
         if(!this.configured) throw new UnconfiguredException("The grid is not configured");
         cursor = 0;
@@ -229,8 +229,8 @@ public class AlgorithmSelector<U,I>
                         cursor+=2;
                     }
 
-                    return !this.contactRec ? new IncrementalUserBasedKNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, k, sim)
-                            : new IncrementalUserBasedKNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, notReciprocal, k, sim);
+                    return !this.contactRec ? new InteractiveUserBasedKNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, k, sim)
+                            : new InteractiveUserBasedKNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, notReciprocal, k, sim);
 
                 case AlgorithmIdentifiers.BANDITKNN:
                     cursor++;
@@ -259,8 +259,8 @@ public class AlgorithmSelector<U,I>
                         ignoreZeroes = fullAlgorithm.get(cursor+1).equalsIgnoreCase("ignore");
                         cursor+=2;
                     }
-                    return !this.contactRec ? new IncrementalUserBasedKNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, k, sim)
-                            : new IncrementalUserBasedKNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, notReciprocal, k, sim);
+                    return !this.contactRec ? new InteractiveUserBasedKNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, k, sim)
+                            : new InteractiveUserBasedKNN(uIndex, iIndex, prefData, ignoreUnknown, ignoreZeroes, notReciprocal, k, sim);
 
                 case AlgorithmIdentifiers.MF:
                     cursor++;
@@ -282,8 +282,8 @@ public class AlgorithmSelector<U,I>
                         cursor++;
                     }
 
-                    return !this.contactRec ? new IncrementalMF(uIndex, iIndex, prefData, ignoreUnknown, k, factorizer)
-                            : new IncrementalMF(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal, k, factorizer);
+                    return !this.contactRec ? new InteractiveMF(uIndex, iIndex, prefData, ignoreUnknown, k, factorizer)
+                            : new InteractiveMF(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal, k, factorizer);
                 default:
                     unknownAlgorithm = true;
             }
@@ -303,7 +303,7 @@ public class AlgorithmSelector<U,I>
     {
         if(!this.configured) throw new UnconfiguredException("AlgorithmSelector");
 
-        IncrementalRecommender<U,I> rec = this.getAlgorithm(algorithm);
+        InteractiveRecommender<U,I> rec = this.getAlgorithm(algorithm);
         if(rec != null)
         {
             this.recs.put(algorithm, rec);
@@ -334,7 +334,7 @@ public class AlgorithmSelector<U,I>
      * Obtains the selection of recommenders.
      * @return the selection of recommenders.
      */
-    public Map<String, IncrementalRecommender<U,I>> getRecs()
+    public Map<String, InteractiveRecommender<U,I>> getRecs()
     {
         return this.recs;
     }
