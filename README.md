@@ -101,8 +101,8 @@ average
 ubknn-100
 knnbandit-1-1-10
 mf-10-fastimf-10-10-20
-bandit-epsilon-0.2-stationary
-bandit-thompson-1-100
+itembandit-epsilon-0.2-stationary
+itembandit-thompson-1-100
 ```
 
 In the above configuration file example, we choose different algorithms ot be run (each with specific parameter settings): popularity, random recommendation, average rating, myopic user-based kNN, kNN bandit, matrix factorization, &epsilon;-greedy and thompson sampling.
