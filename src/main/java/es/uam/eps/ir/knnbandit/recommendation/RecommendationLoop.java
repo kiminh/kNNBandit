@@ -59,8 +59,8 @@ public class RecommendationLoop<U,I>
      * @param userIndex Index containing the users.
      * @param itemIndex Index containing the items.
      * @param recommender The incremental recommendation algorithm.
-     * @param metrics the map of metrics.
-     * @param totalIters total number of iterations. 0 for iterating until no more recommendations can be done.
+     * @param metrics The map of metrics to be computed.
+     * @param totalIters Total number of iterations. 0 for iterating until no more recommendations can be produced.
      */
     public RecommendationLoop(FastUserIndex<U> userIndex, FastItemIndex<I> itemIndex, IncrementalRecommender<U,I> recommender, Map<String, CumulativeMetric<U,I>> metrics, int totalIters)
     {
@@ -81,9 +81,9 @@ public class RecommendationLoop<U,I>
      * @param userIndex Index containing the users.
      * @param itemIndex Index containing the items.
      * @param recommender The incremental recommendation algorithm.
-     * @param metrics the map of metrics.
-     * @param totalIters total number of iterations. 0 for iterating until no more recommendations can be done.
-     * @param rngSeed seed for a random number generator.
+     * @param metrics The map of metrics to be computed.
+     * @param totalIters Total number of iterations. 0 for iterating until no more recommendations can be produced.
+     * @param rngSeed Seed for a random number generator.
      */
     public RecommendationLoop(FastUserIndex<U> userIndex, FastItemIndex<I> itemIndex, IncrementalRecommender<U,I> recommender, Map<String, CumulativeMetric<U,I>> metrics, int totalIters, int rngSeed)
     {
@@ -111,7 +111,7 @@ public class RecommendationLoop<U,I>
 
     /**
      * Recovers previous iterations from a file.
-     * @param tuple a tuple containing the user and item to update.
+     * @param tuple A tuple containing the user and item to update.
      */
     public void update(Tuple2<U, I> tuple)
     {
