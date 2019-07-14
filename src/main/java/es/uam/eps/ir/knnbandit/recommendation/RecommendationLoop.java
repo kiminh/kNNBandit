@@ -119,7 +119,7 @@ public class RecommendationLoop<U,I>
 
     /**
      * Recovers previous iterations from a file.
-     * @param tuple a tuple containing the user and item to update.
+     * @param tuple A tuple containing the user and item to update.
      */
     public void update(Tuple2<U, I> tuple)
     {

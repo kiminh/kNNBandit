@@ -7,7 +7,6 @@ This repository contains the code needed to reproduce the experiments of the pap
 Information Retrieval Group at Universidad Autónoma de Madrid
 - Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
 - Pablo Castells (pablo.castells@uam.es)
-- Esther López
 
 ## Software description
 This repository contains all the needed classes to reproduce the experiments explained in the paper. The software contains the following packages:
