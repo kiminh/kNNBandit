@@ -67,7 +67,7 @@ public class RecommendationLoop<U,I>
      * Constructor. Uses 0 as the default random seed.
      * @param userIndex Index containing the users.
      * @param itemIndex Index containing the items.
-     * @param recommender The incremental recommendation algorithm.
+     * @param recommender The interactive recommendation algorithm.
      * @param metrics The map of metrics.
      * @param nIter Total number of iterations. 0 for iterating until no more recommendations can be done.
      */
@@ -89,7 +89,7 @@ public class RecommendationLoop<U,I>
      * Constructor.
      * @param userIndex Index containing the users.
      * @param itemIndex Index containing the items.
-     * @param recommender The incremental recommendation algorithm.
+     * @param recommender The interactive recommendation algorithm.
      * @param metrics The map of metrics.
      * @param nIter Total number of iterations. 0 for iterating until no more recommendations can be done.
      * @param rngSeed seed for a random number generator.

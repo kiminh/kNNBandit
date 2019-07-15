@@ -23,9 +23,7 @@ import es.uam.eps.ir.knnbandit.metrics.CumulativeRecall;
 import es.uam.eps.ir.knnbandit.metrics.CumulativeMetric;
 import es.uam.eps.ir.knnbandit.recommendation.InteractiveRecommender;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
-
 import es.uam.eps.ir.knnbandit.graph.Graph;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -44,21 +42,19 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.jooq.lambda.tuple.Tuple2;
 import org.jooq.lambda.tuple.Tuple3;
-
 import org.ranksys.formats.parsing.Parsers;
 
 /**
- * Class for executing reinforcement learning algorithms.
+ * Class for executing recommender systems in simulated interactive loops.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  */
 public class InteractiveContactRecommendation
 {
     /**
-     * Executes reinforcement learning algorithms in contact recommendation.
+     * Executes contact recommendation systems in simulated interactive loops.
      * @param args Execution arguments:
      * <ol>
      *     <li>Algorithms: configuration file for the algorithms</li>
@@ -78,7 +74,7 @@ public class InteractiveContactRecommendation
         {
             System.err.println("ERROR:iInvalid arguments");
             System.err.println("Usage:");
-            System.err.println("\tAlgorithms: reinforcement learning algorithms list");
+            System.err.println("\tAlgorithms: recommender systems list");
             System.err.println("\tInput: preference data input");
             System.err.println("\tOutput: folder in which to store the output");
             System.err.println("\tNum. Iter.: number of iterations. 0 if we want to run until we run out of recommendable items");

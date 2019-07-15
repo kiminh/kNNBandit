@@ -35,20 +35,19 @@ import java.util.function.DoubleUnaryOperator;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.jooq.lambda.tuple.Tuple2;
 import org.jooq.lambda.tuple.Tuple3;
 import org.ranksys.formats.parsing.Parsers;
 
 /**
- * Class for executing reinforcement learning algorithms.
+ * Class for executing recommender systems in simulated interactive loops.
  * @author Javier Sanz-Cruzado Puig (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  */
 public class InteractiveRecommendation
 {
     /**
-     * Executes reinforcement learning algorithms in general recommendation.
+     * Executes recommendation algorithms in simulated interactive loops.
      * @param args Execution arguments:
      * <ol>
      *     <li>Algorithms: configuration file for the algorithms</li>
@@ -68,7 +67,7 @@ public class InteractiveRecommendation
         {
             System.err.println("ERROR: Invalid arguments");
             System.err.println("Usage:");
-            System.err.println("\tAlgorithms: reinforcement learning algorithms list");
+            System.err.println("\tAlgorithms: recommender systems list");
             System.err.println("\tInputp Preference data input");
             System.err.println("\tOutput: folder in which to store the output");
             System.err.println("\tNum. Iter.: number of iterations. 0 if we want to run until we run out of recommendable items");
