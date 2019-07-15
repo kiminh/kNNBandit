@@ -1,10 +1,11 @@
-/*
+/* 
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
  * de Madrid, http://ir.ii.uam.es.
- *
- *  This Source Code Form is subject to the terms of the Mozilla Public
- *  License, v. 2.0. If a copy of the MPL was not distributed with this
- *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, you can obtain one at http://mozilla.org/MPL/2.0.
+ * 
  */
 package es.uam.eps.ir.knnbandit;
 
@@ -42,6 +43,7 @@ import org.ranksys.formats.parsing.Parsers;
 /**
  * Class for executing reinforcement learning algorithms.
  * @author Javier Sanz-Cruzado Puig (javier.sanz-cruzado@uam.es)
+ * @author Pablo Castells (pablo.castells@uam.es)
  */
 public class InteractiveRecommendation
 {
@@ -52,7 +54,7 @@ public class InteractiveRecommendation
      *     <li>Algorithms: configuration file for the algorithms</li>
      *     <li>Input: preference data</li>
      *     <li>Output: folder in which to store the output</li>
-     *     <li>Num. Iter: Number of iterations. 0 if we want to apply until full coverage.</li>
+     *     <li>Num. Iter: number of iterations. 0 if we want to apply until full coverage.</li>
      *     <li>Threshold: relevance threshold</li>
      *     <li>Resume: true if we want to retrieve data from previous executions, false to overwrite</li>
      *     <li>Use ratings: true if we want to use ratings, false for binary values</li>
@@ -66,18 +68,17 @@ public class InteractiveRecommendation
         {
             System.err.println("ERROR: Invalid arguments");
             System.err.println("Usage:");
-            System.err.println("\tAlgorithms: Reinforcement learning algorithms list");
-            System.err.println("\tInput: Preference data input");
-            System.err.println("\tOutput: Folder in which to store the output");
-            System.err.println("\tNum. Iter.: Number of iterations. 0 if we want to run until we run out of recommendable items");
+            System.err.println("\tAlgorithms: reinforcement learning algorithms list");
+            System.err.println("\tInputp Preference data input");
+            System.err.println("\tOutput: folder in which to store the output");
+            System.err.println("\tNum. Iter.: number of iterations. 0 if we want to run until we run out of recommendable items");
             System.err.println("\tThreshold: relevance threshold");
             System.err.println("\tresume: true if we want to resume previous executions, false if we want to overwrite");
             System.err.println("\tUse ratings: true if we want to take the true value of the ratings, false if we want to use binary values");
             return;
         }
 
-
-        // First, read the different arguments for the program.
+        // First, read the program argumentsº.
         String algorithms = args[0];
         String input = args[1];
         String output = args[2];
@@ -120,7 +121,7 @@ public class InteractiveRecommendation
             bw.write("" + UntieRandomNumber.RNG);
         }
         
-        // Then, we will read the different ratings.
+        // Then, we read the ratings.
         Set<Long> users = new HashSet<>();
         Set<Long> items = new HashSet<>();
         List<Tuple3<Long,Long,Double>> triplets = new ArrayList<>();
@@ -151,7 +152,6 @@ public class InteractiveRecommendation
         
         SimpleFastPreferenceData<Long, Long> prefData = SimpleFastPreferenceData.load(triplets.stream(), uIndex, iIndex);
 
-        
         System.out.println("USers: " + uIndex.numUsers());
         System.out.println("Items: " + iIndex.numItems());
         int numRel = numrel;
@@ -162,7 +162,7 @@ public class InteractiveRecommendation
         metrics.put("gini", () -> new CumulativeGini(items.size()));
         List<String> metricNames = new ArrayList<>(metrics.keySet());
 
-        // Select the algorithms
+        // Select the algorithms.
         long a = System.currentTimeMillis();
         AlgorithmSelector<Long, Long> algorithmSelector = new AlgorithmSelector<>();
         algorithmSelector.configure(uIndex, iIndex, prefData, useRatings ? threshold : 0.5);
@@ -170,7 +170,7 @@ public class InteractiveRecommendation
         Map<String, InteractiveRecommender<Long,Long>> recs = algorithmSelector.getRecs();
         long b = System.currentTimeMillis();
         
-        System.out.println("Recommenders prepared (" + (b-a) + " ms.)");
+        System.out.println("Recommenders ready (" + (b-a) + " ms.)");
         recs.entrySet().parallelStream().forEach(re -> 
         {
             InteractiveRecommender<Long,Long> rec = re.getValue();

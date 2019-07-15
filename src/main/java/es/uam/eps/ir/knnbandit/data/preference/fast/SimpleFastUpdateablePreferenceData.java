@@ -1,10 +1,11 @@
-/*
+/* 
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
  * de Madrid, http://ir.ii.uam.es.
- *
- *  This Source Code Form is subject to the terms of the Mozilla Public
- *  License, v. 2.0. If a copy of the MPL was not distributed with this
- *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, you can obtain one at http://mozilla.org/MPL/2.0.
+ * 
  */
 package es.uam.eps.ir.knnbandit.data.preference.fast;
 
@@ -33,8 +34,8 @@ import org.jooq.lambda.tuple.Tuple4;
 /**
  * Simple implementation of FastPreferenceData backed by nested lists.
  *
- * @param <U> type of the users
- * @param <I> type of the items
+ * @param <U> User type.
+ * @param <I> Item type.
  * @author Saúl Vargas (saul.vargas@uam.es)
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
@@ -46,22 +47,22 @@ public class SimpleFastUpdateablePreferenceData<U, I> extends StreamsAbstractFas
      */
     private int numPreferences;
     /**
-     * User preferences
+     * User preferences.
      */
     private final List<List<IdxPref>> uidxList;
     /**
-     * Item preferences
+     * Item preferences.
      */
     private final List<List<IdxPref>> iidxList; 
     
     /**
      * Constructor with default IdxPref to IdPref converter.
      *
-     * @param numPreferences initial number of total preferences
-     * @param uidxList list of lists of preferences by user index
-     * @param iidxList list of lists of preferences by item index
-     * @param uIndex user index
-     * @param iIndex item index
+     * @param numPreferences Initial number of total preferences.
+     * @param uidxList List of lists of preferences by user index.
+     * @param iidxList List of lists of preferences by item index.
+     * @param uIndex User index.
+     * @param iIndex Item index.
      */
     protected SimpleFastUpdateablePreferenceData(int numPreferences, List<List<IdxPref>> uidxList, List<List<IdxPref>> iidxList,
                                                  FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex)
@@ -74,13 +75,13 @@ public class SimpleFastUpdateablePreferenceData<U, I> extends StreamsAbstractFas
     /**
      * Constructor with custom IdxPref to IdPref converter.
      *
-     * @param numPreferences initial number of total preferences
-     * @param uidxList list of lists of preferences by user index
-     * @param iidxList list of lists of preferences by item index
-     * @param uIndex user index
-     * @param iIndex item index
-     * @param uPrefFun user IdxPref to IdPref converter
-     * @param iPrefFun item IdxPref to IdPref converter
+     * @param numPreferences Initial number of total preferences.
+     * @param uidxList List of lists of preferences by user index.
+     * @param iidxList List of lists of preferences by item index.
+     * @param uIndex User index.
+     * @param iIndex Item index.
+     * @param uPrefFun User IdxPref to IdPref converter.
+     * @param iPrefFun Item IdxPref to IdPref converter.
      */
     protected SimpleFastUpdateablePreferenceData(int numPreferences, List<List<IdxPref>> uidxList, List<List<IdxPref>> iidxList,
             FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex,
@@ -239,105 +240,7 @@ public class SimpleFastUpdateablePreferenceData<U, I> extends StreamsAbstractFas
         }
         return iidx;
     }
-    
-    /*@Override
-    public int removeUser(U u)
-    {
-        // First, check if the user exists.
-        int uidx = this.user2uidx(u);
-        if(uidx == -1)
-        {
-            return -1;
-        }
-        
-        // Then, we want to remove uidx from the lists of the items which u has rated.
-        if(this.uidxList.get(uidx) != null)
-        {
-            int removePref = this.uidxList.get(uidx).size();
-            this.uidxList.get(uidx).forEach(iidx -> 
-            {
-                List<IdxPref> list = this.iidxList.get(iidx.v1);
-                this.updateDelete(uidx, list);
-            });
-            this.numPreferences = this.numPreferences - removePref;
-        }
-        
-        // We have to update the identifier for the rest of the users. We run over
-        // the whole set of items, and, if they have a user index greater than uidx
-        // in their preferences lists, we reduce the identifier by a unit.
-        // OBS: The order will be kept by doing this.
-        this.getAllIidx().forEach(iidx -> 
-        {
-            if(this.iidxList.get(iidx) != null)
-            {
-                List<IdxPref> list = this.iidxList.get(iidx);
-                int n = list.size();
-                IntStream.range(0, n).forEach(i -> 
-                {
-                    int auxidx = list.get(i).v1;
-                    double value = list.get(i).v2;
-                    if(list.get(i).v1 > uidx)
-                    {
-                        list.set(i, new IdxPref(auxidx-1, value));
-                    }
-                });
-            }
-        });
-        
-        // Remove the user from the uidxlist, and from the index.
-        this.uidxList.remove(uidx);
-        return ((FastUpdateableUserIndex<U>) this.ui).removeUser(u);
-    } */
 
-    /*@Override
-    public int removeItem(I i)
-    {
-        // First, check if the item exists.
-        int iidx = this.item2iidx(i);
-        if(iidx == -1)
-        {
-            return -1;
-        }
-        
-        // Then, we want to remove iidx from the lists of the users which have rated the item.
-        if(this.iidxList.get(iidx) != null)
-        {
-            int removePref = this.iidxList.get(iidx).size();
-            this.iidxList.get(iidx).forEach(uidx -> 
-            {
-                List<IdxPref> list = this.uidxList.get(uidx.v1);
-                this.updateDelete(iidx, list);
-            });
-            this.numPreferences = this.numPreferences - removePref;
-        }
-        
-        // We have to update the identifier for the rest of the items. We run over
-        // the whole set of users, and, if they have a item index greater than iidx
-        // in their preferences lists, we reduce the identifier by a unit.
-        // OBS: The order will be kept by doing this.
-        this.getAllUidx().forEach(uidx -> 
-        {
-            if(this.uidxList.get(uidx) != null)
-            {
-                List<IdxPref> list = this.uidxList.get(uidx);
-                int n = list.size();
-                IntStream.range(0, n).forEach(u -> 
-                {
-                    int auxidx = list.get(u).v1;
-                    double value = list.get(u).v2;
-                    if(list.get(u).v1 > iidx)
-                    {
-                        list.set(u, new IdxPref(auxidx-1, value));
-                    }
-                });
-            }
-        });
-        
-        // Remove the item from the iidxlist, and from the index.
-        this.iidxList.remove(iidx);
-        return ((FastUpdateableItemIndex<I>) this.ii).removeItem(i);       
-    }   */
-    
     @Override
     public void updateRating(int uidx, int iidx, double rating) 
     {        
@@ -355,7 +258,7 @@ public class SimpleFastUpdateablePreferenceData<U, I> extends StreamsAbstractFas
             this.uidxList.set(uidx, idxPrefList);
             this.numPreferences++;
         }
-        else // if the user has at least one preference
+        else // If the user has at least one preference.
         {
             // Update the preference for the user.
             boolean addPref = this.updatePreference(iidx, rating, this.uidxList.get(uidx));
@@ -369,7 +272,7 @@ public class SimpleFastUpdateablePreferenceData<U, I> extends StreamsAbstractFas
             idxPrefList.add(new IdxPref(uidx, rating));
             this.iidxList.set(iidx,idxPrefList);
         }
-        else // if the item has been rated by at least one user.
+        else // If the item has been rated by at least one user.
         {
             this.updatePreference(uidx, rating, this.iidxList.get(iidx));
         }    
@@ -377,9 +280,9 @@ public class SimpleFastUpdateablePreferenceData<U, I> extends StreamsAbstractFas
     
     /**
      * Updates a preference.
-     * @param idx the identifier of the preference to add.
-     * @param value the rating value.
-     * @param list the list in which we want to update the preference.
+     * @param idx The identifier of the preference to add.
+     * @param value The rating value.
+     * @param list The list in which we want to update the preference.
      * @return true if the rating was added, false if it was just updated.
      */
     private boolean updatePreference(int idx, double value, List<IdxPref> list)
@@ -394,13 +297,13 @@ public class SimpleFastUpdateablePreferenceData<U, I> extends StreamsAbstractFas
         Comparator<IdxPref> comp = (x,y) -> x.v1 - y.v1;
         int position = Collections.binarySearch(list, newIdx, comp);
         
-        if(position < 0) // the rating does not exist.
+        if(position < 0) // The rating does not exist.
         {
             position = Math.abs(position+1);
             list.add(position, newIdx);
             return true;
         }
-        else // the rating did already exist
+        else // The rating did already exist.
         {
             list.set(position, newIdx);
             return false;
@@ -416,10 +319,10 @@ public class SimpleFastUpdateablePreferenceData<U, I> extends StreamsAbstractFas
             return;
         }
         
-        // First, delete from the uidxList
+        // First, delete from the uidxList.
         if(this.updateDelete(iidx, this.uidxList.get(uidx)))
         {
-            // Then, delete from the iidxList
+            // Then, delete from the iidxList.
             this.updateDelete(uidx, this.iidxList.get(iidx));
             this.numPreferences--;
         }
@@ -427,21 +330,21 @@ public class SimpleFastUpdateablePreferenceData<U, I> extends StreamsAbstractFas
     
     /**
      * Deletes a rating from the data.
-     * @param idx identifier of the element to delete
-     * @param list list from where the element has to be removed
+     * @param idx Identifier of the element to delete.
+     * @param list List from where the element has to be removed.
      * @return true if the element was removed, false otherwise.
      */
     private boolean updateDelete(int idx, List<IdxPref> list) 
     {
-        // If the list is empty, do nothing
+        // If the list is empty, do nothing.
         if(list == null) return false;
         
-        // Search for the position of the element to remove
+        // Search for the position of the element to remove.
         IdxPref newIdx = new IdxPref(idx, 1.0);
         Comparator<IdxPref> comp = (x,y) -> x.v1 - y.v1;
         int position = Collections.binarySearch(list, newIdx, comp);
         
-        // If it exists
+        // If it exists.
         if(position >= 0)
         {
             list.remove(position);
@@ -454,12 +357,12 @@ public class SimpleFastUpdateablePreferenceData<U, I> extends StreamsAbstractFas
     /**
      * Loads a SimpleFastPreferenceData from a stream of user-item-value triples.
      *
-     * @param <U> user type
-     * @param <I> item type
-     * @param tuples stream of user-item-value triples
-     * @param uIndex user index
-     * @param iIndex item index
-     * @return an instance of SimpleFastPreferenceData containing the data from the input stream
+     * @param <U> User type.
+     * @param <I> Item type.
+     * @param tuples Stream of user-item-value triples.
+     * @param uIndex User index.
+     * @param iIndex Item index.
+     * @return an instance of SimpleFastPreferenceData containing the data from the input stream.
      */
     public static <U, I> SimpleFastUpdateablePreferenceData<U, I> load(Stream<Tuple3<U, I, Double>> tuples, FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex) 
     {
@@ -474,17 +377,17 @@ public class SimpleFastUpdateablePreferenceData<U, I> extends StreamsAbstractFas
     /**
      * Loads a SimpleFastPreferenceData from a stream of user-item-value-other tuples. It can accomodate other information, thus you need to provide sub-classes of IdxPref IdPref accomodating for this new information.
      *
-     * @param <U> user type
-     * @param <I> item type
-     * @param <O> additional information type
-     * @param tuples stream of user-item-value-other tuples
-     * @param uIdxPrefFun converts a tuple to a user IdxPref
-     * @param iIdxPrefFun converts a tuple to a item IdxPref
-     * @param uIndex user index
-     * @param iIndex item index
-     * @param uIdPrefFun user IdxPref to IdPref converter
-     * @param iIdPrefFun item IdxPref to IdPref converter
-     * @return an instance of SimpleFastPreferenceData containing the data from the input stream
+     * @param <U> User type.
+     * @param <I> Item type.
+     * @param <O> Additional information type.
+     * @param tuples Stream of user-item-value-other tuples.
+     * @param uIdxPrefFun Converts a tuple to a user IdxPref.
+     * @param iIdxPrefFun Converts a tuple to a item IdxPref.
+     * @param uIndex User index.
+     * @param iIndex Item index.
+     * @param uIdPrefFun User IdxPref to IdPref converter.
+     * @param iIdPrefFun Item IdxPref to IdPref converter.
+     * @return an instance of SimpleFastPreferenceData containing the data from the input stream.
      */
     public static <U, I, O> SimpleFastUpdateablePreferenceData<U, I> load(Stream<Tuple4<U, I, Double, O>> tuples,
             Function4<Integer, Integer, Double, O, ? extends IdxPref> uIdxPrefFun,

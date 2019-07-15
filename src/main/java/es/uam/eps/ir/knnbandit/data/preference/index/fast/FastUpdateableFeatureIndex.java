@@ -1,10 +1,11 @@
-/*
+/* 
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
  * de Madrid, http://ir.ii.uam.es.
- *
- *  This Source Code Form is subject to the terms of the Mozilla Public
- *  License, v. 2.0. If a copy of the MPL was not distributed with this
- *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, you can obtain one at http://mozilla.org/MPL/2.0.
+ * 
  */
 package es.uam.eps.ir.knnbandit.data.preference.index.fast;
 
@@ -20,7 +21,7 @@ import java.util.stream.Stream;
  * @author Pablo Castells (pablo.castells@uam.es)
  * @author Saúl Vargas (saul.vargas@uam.es)
  *
- * @param <F> type of the features
+ * @param <F> Feature type.
  */
 public interface FastUpdateableFeatureIndex<F> extends UpdateableFeatureIndex<F>, FastFeatureIndex<F>
 {

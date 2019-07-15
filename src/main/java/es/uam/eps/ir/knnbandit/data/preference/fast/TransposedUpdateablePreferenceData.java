@@ -1,10 +1,11 @@
-/*
+/* 
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
  * de Madrid, http://ir.ii.uam.es.
- *
- *  This Source Code Form is subject to the terms of the Mozilla Public
- *  License, v. 2.0. If a copy of the MPL was not distributed with this
- *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, you can obtain one at http://mozilla.org/MPL/2.0.
+ * 
  */
 package es.uam.eps.ir.knnbandit.data.preference.fast;
 
@@ -28,8 +29,8 @@ import org.ranksys.fast.preference.FastPointWisePreferenceData;
  * @author Pablo Castells (pablo.castells@uam.es)
  * @author Saúl Vargas (saul.vargas@uam.es)
  *
- * @param <I> type of the items
- * @param <U> type of the users
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public class TransposedUpdateablePreferenceData<I, U> implements FastUpdateablePreferenceData<I, U>, FastPointWisePreferenceData<I, U>
 {
@@ -38,18 +39,18 @@ public class TransposedUpdateablePreferenceData<I, U> implements FastUpdateableP
      */
     private final FastUpdateablePreferenceData<U, I> d;
     /**
-     * Function that transforms a IdPref indexed by item to an IdPref indexed by user
+     * Function that transforms a IdPref indexed by item to an IdPref indexed by user.
      */
     private final Function2<U, IdPref<I>, IdPref<U>> idPrefFun;
     /**
-     * Function that transforms a IdPref indexed by item id to an IdPref indexed by user id
+     * Function that transforms a IdPref indexed by item id to an IdPref indexed by user id.
      */
     private final Function2<Integer, IdxPref, IdxPref> idxPrefFun;
 
     /**
      * Constructor with default converters between IdxPref and IdPref.
      *
-     * @param recommenderData preference data to be transposed
+     * @param recommenderData Preference data to be transposed.
      */
     public TransposedUpdateablePreferenceData(FastUpdateablePreferenceData<U, I> recommenderData) 
     {
@@ -59,9 +60,9 @@ public class TransposedUpdateablePreferenceData<I, U> implements FastUpdateableP
     /**
      * Constructor with custom converters between IdxPref and IdPref.
      *
-     * @param recommenderData preference data to be transposed
-     * @param idPrefFun converter from item IdPref to user IdPref
-     * @param idxPrefFun converter from item IdxPref to item IdxPref
+     * @param recommenderData Preference data to be transposed.
+     * @param idPrefFun Converter from item IdPref to user IdPref.
+     * @param idxPrefFun Cnverter from item IdxPref to item IdxPref.
      */
     public TransposedUpdateablePreferenceData(FastUpdateablePreferenceData<U, I> recommenderData,
                                     Function2<U, IdPref<I>, IdPref<U>> idPrefFun,
@@ -315,16 +316,4 @@ public class TransposedUpdateablePreferenceData<I, U> implements FastUpdateableP
     public int addItem(U u) {
         return this.d.addUser(u);
     }
-
-    /*@Override
-    public int removeUser(I u)
-    {
-        return this.d.removeItem(u);
-    }
-
-    @Override
-    public int removeItem(U i)
-    {
-        return this.d.removeUser(i);
-    }*/
 }

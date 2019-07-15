@@ -1,10 +1,11 @@
-/*
+/* 
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
  * de Madrid, http://ir.ii.uam.es.
- *
- *  This Source Code Form is subject to the terms of the Mozilla Public
- *  License, v. 2.0. If a copy of the MPL was not distributed with this
- *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, you can obtain one at http://mozilla.org/MPL/2.0.
+ * 
  */
 package es.uam.eps.ir.knnbandit.data.preference.fast;
 
@@ -26,16 +27,16 @@ import org.ranksys.core.util.iterators.StreamIntIterator;
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  * @author Saúl Vargas (Saul@VargasSandoval.es)
- * @param <U> user type
- * @param <I> item type
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public abstract class StreamsAbstractFastUpdateablePreferenceData<U, I> extends AbstractFastUpdateablePreferenceData<U, I> {
 
     /**
      * Constructor with default IdxPref to IdPref converter.
      *
-     * @param userIndex user index
-     * @param itemIndex item index
+     * @param userIndex User index.
+     * @param itemIndex Item index.
      */
     public StreamsAbstractFastUpdateablePreferenceData(FastUpdateableUserIndex<U> userIndex, FastUpdateableItemIndex<I> itemIndex) {
         super(userIndex, itemIndex);
@@ -44,10 +45,10 @@ public abstract class StreamsAbstractFastUpdateablePreferenceData<U, I> extends 
     /**
      * Constructor with custom IdxPref to IdPref converter.
      *
-     * @param userIndex user index
-     * @param itemIndex item index
-     * @param uPrefFun user IdxPref to IdPref converter
-     * @param iPrefFun item IdxPref to IdPref converter
+     * @param userIndex User index.
+     * @param itemIndex Item index.
+     * @param uPrefFun User IdxPref to IdPref converter.
+     * @param iPrefFun Item IdxPref to IdPref converter.
      */
     public StreamsAbstractFastUpdateablePreferenceData(FastUpdateableUserIndex<U> userIndex, FastUpdateableItemIndex<I> itemIndex, Function<IdxPref, IdPref<I>> uPrefFun, Function<IdxPref, IdPref<U>> iPrefFun) {
         super(userIndex, itemIndex, uPrefFun, iPrefFun);
@@ -82,5 +83,4 @@ public abstract class StreamsAbstractFastUpdateablePreferenceData<U, I> extends 
     {
         return false;
     }
-
 }

@@ -1,10 +1,11 @@
-/*
+/* 
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
  * de Madrid, http://ir.ii.uam.es.
- *
- *  This Source Code Form is subject to the terms of the Mozilla Public
- *  License, v. 2.0. If a copy of the MPL was not distributed with this
- *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, you can obtain one at http://mozilla.org/MPL/2.0.
+ * 
  */
 package es.uam.eps.ir.knnbandit.data.preference.fast;
 
@@ -28,16 +29,16 @@ import org.jooq.lambda.tuple.Tuple3;
  * @author Pablo Castells (pablo.castells@uam.es)
  * @author Saúl Vargas (saul.vargas@uam.es)
  *
- * @param <U> type of the users
- * @param <I> type of the items
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public abstract class AbstractFastUpdateablePreferenceData<U, I> extends AbstractFastPreferenceData<U,I> implements FastUpdateablePreferenceData<U,I>
 {
     /**
      * Constructor.
      *
-     * @param users user index
-     * @param items item index
+     * @param users User index.
+     * @param items Item index.
      */
     public AbstractFastUpdateablePreferenceData(FastUpdateableUserIndex<U> users, FastUpdateableItemIndex<I> items)
     {
@@ -49,10 +50,10 @@ public abstract class AbstractFastUpdateablePreferenceData<U, I> extends Abstrac
     /**
      * Constructor.
      *
-     * @param userIndex user index
-     * @param itemIndex item index
-     * @param uPrefFun converter from IdxPref to IdPref (preference for item).
-     * @param iPrefFun converter from IdxPref to IdPref (preference from user).
+     * @param userIndex User index.
+     * @param itemIndex Item index.
+     * @param uPrefFun Converter from IdxPref to IdPref (preference for item).
+     * @param iPrefFun Converter from IdxPref to IdPref (preference from user).
      */
     public AbstractFastUpdateablePreferenceData(FastUpdateableUserIndex<U> userIndex, FastUpdateableItemIndex<I> itemIndex, Function<IdxPref, IdPref<I>> uPrefFun, Function<IdxPref, IdPref<U>> iPrefFun) 
     {
@@ -70,18 +71,6 @@ public abstract class AbstractFastUpdateablePreferenceData<U, I> extends Abstrac
     {
         this.addItem(i);
     }
-    
-    /*@Override
-    public void updateRemoveUser(U u)
-    {
-        this.removeUser(u);
-    }
-    
-    @Override
-    public void updateRemoveItem(I i)
-    {
-        this.removeItem(i);
-    }*/
     
     @Override
     public void update(Stream<Tuple3<U,I,Double>> tuples)
@@ -140,16 +129,16 @@ public abstract class AbstractFastUpdateablePreferenceData<U, I> extends Abstrac
     
     /**
      * Updates a rating value.
-     * @param uidx identifier of the user
-     * @param iidx identifier of the item
-     * @param rating the rating.
+     * @param uidx Identifier of the user.
+     * @param iidx Identifier of the item.
+     * @param rating The rating.
      */
     protected abstract void updateRating(int uidx, int iidx, double rating);
     
     /**
      * Deletes a rating.
-     * @param uidx identifier of the user.
-     * @param iidx identifier of the item.
+     * @param uidx Identifier of the user.
+     * @param iidx Identifier of the item.
      */
     protected abstract void updateDelete(int uidx, int iidx);
 }

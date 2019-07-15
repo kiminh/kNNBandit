@@ -1,10 +1,11 @@
-/*
+/* 
  * Copyright (C) 2019 Information Retrieval Group at Universidad Autónoma
  * de Madrid, http://ir.ii.uam.es.
- *
- *  This Source Code Form is subject to the terms of the Mozilla Public
- *  License, v. 2.0. If a copy of the MPL was not distributed with this
- *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, you can obtain one at http://mozilla.org/MPL/2.0.
+ * 
  */
 package es.uam.eps.ir.knnbandit.data.preference.fast;
 
@@ -24,16 +25,16 @@ import java.util.stream.Stream;
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  * @author Saúl Vargas (Saul@VargasSandoval.es)
- * @param <U> user type
- * @param <I> item type
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public abstract class IteratorsAbstractFastUpdateablePreferenceData<U, I> extends AbstractFastUpdateablePreferenceData<U, I> 
 {
     /**
      * Constructor with default IdxPref to IdPref converter.
      *
-     * @param userIndex user index
-     * @param itemIndex item index
+     * @param userIndex User index.
+     * @param itemIndex Item index.
      */
     public IteratorsAbstractFastUpdateablePreferenceData(FastUpdateableUserIndex<U> userIndex, FastUpdateableItemIndex<I> itemIndex)
     {
@@ -43,10 +44,10 @@ public abstract class IteratorsAbstractFastUpdateablePreferenceData<U, I> extend
     /**
      * Constructor with custom IdxPref to IdPref converter.
      *
-     * @param userIndex user index
-     * @param itemIndex item index
-     * @param uPrefFun  user IdxPref to IdPref converter
-     * @param iPrefFun  item IdxPref to IdPref converter
+     * @param userIndex User index.
+     * @param itemIndex Item index.
+     * @param uPrefFun User IdxPref to IdPref converter.
+     * @param iPrefFun Item IdxPref to IdPref converter.
      */
     public IteratorsAbstractFastUpdateablePreferenceData(FastUpdateableUserIndex<U> userIndex, FastUpdateableItemIndex<I> itemIndex, Function<IdxPref, IdPref<I>> uPrefFun, Function<IdxPref, IdPref<U>> iPrefFun)
     {
@@ -68,10 +69,10 @@ public abstract class IteratorsAbstractFastUpdateablePreferenceData<U, I> extend
     /**
      * Converts the int and double iterators to a stream of IdxPref.
      *
-     * @param n length of iterators
-     * @param idxs iterator of user/item indices
-     * @param vs interator of user/item values
-     * @return stream of IdxPref
+     * @param n Length of iterators.
+     * @param idxs Iterator of user/item indices.
+     * @param vs Iterator of user/item values.
+     * @return Stream of IdxPref.
      */
     protected Stream<IdxPref> getPreferences(int n, IntIterator idxs, DoubleIterator vs) 
     {
