@@ -28,10 +28,10 @@ public class OrderedListCombiner
     /**
      * Merges two ordered lists, so that the order is preserved.
      * @param <T> The type of the elements in the lists.
-     * @param firstList the first list.
-     * @param secondList the second list.
-     * @param comp a comparator for determining the order of the elements.
-     * @param combiner a function for combining two elements in case they are present in both lists. 
+     * @param firstList The first list.
+     * @param secondList The second list.
+     * @param comp A comparator for determining the order of the elements.
+     * @param combiner A function for combining two elements in case they are present in both lists. 
      * The first argument of the function receives an element of
      * the first list, and the second an element of the second.
      * @return the merged list.
@@ -44,10 +44,10 @@ public class OrderedListCombiner
     /**
      * Merges two ordered streams, so that the order is preserved.
      * @param <T> The type of the elements in the lists.
-     * @param firstStream the first stream.
-     * @param secondStream the second stream.
-     * @param comp a comparator for determining the order of the elements.
-     * @param combiner a function for combining two elements in case they are present in both streams. 
+     * @param firstStream The first stream.
+     * @param secondStream The second stream.
+     * @param comp A comparator for determining the order of the elements.
+     * @param combiner A function for combining two elements in case they are present in both streams. 
      * The first argument of the function receives an element of
      * the first stream, and the second an element of the second stream.
      * @return the merged list.
@@ -60,10 +60,10 @@ public class OrderedListCombiner
     /**
      * Merges two ordered lists/streams, represented by iterators, so that the order is preserved.
      * @param <T> The type of the elements in the lists.
-     * @param firstIterator the first iterator.
-     * @param secondIterator the second iterator.
-     * @param comp a comparator for determining the order of the elements.
-     * @param combiner a function for combining two elements in case they are present in both lists/streams. 
+     * @param firstIterator The first iterator.
+     * @param secondIterator The second iterator.
+     * @param comp A comparator for determining the order of the elements.
+     * @param combiner A function for combining two elements in case they are present in both lists/streams. 
      * The first argument of the function receives an element of
      * the first list/stream, and the second an element of the second list/stream.
      * @return the merged list.
@@ -110,14 +110,12 @@ public class OrderedListCombiner
         return combination;
     }
     
-    
     /**
-     * Finds the size of the union of two ordered lists
+     * Finds the size of the union of two ordered lists.
      * @param <T> The type of the elements in the lists.
-     * @param firstList the first list.
-     * @param secondList the second list.
-     * @param comp a comparator for determining the order of the elements.
-
+     * @param firstList The first list.
+     * @param secondList The second list.
+     * @param comp A comparator for determining the order of the elements.
      * @return the size of the merged list.
      */
     public static <T> int mergeListsSize(List<T> firstList, List<T> secondList, Comparator<T> comp)
@@ -128,9 +126,9 @@ public class OrderedListCombiner
     /**
      * Finds the size of the union of two ordered streams.
      * @param <T> The type of the elements in the streams.
-     * @param firstStream the first stream.
-     * @param secondStream the second stream.
-     * @param comp a comparator for determining the order of the elements.
+     * @param firstStream The first stream.
+     * @param secondStream The second stream.
+     * @param comp A comparator for determining the order of the elements.
      * @return the size of the merged list.
      */
     public static <T> int mergeListsSize(Stream<T> firstStream, Stream<T> secondStream, Comparator<T> comp)
@@ -138,13 +136,12 @@ public class OrderedListCombiner
         return OrderedListCombiner.mergeListsSize(firstStream.iterator(), secondStream.iterator(),comp);
     }
     
-    
     /**
      * Finds the size of the union of two ordered lists/streams, represented by iterators.
      * @param <T> The type of the elements in the lists.
-     * @param firstIterator the first iterator.
-     * @param secondIterator the second iterator.
-     * @param comp a comparator for determining the order of the elements.
+     * @param firstIterator The first iterator.
+     * @param secondIterator The second iterator.
+     * @param comp A comparator for determining the order of the elements.
      * @return the size of the union list.
      */
     public static <T> int mergeListsSize(Iterator<T> firstIterator, Iterator<T> secondIterator, Comparator<T> comp)
@@ -177,15 +174,13 @@ public class OrderedListCombiner
         return counter;
     }
     
-    
-    
     /**
      * Intersects two ordered lists, preserving the order.
-     * @param <T> the type of the elements in the lists.
-     * @param firstList the first list.
-     * @param secondList the second list.
-     * @param comp a comparator for determining the order of the elements.
-     * @param combiner a function for combining two elements. The first argument of the function is the one in the first list,
+     * @param <T> The type of the elements in the lists.
+     * @param firstList The first list.
+     * @param secondList The second list.
+     * @param comp A comparator for determining the order of the elements.
+     * @param combiner A function for combining two elements. The first argument of the function is the one in the first list,
      * whereas the second argument is the element in the second list.
      * @return the intersection of the lists.
      */
@@ -197,10 +192,10 @@ public class OrderedListCombiner
     /**
      * Intersects two ordered streams, preserving the order.
      * @param <T> the type of the elements in the lists.
-     * @param firstStream the first stream.
-     * @param secondStream the second stream.
-     * @param comp a comparator for determining the order of the elements.
-     * @param combiner a function for combining two elements. The first argument of the function is the one in the first stream,
+     * @param firstStream The first stream.
+     * @param secondStream The second stream.
+     * @param comp A comparator for determining the order of the elements.
+     * @param combiner A function for combining two elements. The first argument of the function is the one in the first stream,
      * whereas the second argument is the element in the second stream.
      * @return the intersection of the streams.
      */
@@ -211,11 +206,11 @@ public class OrderedListCombiner
     
     /**
      * Intersects two ordered streams/lists, represented by iterators, preserving the order.
-     * @param <T> the type of the elements in the lists.
-     * @param firstIter the first iterator.
-     * @param secondIter the second iterator.
-     * @param comp a comparator for determining the order of the elements.
-     * @param combiner a function for combining two elements. The first argument of the function is the one in the first stream,
+     * @param <T> The type of the elements in the lists.
+     * @param firstIter The first iterator.
+     * @param secondIter The second iterator.
+     * @param comp A comparator for determining the order of the elements.
+     * @param combiner A function for combining two elements. The first argument of the function is the one in the first stream,
      * whereas the second argument is the element in the second stream.
      * @return the intersection of the streams/lists.
      */
@@ -281,9 +276,9 @@ public class OrderedListCombiner
     /**
      * Finds the size of the intersection of two ordered lists.
      * @param <T> the type of the elements in the lists.
-     * @param firstList the first list.
-     * @param secondList the second list.
-     * @param comp a comparator for determining the order of the elements.
+     * @param firstList The first list.
+     * @param secondList The second list.
+     * @param comp A comparator for determining the order of the elements.
      * @return the size of the intersection of the lists.
      */
     public static <T> int intersectListsSize(List<T> firstList, List<T> secondList, Comparator<T> comp)
@@ -293,10 +288,10 @@ public class OrderedListCombiner
     
     /**
      * Finds the size of the intersection of two ordered streams.
-     * @param <T> the type of the elements in the lists.
-     * @param firstStream the first stream.
-     * @param secondStream the second stream.
-     * @param comp a comparator for determining the order of the elements.
+     * @param <T> The type of the elements in the lists.
+     * @param firstStream The first stream.
+     * @param secondStream The second stream.
+     * @param comp A comparator for determining the order of the elements.
      * @return the size of the intersection of the streams.
      */
     public static <T> int intersectListsSize(Stream<T> firstStream, Stream<T> secondStream, Comparator<T> comp)
@@ -307,9 +302,9 @@ public class OrderedListCombiner
     /**
      * Finds the size of the intersection of two ordered streams/lists.
      * @param <T> The type of the elements.
-     * @param firstIter the iterator representing the first list/stream.
-     * @param secondIter the iterator representing the second list/stream.
-     * @param comp the comparator.
+     * @param firstIter The iterator representing the first list/stream.
+     * @param secondIter The iterator representing the second list/stream.
+     * @param comp The comparator.
      * @return the size of the intersection.
      */
     public static <T> int intersectListsSize(Iterator<T> firstIter, Iterator<T> secondIter, Comparator<T> comp)
@@ -372,10 +367,10 @@ public class OrderedListCombiner
     
     /**
      * Checks whether the intersection of two ordered lists is empty or not.
-     * @param <T> the type of the elements.
-     * @param firstList the first list.
-     * @param secondList the second list.
-     * @param comp a comparator.
+     * @param <T> The type of the elements.
+     * @param firstList The first list.
+     * @param secondList The second list.
+     * @param comp A comparator.
      * @return true if the intersection has elements, false otherwise.
      */
     public static <T> boolean intersectionHasElements(List<T> firstList, List<T> secondList, Comparator<T> comp)
@@ -385,10 +380,10 @@ public class OrderedListCombiner
     
     /**
      * Checks whether the intersection of two ordered lists is empty or not.
-     * @param <T> the type of the elements.
-     * @param firstList a stream containing the first list.
-     * @param secondList a stream containing the second list.
-     * @param comp a comparator.
+     * @param <T> The type of the elements.
+     * @param firstList A stream containing the first list.
+     * @param secondList A stream containing the second list.
+     * @param comp A comparator.
      * @return true if the intersection has elements, false otherwise.
      */
     public static <T> boolean intersectionHaslements(Stream<T> firstList, Stream<T> secondList, Comparator<T> comp)
@@ -398,10 +393,10 @@ public class OrderedListCombiner
     
     /**
      * Checks whether the intersection of two ordered lists is empty or not.
-     * @param <T> the type of the elements.
-     * @param firstList the iterator of the first list.
-     * @param secondList the iterator of the second list.
-     * @param comp a comparator.
+     * @param <T> The type of the elements.
+     * @param firstList The iterator of the first list.
+     * @param secondList The iterator of the second list.
+     * @param comp A comparator.
      * @return true if the intersection has elements, false otherwise.
      */
     public static <T> boolean intersectionHasElements(Iterator<T> firstList, Iterator<T> secondList, Comparator<T> comp)
@@ -430,15 +425,14 @@ public class OrderedListCombiner
             while(true);
         }
     }
-    
 
     /**
      * Finds the union and intersection of two ordered lists, preserving the order.
-     * @param <T> the type of the elements in the lists.
-     * @param firstList the first list.
-     * @param secondList the second list.
-     * @param comp a comparator for determining the order of the elements.
-     * @param combiner a function for combining two elements. The first argument of the function is the one in the first stream,
+     * @param <T> The type of the elements in the lists.
+     * @param firstList The first list.
+     * @param secondList The second list.
+     * @param comp A comparator for determining the order of the elements.
+     * @param combiner A function for combining two elements. The first argument of the function is the one in the first stream,
      * whereas the second argument is the element in the second stream.
      * @return a pair containing the union of the streams/lists in the first element, and the intersection in the other.
      */
@@ -449,11 +443,11 @@ public class OrderedListCombiner
     
     /**
      * Finds the union and intersection of two ordered streams, preserving the order.
-     * @param <T> the type of the elements in the streams.
-     * @param firstList the first streams.
-     * @param secondList the second streams.
-     * @param comp a comparator for determining the order of the elements.
-     * @param combiner a function for combining two elements. The first argument of the function is the one in the first stream,
+     * @param <T> The type of the elements in the streams.
+     * @param firstList The first streams.
+     * @param secondList The second streams.
+     * @param comp A comparator for determining the order of the elements.
+     * @param combiner A function for combining two elements. The first argument of the function is the one in the first stream,
      * whereas the second argument is the element in the second stream.
      * @return a pair containing the union of the streams/lists in the first element, and the intersection in the other.
      */
@@ -464,11 +458,11 @@ public class OrderedListCombiner
     
     /**
      * Finds the union and intersection of two ordered streams/lists, represented by iterators, preserving the order.
-     * @param <T> the type of the elements in the lists.
-     * @param firstIterator the first iterator.
-     * @param secondIterator the second iterator.
-     * @param comp a comparator for determining the order of the elements.
-     * @param combiner a function for combining two elements. The first argument of the function is the one in the first stream,
+     * @param <T> The type of the elements in the lists.
+     * @param firstIterator The first iterator.
+     * @param secondIterator The second iterator.
+     * @param comp A comparator for determining the order of the elements.
+     * @param combiner A function for combining two elements. The first argument of the function is the one in the first stream,
      * whereas the second argument is the element in the second stream.
      * @return a pair containing the union of the streams/lists in the first element, and the intersection in the other.
      */
@@ -519,10 +513,10 @@ public class OrderedListCombiner
     
     /**
      * Finds the union and intersection of two ordered lists, preserving the order.
-     * @param <T> the type of the elements in the lists.
-     * @param firstList the first list.
-     * @param secondList the second list.
-     * @param comp a comparator for determining the order of the elements.
+     * @param <T> The type of the elements in the lists.
+     * @param firstList The first list.
+     * @param secondList The second list.
+     * @param comp A comparator for determining the order of the elements.
      * @return a pair containing the union of the streams/lists in the first element, and the intersection in the other.
      */
     public static <T> Pair<Integer> mergeAndIntersectListsSize(List<T> firstList, List<T> secondList, Comparator<T> comp)
@@ -532,10 +526,10 @@ public class OrderedListCombiner
     
     /**
      * Finds the union and intersection of two ordered streams, preserving the order.
-     * @param <T> the type of the elements in the streams.
-     * @param firstList the first streams.
-     * @param secondList the second streams.
-     * @param comp a comparator for determining the order of the elements.
+     * @param <T> The type of the elements in the streams.
+     * @param firstList The first streams.
+     * @param secondList The second streams.
+     * @param comp A comparator for determining the order of the elements.
      * @return a pair containing the union of the streams/lists in the first element, and the intersection in the other.
      */
     public static <T> Pair<Integer> mergeAndIntersectListsSize(Stream<T> firstList, Stream<T> secondList, Comparator<T> comp)
@@ -545,10 +539,10 @@ public class OrderedListCombiner
     
     /**
      * Finds the union and intersection of two ordered streams/lists, represented by iterators, preserving the order.
-     * @param <T> the type of the elements in the lists.
-     * @param firstIterator the first iterator.
-     * @param secondIterator the second iterator.
-     * @param comp a comparator for determining the order of the elements.
+     * @param <T> The type of the elements in the lists.
+     * @param firstIterator The first iterator.
+     * @param secondIterator The second iterator.
+     * @param comp A comparator for determining the order of the elements.
      * @return a pair containing the union of the streams/lists in the first element, and the intersection in the other.
      */
     public static <T> Pair<Integer> mergeAndIntersectListsSize(Iterator<T> firstIterator, Iterator<T> secondIterator, Comparator<T> comp)

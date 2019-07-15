@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
 /**
  * Writes a graph to a file.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
- * @param <U> Type of the users.
+ * @param <V> Type of the vertices.
  */
-public class TextGraphWriter<U> implements GraphWriter<U>
+public class TextGraphWriter<V> implements GraphWriter<V>
 {
     /**
      * The delimiter for separating fields.
@@ -44,7 +44,7 @@ public class TextGraphWriter<U> implements GraphWriter<U>
     }
     
     @Override
-    public boolean write(Graph<U> graph, String file)
+    public boolean write(Graph<V> graph, String file)
     {
         try
         {
@@ -57,13 +57,13 @@ public class TextGraphWriter<U> implements GraphWriter<U>
     }
 
     @Override
-    public boolean write(Graph<U> graph, OutputStream file)
+    public boolean write(Graph<V> graph, OutputStream file)
     {
         return this.write(graph, file, true, false);
     }
 
     @Override
-    public boolean write(Graph<U> graph, String file, boolean writeWeights, boolean writeTypes)
+    public boolean write(Graph<V> graph, String file, boolean writeWeights, boolean writeTypes)
     {
         try
         {
@@ -76,7 +76,7 @@ public class TextGraphWriter<U> implements GraphWriter<U>
     }
 
     @Override
-    public boolean write(Graph<U> graph, OutputStream file, boolean writeWeights, boolean writeTypes)
+    public boolean write(Graph<V> graph, OutputStream file, boolean writeWeights, boolean writeTypes)
     {
         try
         {
@@ -102,7 +102,7 @@ public class TextGraphWriter<U> implements GraphWriter<U>
      * @param writeTypes Indicates if types have to be written or not.
      * @return true if everything went OK, false if not.
      */
-    private boolean writeSimpleGraph(Graph<U> graph, BufferedWriter bw, boolean writeWeights, boolean writeTypes)
+    private boolean writeSimpleGraph(Graph<V> graph, BufferedWriter bw, boolean writeWeights, boolean writeTypes)
     {
         boolean directed = graph.isDirected();
         
@@ -110,11 +110,11 @@ public class TextGraphWriter<U> implements GraphWriter<U>
         {
             if(directed)
             {
-                List<U> nodes = graph.getAllNodes().collect(Collectors.toCollection(ArrayList::new));
-                for(U node : nodes)
+                List<V> nodes = graph.getAllNodes().collect(Collectors.toCollection(ArrayList::new));
+                for(V node : nodes)
                 {
-                    List<U> adjacentNodes = graph.getAdjacentNodes(node).collect(Collectors.toCollection(ArrayList::new));
-                    for(U v : adjacentNodes)
+                    List<V> adjacentNodes = graph.getAdjacentNodes(node).collect(Collectors.toCollection(ArrayList::new));
+                    for(V v : adjacentNodes)
                     {
                         Double weight = graph.getEdgeWeight(node, v);
                         Integer type = graph.getEdgeType(node, v);
@@ -131,12 +131,12 @@ public class TextGraphWriter<U> implements GraphWriter<U>
             }
             else
             {
-                Set<U> visited = new HashSet<>();
-                List<U> nodes = graph.getAllNodes().collect(Collectors.toCollection(ArrayList::new));
-                for(U node : nodes)
+                Set<V> visited = new HashSet<>();
+                List<V> nodes = graph.getAllNodes().collect(Collectors.toCollection(ArrayList::new));
+                for(V node : nodes)
                 {
-                    List<U> adjacentNodes = graph.getAdjacentNodes(node).filter(v -> !visited.contains(v)).collect(Collectors.toCollection(ArrayList::new));
-                    for(U v : adjacentNodes)
+                    List<V> adjacentNodes = graph.getAdjacentNodes(node).filter(v -> !visited.contains(v)).collect(Collectors.toCollection(ArrayList::new));
+                    for(V v : adjacentNodes)
                     {
                         Double weight = graph.getEdgeWeight(node, v);
                         Integer type = graph.getEdgeType(node, v);

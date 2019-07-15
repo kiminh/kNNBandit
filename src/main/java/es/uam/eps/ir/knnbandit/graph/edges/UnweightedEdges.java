@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import es.uam.eps.ir.ranksys.fast.preference.IdxPref;
 
 /**
- * Interface for unweighted edges
+ * Interface for unweighted edges.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  */

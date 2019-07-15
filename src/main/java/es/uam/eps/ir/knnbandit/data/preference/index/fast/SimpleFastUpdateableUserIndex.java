@@ -12,9 +12,8 @@ package es.uam.eps.ir.knnbandit.data.preference.index.fast;
 import es.uam.eps.ir.ranksys.fast.index.SimpleFastUserIndex;
 import java.util.stream.Stream;
 
-
 /**
- * Simple implementation of FastUpdateableUserIndex backed by a bi-map IdxIndex
+ * Simple implementation of FastUpdateableUserIndex backed by a bi-map IdxIndex.
  *
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)

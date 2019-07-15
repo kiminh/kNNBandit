@@ -15,16 +15,16 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * Fast implementation for an weighted relation. Represented items have indexes between 0 and N-1, where N
+ * Fast implementation for a weighted relation. Represented items have indexes between 0 and N-1, where N
  * is the number of items.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <W> type of the weight
+ * @param <W> Type of the weight.
  */
 public class FastWeightedPairwiseRelation<W> extends FastWeightedRelation<W>
 {
     /**
-     * Constructor. Builds an empty autorelation
+     * Constructor. Builds an empty autorelation.
      */
     public FastWeightedPairwiseRelation()
     {
@@ -33,7 +33,7 @@ public class FastWeightedPairwiseRelation<W> extends FastWeightedRelation<W>
     
     /**
      * Constructor. Builds an autorelation from previous information.
-     * @param weightsList The list of weights
+     * @param weightsList The list of weights.
      */
     public FastWeightedPairwiseRelation(List<List<IdxValue<W>>> weightsList)
     {
@@ -53,7 +53,7 @@ public class FastWeightedPairwiseRelation<W> extends FastWeightedRelation<W>
             }
         }
         
-        // Sorts the lists
+        // Sorts the lists.
         firstIdxList.parallelStream()
                 .filter(l -> l != null)
                 .forEach(l -> l.sort(Comparator.naturalOrder()));

@@ -12,7 +12,6 @@ package es.uam.eps.ir.knnbandit.recommendation.knn.user;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableItemIndex;
 import es.uam.eps.ir.knnbandit.data.preference.index.fast.FastUpdateableUserIndex;
 import es.uam.eps.ir.knnbandit.recommendation.InteractiveRecommender;
-
 import es.uam.eps.ir.knnbandit.recommendation.knn.similarities.UpdateableSimilarity;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
 import it.unimi.dsi.fastutil.ints.Int2DoubleOpenHashMap;
@@ -27,14 +26,14 @@ import org.jooq.lambda.tuple.Tuple3;
 import org.ranksys.core.util.tuples.Tuple2id;
 
 /**
- * Abstract version of a user-based kNN algorithm
+ * Abstract version of an interactive user-based kNN algorithm
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  */
 public abstract class AbstractInteractiveUserBasedKNN<U,I> extends InteractiveRecommender<U,I>
 {
     /**
-     * Updateable similarity
+     * Updateable similarity.
      */
     protected final UpdateableSimilarity sim;
     /**
@@ -54,19 +53,19 @@ public abstract class AbstractInteractiveUserBasedKNN<U,I> extends InteractiveRe
      */
     private final IntList userList;
     
-    private final boolean ignoreZeroes;
+    private final boolean ignoreZeros;
     
     /**
      * Constructor.
-     * @param uIndex user index.
-     * @param iIndex item index.
-     * @param prefData preference data.
-     * @param ignoreUnknown true if we must ignore unknown items when updating.
-     * @param ignoreZeroes true if we ignore zero ratings when updating.
-     * @param k number of neighbors to use.
-     * @param sim updateable similarity
+     * @param uIndex User index.
+     * @param iIndex Item index.
+     * @param prefData Preference data.
+     * @param ignoreUnknown True if we must ignore unknown items when updating.
+     * @param ignoreZeros True if we ignore zero ratings when updating.
+     * @param k Number of neighbors to use.
+     * @param sim Updateable similarity
      */
-    public AbstractInteractiveUserBasedKNN(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean ignoreZeroes, int k, UpdateableSimilarity sim)
+    public AbstractInteractiveUserBasedKNN(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean ignoreZeros, int k, UpdateableSimilarity sim)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown);
         this.sim = sim;
@@ -80,21 +79,21 @@ public abstract class AbstractInteractiveUserBasedKNN<U,I> extends InteractiveRe
                 return userList.indexOf(x.v1) - userList.indexOf(y.v1);
             return value;
         };
-        this.ignoreZeroes = ignoreZeroes;
+        this.ignoreZeros = ignoreZeros;
     }
     
     /**
      * Constructor.
-     * @param uIndex user index.
-     * @param iIndex item index.
-     * @param prefData preference data.
-     * @param ignoreUnknown true if we must ignore unknown items when updating.
-     * @param ignoreZeroes true if we ignore zero ratings when updating.
-     * @param notReciprocal true if we do not recommend reciprocal social links, false otherwise
-     * @param k number of neighbors to use.
-     * @param sim updateable similarity
+     * @param uIndex User index.
+     * @param iIndex Item index.
+     * @param prefData Preference data.
+     * @param ignoreUnknown True if we must ignore unknown items when updating.
+     * @param ignoreZeros True if we ignore zero ratings when updating.
+     * @param notReciprocal True if we do not recommend reciprocal social links, false otherwise.
+     * @param k Number of neighbors to use.
+     * @param sim Updateable similarity
      */
-    public AbstractInteractiveUserBasedKNN(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean ignoreZeroes, boolean notReciprocal, int k, UpdateableSimilarity sim)
+    public AbstractInteractiveUserBasedKNN(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean ignoreZeros, boolean notReciprocal, int k, UpdateableSimilarity sim)
     {
         super(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal);
         this.sim = sim;
@@ -108,7 +107,7 @@ public abstract class AbstractInteractiveUserBasedKNN<U,I> extends InteractiveRe
                 return userList.indexOf(x.v1) - userList.indexOf(y.v1);
             return value;
         };      
-        this.ignoreZeroes = ignoreZeroes;
+        this.ignoreZeros = ignoreZeros;
     }
     
     @Override
@@ -149,7 +148,7 @@ public abstract class AbstractInteractiveUserBasedKNN<U,I> extends InteractiveRe
             this.trainData.getUidxPreferences(neigh.v1).forEach(vs -> 
             {
                 double p = neigh.v2*this.score(neigh.v1, vs.v2);
-                if(!ignoreZeroes || p > 0)
+                if(!ignoreZeros || p > 0)
                 {
                     itemScores.addTo(vs.v1, p);
                 }
@@ -177,7 +176,6 @@ public abstract class AbstractInteractiveUserBasedKNN<U,I> extends InteractiveRe
             }
         }
         
-        
         int topSize = top.size();
         if(top.isEmpty()) return list.get(rng.nextInt(list.size()));
         else if(topSize == 1) return top.get(0);
@@ -185,9 +183,9 @@ public abstract class AbstractInteractiveUserBasedKNN<U,I> extends InteractiveRe
     }
 
     /**
-     * Function of the rating.
-     * @param vidx identifier of the neighbor user.
-     * @param rating the rating value
+     * Scoring function.
+     * @param vidx Identifier of the neighbor user.
+     * @param rating The rating value.
      * @return 
      */
     protected abstract double score(int vidx, double rating);

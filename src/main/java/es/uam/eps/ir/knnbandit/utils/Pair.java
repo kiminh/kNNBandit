@@ -13,7 +13,7 @@ package es.uam.eps.ir.knnbandit.utils;
  * Class that represents a pair of objects of the same type.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> type of the objects
+ * @param <U> Type of the objects.
  */
 public class Pair<U> extends Tuple2oo<U,U>
 {

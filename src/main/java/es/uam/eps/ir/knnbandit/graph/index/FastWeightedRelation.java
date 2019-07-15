@@ -24,16 +24,16 @@ import java.util.stream.Stream;
 public abstract class FastWeightedRelation<W> implements Relation<W>
 {
     /**
-     * Links from the first kind of objects to the second. Indexed by the second. Ej: Incident edges.
+     * Links from the first kind of objects to the second. Indexed by the second. E.g. incident edges.
      */
     protected final List<List<IdxValue<W>>> firstIdxList;
     /**
-     * Links from the second kind of objects to the first. Indexed by the first. Ej: Adjacent edges.
+     * Links from the second kind of objects to the first. Indexed by the first. E.g. outgoing edges.
      */
     protected final List<List<IdxValue<W>>> secondIdxList;
     
     /**
-     * Constructor. Builds an empty weighted relation
+     * Constructor. Builds an empty weighted relation.
      */
     public FastWeightedRelation()
     {
@@ -43,8 +43,8 @@ public abstract class FastWeightedRelation<W> implements Relation<W>
     
     /**
      * Constructor.
-     * @param firstIdxList Links from the first kind of objects to the second. Indexed by the second. Ej: Incident edges.
-     * @param secondIdxList Links from the second kind of objects to the first. Indexed by the first. Ej: Adjacent edges.
+     * @param firstIdxList Links from the first kind of objects to the second. Indexed by the second. E.g. incident edges.
+     * @param secondIdxList Links from the second kind of objects to the first. Indexed by the first. E.g. outgoing edges.
      */
     public FastWeightedRelation(List<List<IdxValue<W>>> firstIdxList, List<List<IdxValue<W>>> secondIdxList)
     {
@@ -192,7 +192,6 @@ public abstract class FastWeightedRelation<W> implements Relation<W>
         return true;
     }
 
-   
     @Override
     public boolean removePair(int firstIdx, int secondIdx) 
     {
@@ -216,10 +215,10 @@ public abstract class FastWeightedRelation<W> implements Relation<W>
     
     /**
      * Given a pair (firstIdx, secondIdx), finds it in the graph using binary search.
-     * @param firstIdx the first element.
-     * @param secondIdx the second element.
-     * @param weight the weight value.
-     * @param firstList true if the element has to be found on the list of first elements,
+     * @param firstIdx The first element.
+     * @param secondIdx The second element.
+     * @param weight The weight value.
+     * @param firstList True if the element has to be found on the list of first elements,
      * false if it has to be found on the list of second elements.
      * @return the index of the element if it exists, - (insertpoint - 1) if it does not,
      * where insertpoint is the corresponding point where the element should be added.

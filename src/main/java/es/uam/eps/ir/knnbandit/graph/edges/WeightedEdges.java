@@ -9,7 +9,6 @@
  */
 package es.uam.eps.ir.knnbandit.graph.edges;
 
-
 import es.uam.eps.ir.ranksys.fast.preference.IdxPref;
 
 import java.util.stream.Stream;
@@ -25,7 +24,7 @@ public interface WeightedEdges extends Edges
     /**
      * Given a node, finds all the weights of edges such that the edge (u to node) is in the graph.
      * @param node The node.
-     * @return A stream of the weights of incident nodes.
+     * @return a stream of the weights of incident nodes.
      */
     @Override
     public default Stream<IdxPref> getIncidentWeights(int node)
@@ -35,8 +34,8 @@ public interface WeightedEdges extends Edges
     
     /**
      * Given a node, finds all the weights of edges u such that the edge (node to u) is in the graph.
-     * @param node The node
-     * @return A stream containing the weights adjacent nodes.
+     * @param node The node.
+     * @return a stream containing the weights adjacent nodes.
      */
     @Override
     public default Stream<IdxPref> getAdjacentWeights(int node)
@@ -46,8 +45,8 @@ public interface WeightedEdges extends Edges
     
     /**
      * Given a node, finds all the all the weights of edges so that either (node to u) or (u to node) are in the graph.
-     * @param node The node
-     * @return A stream containing all the weights of the nodes in the neighbourhood.
+     * @param node The node.
+     * @return a stream containing all the weights of the nodes in the neighbourhood.
      */
     @Override
     public default Stream<IdxPref> getNeighbourWeights(int node)

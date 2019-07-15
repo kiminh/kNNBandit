@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * Unweighted relation between different types of objects
+ * Unweighted relation between different types of objects.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  * @param <W> type of the weights.
@@ -25,17 +25,17 @@ public class FastUnweightedPairwiseRelation<W> extends FastUnweightedRelation<W>
 {
 
     /**
-     * Links from the first kind of objects to the second. Indexed by the second. Ej: Incident edges.
+     * Links from the first kind of objects to the second. Indexed by the second. E.g. incident edges.
      */
     private final List<List<Integer>> firstIdxList;
     /**
-     * Links from the second kind of objects to the first. Indexed by the first. Ej: Adjacent edges.
+     * Links from the second kind of objects to the first. Indexed by the first. E.g. outgoing edges.
      */
     private final List<List<Integer>> secondIdxList;
     
     
     /**
-     * Constructor. Builds an empty autorelation
+     * Constructor. Builds an empty autorelation.
      */
     public FastUnweightedPairwiseRelation()
     {
@@ -45,7 +45,7 @@ public class FastUnweightedPairwiseRelation<W> extends FastUnweightedRelation<W>
     
     /**
      * Constructor. Builds an autorelation from previous information.
-     * @param weightList list of weights.
+     * @param weightList List of weights.
      */
     public FastUnweightedPairwiseRelation(List<List<Integer>> weightList)
     {
@@ -65,10 +65,9 @@ public class FastUnweightedPairwiseRelation<W> extends FastUnweightedRelation<W>
             {
                 this.firstIdxList.get(list.get(j)).add(i);
             }
-            
         }
         
-        // Sorts the lists
+        // Sorts the lists.
         firstIdxList.parallelStream()
                 .filter(l -> l != null)
                 .forEach(l -> l.sort(Comparator.naturalOrder()));
@@ -144,7 +143,6 @@ public class FastUnweightedPairwiseRelation<W> extends FastUnweightedRelation<W>
             return false;
         if(firstIdx > size)
             return false;
-
         
         this.secondIdxList.add(new ArrayList<>());
         
@@ -195,7 +193,6 @@ public class FastUnweightedPairwiseRelation<W> extends FastUnweightedRelation<W>
     {
         return null;
     }
-
     
     @Override
     public boolean containsPair(int firstIdx, int secondIdx)
@@ -246,9 +243,9 @@ public class FastUnweightedPairwiseRelation<W> extends FastUnweightedRelation<W>
     
     /**
      * Given a pair (firstIdx, secondIdx), finds it in the graph using binary search.
-     * @param firstIdx the first element.
-     * @param secondIdx the second element.
-     * @param firstList true if the element has to be found on the list of first elements,
+     * @param firstIdx The first element.
+     * @param secondIdx The second element.
+     * @param firstList True if the element has to be found on the list of first elements,
      * false if it has to be found on the list of second elements.
      * @return the index of the element if it exists, - (insertpoint - 1) if it does not,
      * where insertpoint is the corresponding point where the element should be added.

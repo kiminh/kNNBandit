@@ -16,47 +16,47 @@ import java.io.OutputStream;
  * Interface for graph writers.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> type of the users.
+ * @param <V> type of the vertices.
  */
-public interface GraphWriter<U>
+public interface GraphWriter<V>
 {
     /**
      * Writes a graph into a file. It writes the weights, but not the types
      * @param graph The graph we want to write.
      * @param file The file.
-     * @return true if everything went OK, false if not.
+     * @return true if everything went OK, false otherwise.
      */
-    public boolean write(Graph<U> graph, String file);
+    public boolean write(Graph<V> graph, String file);
     
     /**
-     * Writes a graph into an output stream. It writes the weights, but not the types
+     * Writes a graph into an output stream. It writes the weights, but not the types.
      * @param graph The graph we want to write.
      * @param file The output stream.
-     * @return true if everything went OK, false if not.
+     * @return true if everything went OK, false otherwise.
      */
-    public boolean write(Graph<U> graph, OutputStream file);
+    public boolean write(Graph<V> graph, OutputStream file);
     
     /**
      * Writes a graph into a file. Simple graphs types are written, while multigraph
      * types are not.
      * @param graph The graph we want to write.
      * @param file The file.
-     * @param writeWeights indicates if weights have to be written.
-     * @param writeTypes indicates if types have to be written.
-     * @return true if everything is ok, false if not
+     * @param writeWeights Indicates if weights have to be written.
+     * @param writeTypes Indicates if types have to be written.
+     * @return true if everything is ok, false otherwise.
      */
-    public boolean write(Graph<U> graph, String file, boolean writeWeights, boolean writeTypes);
+    public boolean write(Graph<V> graph, String file, boolean writeWeights, boolean writeTypes);
     
     /**
      * Writes a graph into a output stream. Simple graphs types are written, while multigraph
      * types are not.
      * @param graph The graph we want to write.
      * @param file The file.
-     * @param writeWeights indicates if weights have to be written.
-     * @param writeTypes indicates if types have to be written.
-     * @return true if everything is ok, false if not
+     * @param writeWeights Indicates if weights have to be written.
+     * @param writeTypes Indicates if types have to be written.
+     * @return true if everything is ok, false otherwise.
      */
-    public boolean write(Graph<U> graph, OutputStream file, boolean writeWeights, boolean writeTypes);
+    public boolean write(Graph<V> graph, OutputStream file, boolean writeWeights, boolean writeTypes);
     
     
 }

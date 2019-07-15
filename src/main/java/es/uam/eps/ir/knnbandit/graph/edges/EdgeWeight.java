@@ -23,7 +23,7 @@ public class EdgeWeight extends IdxPref
 {    
     /**
      * Constructor.
-     * @param idx Destination node identifier.
+     * @param idx Incoming node identifier.
      * @param value weight value.
      */
     public EdgeWeight(int idx, double value)
@@ -32,8 +32,8 @@ public class EdgeWeight extends IdxPref
     }
     
     /**
-     * Constructor. Returns the default value weight.
-     * @param idx Destination node identifier.
+     * Constructor. Assigns the default value weight.
+     * @param idx Incoming node identifier.
      */
     public EdgeWeight(int idx)
     {

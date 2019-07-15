@@ -17,60 +17,60 @@ import java.io.InputStream;
  * Interface for graph readers.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> type of the users.
+ * @param <V> Type of the vertices.
  */
-public interface GraphReader<U>
+public interface GraphReader<V>
 {
     /**
      * Given a file, reads a graph. 
-     * @param file the file containing the nodes.
-     * @return the graph if everything goes OK, null if not.
+     * @param file The file containing the nodes.
+     * @return the graph if everything goes ok, null otherwise.
      */
-    public Graph<U> read(String file);
+    public Graph<V> read(String file);
     
     /**
      * Given a file, reads a graph.
      * @param file The file containing the graph.
-     * @param readWeights true if the file contains weights, false if not.
-     * @param readTypes true if the file contains types, false if not.
-     * @return the graph if everything goes OK, null if not.
+     * @param readWeights True if the file contains weights, false otherwise.
+     * @param readTypes True if the file contains types, false otherwise.
+     * @return the graph if everything goes ok, null otherwise.
      */
-    public Graph<U> read(String file, boolean readWeights, boolean readTypes);
+    public Graph<V> read(String file, boolean readWeights, boolean readTypes);
     
     /**
      * Given an file, reads a graph.
      * @param file The file containing the graph.
-     * @param readWeights true if the file contains weights, false if not.
-     * @param readTypes true if the file contains graph types.
-     * @param users an index containing the users in the network.
-     * @return the graph if everything goes OK, null if not.
+     * @param readWeights True if the file contains weights, false otherwise.
+     * @param readTypes True if the file contains graph types.
+     * @param nodes An index containing the nodes in the network.
+     * @return the graph if everything goes ok, null otherwise.
      */
-    public Graph<U> read(String file, boolean readWeights, boolean readTypes, Index<U> users);
+    public Graph<V> read(String file, boolean readWeights, boolean readTypes, Index<V> nodes);
     
     /**
-     * Given an input stream, reads a file from it (for reading embedded graphs in greater files)
+     * Given an input stream, reads a file from it (for reading embedded graphs in greater files).
      * By default, assumes the graph contains information about weights, but not about types.
-     * @param stream the input stream we read the graph from.
-     * @return the graph if everything goes OK, null if not.
+     * @param stream The input stream we read the graph from.
+     * @return the graph if everything goes ok, null otherwise.
      */
-    public Graph<U> read(InputStream stream);
+    public Graph<V> read(InputStream stream);
     
     /**
-     * Given an input stream, reads a file from it (for reading embedded graphs in greater files)
-     * @param stream the input stream we read the graph from.
-     * @param readWeights true if the file contains weights, false if not.
-     * @param readTypes true if the file contains graph types.
-     * @return the graph if everything goes OK, null if not.
+     * Given an input stream, reads a file from it (for reading embedded graphs in greater files).
+     * @param stream The input stream we read the graph from.
+     * @param readWeights True if the file contains weights, false otherwise.
+     * @param readTypes True if the file contains graph types.
+     * @return the graph if everything goes ok, null otherwise.
      */
-    public Graph<U> read(InputStream stream, boolean readWeights, boolean readTypes);
+    public Graph<V> read(InputStream stream, boolean readWeights, boolean readTypes);
     
     /**
-     * Given an input stream, reads a file from it (for reading embedded graphs in greater files)
-     * @param stream the input stream we read the graph from.
-     * @param readWeights true if the file contains weights, false if not.
-     * @param readTypes true if the file contains graph types.
-     * @param users an index containing the users in the network.
-     * @return the graph if everything goes OK, null if not.
+     * Given an input stream, reads a file from it (for reading embedded graphs in greater files).
+     * @param stream The input stream we read the graph from.
+     * @param readWeights True if the file contains weights, false otherwise.
+     * @param readTypes True if the file contains graph types.
+     * @param nodes An index containing the nodes in the network.
+     * @return the graph if everything goes ok, null otherwise.
      */
-    public Graph<U> read(InputStream stream, boolean readWeights, boolean readTypes, Index<U> users);
+    public Graph<V> read(InputStream stream, boolean readWeights, boolean readTypes, Index<V> nodes);
 }

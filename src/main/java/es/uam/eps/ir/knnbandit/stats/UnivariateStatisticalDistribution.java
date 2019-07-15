@@ -18,14 +18,14 @@ public interface UnivariateStatisticalDistribution
 {
     /**
      * Updates the parameters of the distribution.
-     * @param values the corresponding values.
+     * @param values The corresponding values.
      */
     public void update(Double... values);
     
     /**
-     * Updates a single parameter of the distribution
-     * @param value the new value
-     * @param i the index of the parameter.
+     * Updates a single parameter of the distribution.
+     * @param value The new value.
+     * @param i The index of the parameter.
      */
     public void update(double value, int i);
     
@@ -37,14 +37,14 @@ public interface UnivariateStatisticalDistribution
     
     /**
      * Obtains the value of a given parameter.
-     * @param i the index of the parameter.
+     * @param i The index of the parameter.
      * @return the value of the parameter.
      */
     public double getParameter(int i);
     
     /**
      * Obtains a random sample from the distribution.
-     * @return the random sample.
+     * @return The random sample.
      */
     public double sample();
 }

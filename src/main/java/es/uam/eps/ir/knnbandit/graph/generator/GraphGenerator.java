@@ -26,7 +26,7 @@ public interface GraphGenerator<V>
     public void configure(Object... configuration);
     /**
      * Generates a graph.
-     * @return The generated graph.
+     * @return the generated graph.
      * @throws GeneratorNotConfiguredException The generator is not configured.
      * @throws GeneratorBadConfiguredException The generator parameters are incorretct.
      */

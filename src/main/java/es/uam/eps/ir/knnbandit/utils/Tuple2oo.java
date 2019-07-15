@@ -15,8 +15,8 @@ import java.util.Objects;
  * Class that represents a pair of objects of different type.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Objects of the first type.
- * @param <I> Objects of the second type.
+ * @param <U> Type of first object.
+ * @param <I> Type of second object.
  */
 public class Tuple2oo<U,I>
 {

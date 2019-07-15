@@ -24,18 +24,17 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import org.jooq.lambda.tuple.Tuple3;
 
-
 /**
- * Incremental version of matrix factorization algorithms.
+ * Interactive version of matrix factorization algorithms.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the users.
- * @param <I> Type of the items.
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public class InteractiveMF<U,I> extends InteractiveRecommender<U,I>
 {
     /**
-     * Element for obtaining the factorized matrices.
+     * Factorizer for obtaining the factorized matrices.
      */
     private final Factorizer<U,I> factorizer;
     /**
@@ -57,12 +56,12 @@ public class InteractiveMF<U,I> extends InteractiveRecommender<U,I>
 
     /**
      * Constructor.
-     * @param uIndex user index.
-     * @param iIndex item index.
-     * @param prefData preference data.
-     * @param ignoreUnknown true if we must ignore unknown items when updating.
-     * @param k number of neighbors to use.
-     * @param factorizer element for obtaining the factorized matrices.
+     * @param uIndex User index.
+     * @param iIndex Item index.
+     * @param prefData Preference data.
+     * @param ignoreUnknown True if we must ignore unknown items when updating.
+     * @param k Number of neighbors to use.
+     * @param factorizer Factorizer for obtaining the factorized matrices.
      */
     public InteractiveMF(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, int k, Factorizer<U,I> factorizer)
     {
@@ -76,12 +75,12 @@ public class InteractiveMF<U,I> extends InteractiveRecommender<U,I>
     
     /**
      * Constructor.
-     * @param uIndex user index.
-     * @param iIndex item index.
-     * @param prefData preference data.
-     * @param ignoreUnknown true if we must ignore unknown items when updating.
-     * @param k number of neighbors to use.
-     * @param factorizer element for obtaining the factorized matrices.
+     * @param uIndex User index.
+     * @param iIndex Item index.
+     * @param prefData Preference data.
+     * @param ignoreUnknown True if we must ignore unknown items when updating.
+     * @param k Number of neighbors to use.
+     * @param factorizer Factorizer for obtaining the factorized matrices.
      */
     public InteractiveMF(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean notReciprocal, int k, Factorizer<U,I> factorizer)
     {

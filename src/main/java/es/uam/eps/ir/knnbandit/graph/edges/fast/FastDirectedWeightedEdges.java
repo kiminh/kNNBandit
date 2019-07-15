@@ -9,7 +9,6 @@
  */
 package es.uam.eps.ir.knnbandit.graph.edges.fast;
 
-
 import es.uam.eps.ir.knnbandit.graph.edges.DirectedEdges;
 import es.uam.eps.ir.knnbandit.graph.edges.EdgeType;
 import es.uam.eps.ir.knnbandit.graph.edges.EdgeWeight;
@@ -34,7 +33,6 @@ import java.util.stream.Stream;
  */
 public class FastDirectedWeightedEdges extends FastEdges implements DirectedEdges, WeightedEdges
 {
-
     /**
      * Constructor.
      */
@@ -89,7 +87,6 @@ public class FastDirectedWeightedEdges extends FastEdges implements DirectedEdge
         }
         
         return false;
-            
     }
     
     @Override
@@ -141,7 +138,6 @@ public class FastDirectedWeightedEdges extends FastEdges implements DirectedEdge
             {
                 queue.add(new Tuple2oo<>(tuple.v2().next(), tuple.v2()));
             }
-            
         }
         
         if(currentNeigh != -1)
@@ -181,7 +177,7 @@ public class FastDirectedWeightedEdges extends FastEdges implements DirectedEdge
         return this.weights.firstsWithSeconds();
     }
 
-@Override
+    @Override
     public IntStream getNodesWithEdges() 
     {
         Iterator<Integer> iteratorIncident = this.getNodesWithIncidentEdges().iterator();

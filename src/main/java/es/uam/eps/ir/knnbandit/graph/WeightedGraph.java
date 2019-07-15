@@ -32,7 +32,7 @@ public interface WeightedGraph<V> extends Graph<V>
     
     /**
      * Given a node, finds all the nodes u such that the edge (node to u) is in the graph.
-     * @param node The node
+     * @param node The node.
      * @return A stream containing the adjacent nodes.
      */
     @Override
@@ -43,7 +43,7 @@ public interface WeightedGraph<V> extends Graph<V>
     
     /**
      * Given a node, finds all the nodes u so that either (node to u) or (u to node) are in the graph.
-     * @param node The node
+     * @param node The node.
      * @return A stream containing all the nodes in the neighbourhood.
      */
     @Override

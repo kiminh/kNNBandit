@@ -19,11 +19,11 @@ import java.util.Random;
 
 
 /**
- * Reinforcement learning version of a random algorithm.
+ * Interactive version of a random algorithm.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the users.
- * @param <I> Type of the items.
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public class RandomRecommender<U,I> extends InteractiveRecommender<U,I>
 {

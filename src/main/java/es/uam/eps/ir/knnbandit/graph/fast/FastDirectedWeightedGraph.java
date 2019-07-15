@@ -20,14 +20,13 @@ import no.uib.cipr.matrix.Matrix;
 import no.uib.cipr.matrix.sparse.LinkedSparseMatrix;
 
 /**
- * Fast implementation of a directed weighted graph. This implementation does not allow to remove nodes/edges
+ * Fast implementation of a directed weighted graph. This implementation does not allow to remove nodes/edges.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the users
+ * @param <V> Type of the vertices.
  */
-public class FastDirectedWeightedGraph<U> extends FastGraph<U> implements DirectedWeightedGraph<U>
+public class FastDirectedWeightedGraph<V> extends FastGraph<V> implements DirectedWeightedGraph<V>
 {
-
     /**
      * Constructor. 
      */
@@ -36,12 +35,12 @@ public class FastDirectedWeightedGraph<U> extends FastGraph<U> implements Direct
         super(new FastIndex<>(),new FastDirectedWeightedEdges());
     }
 
-    
     @Override
     public DoubleMatrix2D getAdjacencyMatrix(EdgeOrientation direction)
     {
         DoubleMatrix2D matrix = new SparseDoubleMatrix2D(new Long(this.getVertexCount()).intValue(), new Long(this.getVertexCount()).intValue());
-        // Creation of the adjacency matrix
+
+        // Creation of the adjacency matrix.
         for(int row = 0; row < matrix.rows(); ++row)
         {   
             for(int col = 0; col < matrix.rows(); ++col)

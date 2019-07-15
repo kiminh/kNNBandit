@@ -19,10 +19,10 @@ public interface ValueFunction
 {
     /**
      * Applies the function.
-     * @param uidx identifier of the user.
-     * @param iidx identifier of the item.
-     * @param currentValue current value of the arm.
-     * @param numTimes number of times the arm has been selected.
+     * @param uidx Identifier of the user.
+     * @param iidx Identifier of the item.
+     * @param currentValue Current value of the arm.
+     * @param numTimes Number of times the arm has been selected.
      * @return the value of the arm in our context.
      */
     public abstract double apply(int uidx, int iidx, double currentValue, double numTimes);

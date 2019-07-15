@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 public class FastWeightedAutoRelation<W> extends FastWeightedRelation<W> implements AutoRelation<W>
 {
     /**
-     * Constructor. Builds an empty autorelation
+     * Constructor. Builds an empty autorelation.
      */
     public FastWeightedAutoRelation()
     {
@@ -53,7 +53,7 @@ public class FastWeightedAutoRelation<W> extends FastWeightedRelation<W> impleme
             }
         }
         
-        // Sorts the lists
+        // Sorts the lists.
         firstIdxList.parallelStream()
                 .filter(l -> l != null)
                 .forEach(l -> l.sort(Comparator.naturalOrder()));
@@ -69,7 +69,6 @@ public class FastWeightedAutoRelation<W> extends FastWeightedRelation<W> impleme
         {
             return false;
         }
-        
         
         int count = this.firstIdxList.get(idx).size() + this.secondIdxList.get(idx).size();
         if(this.containsPair(idx, idx)) count -= 1;

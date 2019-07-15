@@ -73,7 +73,6 @@ public interface UndirectedEdges extends Edges
     {
         return this.getNeighbourTypes(node);
     }
-
     
     @Override
     public default Stream<IdxPref> getAdjacentWeights(int node)
@@ -98,7 +97,6 @@ public interface UndirectedEdges extends Edges
     {
         return this.getNeighbourWeights(node);
     }
-    
 
     @Override
     public default long getAdjacentCount(int node)

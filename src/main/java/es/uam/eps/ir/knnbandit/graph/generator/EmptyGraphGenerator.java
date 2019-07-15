@@ -20,20 +20,20 @@ import es.uam.eps.ir.knnbandit.graph.fast.FastUndirectedWeightedGraph;
  * Empty graph generator.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the users
+ * @param <V> Type of the vertices.
  */
-public class EmptyGraphGenerator<U> implements GraphGenerator<U>
+public class EmptyGraphGenerator<V> implements GraphGenerator<V>
 {
     /**
-     * Indicates if the graph is going to be directed.
+     * Indicates whether the graph is going to be directed.
      */
     private boolean directed;
     /**
-     * Indicates if the graph has been configured.
+     * Indicates whether the graph has been configured.
      */
     private boolean configured = false;
     /**
-     * Indicates if the graph has weights.
+     * Indicates whether the graph has weights.
      */
     private boolean weighted;
     
@@ -53,13 +53,12 @@ public class EmptyGraphGenerator<U> implements GraphGenerator<U>
         {
             configured = false;
         }
-        
     }
     
     /**
      * Configures the graph
-     * @param directed if the graph is going to be directed.
-     * @param weighted if the graph is going to be weighted.
+     * @param directed Whether the graph should be directed.
+     * @param weighted Whether the graph should be weighted.
      */
     public void configure(boolean directed, boolean weighted)
     {
@@ -69,12 +68,12 @@ public class EmptyGraphGenerator<U> implements GraphGenerator<U>
     }
     
     @Override
-    public Graph<U> generate() throws GeneratorNotConfiguredException, GeneratorBadConfiguredException
+    public Graph<V> generate() throws GeneratorNotConfiguredException, GeneratorBadConfiguredException
     {
         if(configured == false)
-            throw new GeneratorNotConfiguredException("Empty graph: The generator was not configured");
+            throw new GeneratorNotConfiguredException("Empty graph: the generator was not configured");
         
-        Graph<U> graph;
+        Graph<V> graph;
         if(directed)
             if(weighted)
                 graph = new FastDirectedWeightedGraph<>();

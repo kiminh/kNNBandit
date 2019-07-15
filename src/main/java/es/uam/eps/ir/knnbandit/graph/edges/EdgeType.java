@@ -22,8 +22,8 @@ import es.uam.eps.ir.knnbandit.graph.index.IdxValue;
 public class EdgeType extends IdxValue<Integer>
 {    
     /**
-     * Constructor
-     * @param idx identifier of the adjacent node.
+     * Constructor.
+     * @param idx Identifier of the adjacent node.
      * @param value value of the type.
      */
     public EdgeType(int idx, Integer value)
@@ -57,6 +57,5 @@ public class EdgeType extends IdxValue<Integer>
     {
         return 0;
     }
-
     
 }

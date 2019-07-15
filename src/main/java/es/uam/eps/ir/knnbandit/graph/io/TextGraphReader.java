@@ -26,53 +26,53 @@ import org.ranksys.formats.parsing.Parsers;
 /**
  * Reads a graph from a file.
  * 
- * The read format is the following:
+ * The file data format is the following:
  * 
- * userA userB (weight) (types)
+ * nodeA nodeB (weight) (types)
  * 
- * where the weight must appear only if the graph is weighted. In other case, this
+ * where the weight must appear only if the graph is weighted. Otherwise, this
  * column will be ignored. The type must only appear if it is going to be read. In
- * that case, the fourth column will be read. In other, it will be ignored. A weight
+ * that case, the fourth column will be read. otherwise, it will be ignored. A weight
  * column must exist in case the types appear, but it can be empty.
- * Every column appart from that ones will be ignored at loading
- * the graph. Columns are separated by a certain delimiter. By defect, this delimiter
+ * Every column apart from these ones will be ignored when loading
+ * the graph. Columns are separated by a certain delimiter. By default, this delimiter
  * is a tab space.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> The type of the user nodes.
+ * @param <V> The type of the vertices.
  */
-public class TextGraphReader<U> implements GraphReader<U>
+public class TextGraphReader<V> implements GraphReader<V>
 {
     /**
-     * Indicates if the graph to read is directed (true) or not (false)
+     * Indicates if the graph to read is directed (true) or not (false).
      */
     private final boolean directed;
     /**
-     * Indicates if the graph to read is weighted (true) or not (false)
+     * Indicates if the graph to read is weighted (true) or not (false).
      */
     private final boolean weighted;
     /**
-     * Indicates if the graph to read allows autoloops (true) or not (false)
+     * Indicates if the graph to read allows autoloops (true) or not (false).
      */    
     private final boolean selfloops;
     /**
-     * Parser for reading the users
+     * Parser for reading the vertices.
      */
-    private final Parser<U> uParser;
+    private final Parser<V> uParser;
     /**
-     * File delimiter
+     * Field delimiter.
      */
     private final String delimiter;
     
     /**
-     * Constructor
-     * @param directed Indicates if the graph to read is directed (true) or not (false)
-     * @param weighted Indicates if the graph to read is weighted (true) or not (false)
-     * @param selfloops Indicates if the graph to read allows autoloops (true) or not (false)
-     * @param delimiter File delimiter
-     * @param uParser Parser for reading the users
+     * Constructor.
+     * @param directed Indicates if the graph to read is directed (true) or not (false).
+     * @param weighted Indicates if the graph to read is weighted (true) or not (false).
+     * @param selfloops Indicates if the graph to read allows autoloops (true) or not (false).
+     * @param delimiter Field delimiter.
+     * @param uParser Parser for reading the vertices.
      */
-    public TextGraphReader(boolean directed, boolean weighted, boolean selfloops, String delimiter, Parser<U> uParser)
+    public TextGraphReader(boolean directed, boolean weighted, boolean selfloops, String delimiter, Parser<V> uParser)
     {
         this.directed = directed;
         this.weighted = weighted;
@@ -82,7 +82,7 @@ public class TextGraphReader<U> implements GraphReader<U>
     }
 
     @Override
-    public Graph<U> read(String file)
+    public Graph<V> read(String file)
     {
         try
         {
@@ -91,12 +91,13 @@ public class TextGraphReader<U> implements GraphReader<U>
         }
         catch(IOException ioe)
         {
+            ioe.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public Graph<U> read(String file, boolean readWeights, boolean readTypes)
+    public Graph<V> read(String file, boolean readWeights, boolean readTypes)
     {
         try
         {
@@ -105,35 +106,36 @@ public class TextGraphReader<U> implements GraphReader<U>
         }
         catch(IOException ioe)
         {
+            ioe.printStackTrace();
             return null;
         }    
     }
 
     @Override
-    public Graph<U> read(InputStream stream)
+    public Graph<V> read(InputStream stream)
     {
         return this.read(stream, true, false);
     }
 
     @Override
-    public Graph<U> read(InputStream stream, boolean readWeights, boolean readTypes)
+    public Graph<V> read(InputStream stream, boolean readWeights, boolean readTypes)
     {
         try{
-            GraphGenerator<U> gg = new EmptyGraphGenerator<>();
+            GraphGenerator<V> gg = new EmptyGraphGenerator<>();
 
-            EmptyGraphGenerator<U> empty = (EmptyGraphGenerator<U>) gg;
+            EmptyGraphGenerator<V> empty = (EmptyGraphGenerator<V>) gg;
             empty.configure(directed, weighted);
 
-            Graph<U> graph = gg.generate();
+            Graph<V> graph = gg.generate();
             
             try(BufferedReader br = new BufferedReader(new InputStreamReader(stream)))
             {
                 br.lines().forEach(line -> {
                     String[] splits = line.split(delimiter);
-                    U origin = uParser.parse(splits[0]);
-                    U destiny = uParser.parse(splits[1]);
+                    V source = uParser.parse(splits[0]);
+                    V dest = uParser.parse(splits[1]);
                     
-                    if(!origin.equals(destiny) || selfloops)
+                    if(!source.equals(dest) || selfloops)
                     {
                         double weight = 1.0;
                         int type = 0;
@@ -151,59 +153,64 @@ public class TextGraphReader<U> implements GraphReader<U>
                             type = Parsers.ip.parse(splits[2]);
                         }
                         
-                        graph.addEdge(origin, destiny, weight, type, true);
+                        graph.addEdge(source, dest, weight, type, true);
                     }
                 });
             }
+            
             catch(IOException ioe)
             {
+                ioe.printStackTrace();
                 return null;
             }
             
             return graph;
         }
+        
         catch(GeneratorNotConfiguredException | GeneratorBadConfiguredException ex)
         {
+            ex.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public Graph<U> read(String file, boolean readWeights, boolean readTypes, Index<U> users)
+    public Graph<V> read(String file, boolean readWeights, boolean readTypes, Index<V> nodes)
     {
         try
         {
             InputStream ios = new FileInputStream(file);
-            return this.read(ios, readWeights, readTypes, users);
+            return this.read(ios, readWeights, readTypes, nodes);
         }
         catch(IOException ioe)
         {
+            ioe.printStackTrace();
             return null;
         }    
     }
 
     @Override
-    public Graph<U> read(InputStream stream, boolean readWeights, boolean readTypes, Index<U> users)
+    public Graph<V> read(InputStream stream, boolean readWeights, boolean readTypes, Index<V> nodes)
     {
         try
         {
-            GraphGenerator<U> gg = new EmptyGraphGenerator<>();
+            GraphGenerator<V> gg = new EmptyGraphGenerator<>();
 
-            EmptyGraphGenerator<U> empty = (EmptyGraphGenerator<U>) gg;
+            EmptyGraphGenerator<V> empty = (EmptyGraphGenerator<V>) gg;
             empty.configure(directed, weighted);
 
-            Graph<U> graph = gg.generate();
+            Graph<V> graph = gg.generate();
             
-            users.getAllObjectsIds().sorted().forEach(i -> graph.addNode(users.idx2object(i)));
+            nodes.getAllObjectsIds().sorted().forEach(i -> graph.addNode(nodes.idx2object(i)));
             
             try(BufferedReader br = new BufferedReader(new InputStreamReader(stream)))
             {
                 br.lines().forEach(line -> {
                     String[] splits = line.split(delimiter);
-                    U origin = uParser.parse(splits[0]);
-                    U destiny = uParser.parse(splits[1]);
+                    V source = uParser.parse(splits[0]);
+                    V dest = uParser.parse(splits[1]);
                     
-                    if(!origin.equals(destiny) || selfloops)
+                    if(!source.equals(dest) || selfloops)
                     {
                         double weight = 1.0;
                         int type = 0;
@@ -221,25 +228,24 @@ public class TextGraphReader<U> implements GraphReader<U>
                             type = Parsers.ip.parse(splits[2]);
                         }
                         
-                        graph.addEdge(origin, destiny, weight, type, false);
+                        graph.addEdge(source, dest, weight, type, false);
                     }
                 });
             }
+            
             catch(IOException ioe)
             {
+                ioe.printStackTrace();
                 return null;
             }
             
             return graph;
         }
+        
         catch(GeneratorNotConfiguredException | GeneratorBadConfiguredException ex)
         {
+            ex.printStackTrace();
             return null;
         }
     }
-
-
-
-    
-    
 }

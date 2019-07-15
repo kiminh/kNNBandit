@@ -109,7 +109,7 @@ public class FastUndirectedUnweightedEdges extends FastEdges implements Undirect
         return false;
     }
     
-        @Override
+    @Override
     public IntStream getNodesWithIncidentEdges() 
     {
         return this.weights.secondsWithFirsts();

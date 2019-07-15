@@ -28,7 +28,6 @@ import es.uam.eps.ir.ranksys.mf.als.HKVFactorizer;
 import es.uam.eps.ir.ranksys.mf.als.PZTFactorizer;
 import es.uam.eps.ir.ranksys.mf.plsa.PLSAFactorizer;
 import org.ranksys.formats.parsing.Parsers;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -41,25 +40,25 @@ import java.util.Map;
 import java.util.function.DoubleUnaryOperator;
 
 /**
- * Class for selecting the bandit algorithms to apply.
+ * Class for selecting the interactive recommendation algorithms to apply in an experiments. The class encapsulates the set
+ * of algorithms, as well as some experiment settings.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the users.
- * @param <I> Type of the items.
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public class AlgorithmSelector<U,I>
 {
     /**
-     * A map of recommenders to apply
+     * A map of recommenders to apply.
      */
     private final Map<String, InteractiveRecommender<U,I>> recs;
-    
     /**
      * A cursor for reading the line configuration.
      */
     private int cursor;
     /**
-     * Indicates if the grid has been previously configured.
+     * Indicates if the selector has been previously configured.
      */
     private boolean configured;
     /**
@@ -79,7 +78,7 @@ public class AlgorithmSelector<U,I>
      */
     private boolean contactRec;
     /**
-     * true if reciprocal links should not be recommended, false otherwise.
+     * True if reciprocal links should not be recommended, false otherwise.
      */
     private boolean notReciprocal;
     /**
@@ -96,7 +95,7 @@ public class AlgorithmSelector<U,I>
     }
     
     /**
-     * Resets the selection
+     * Resets the selection.
      */
     public void reset()
     {
@@ -110,11 +109,11 @@ public class AlgorithmSelector<U,I>
     }
     
     /**
-     * Configures the bandit grid.
-     * @param uIndex user index.
-     * @param iIndex item index.
-     * @param prefData preference data.
-     * @param threshold relevance threshold
+     * Configures the experiment.
+     * @param uIndex User index.
+     * @param iIndex Item index.
+     * @param prefData Preference data.
+     * @param threshold Relevance threshold
      */
     public void configure(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, double threshold)
     {
@@ -128,12 +127,12 @@ public class AlgorithmSelector<U,I>
     }   
     
     /**
-     * Configures the bandit grid.
-     * @param uIndex user index.
-     * @param iIndex item index.
-     * @param prefData preference data.
-     * @param threshold relevance threshold
-     * @param notReciprocal true if we have to avoid recommending reciprocal items.
+     * Configures the experiment.
+     * @param uIndex User index.
+     * @param iIndex Item index.
+     * @param prefData Preference data.
+     * @param threshold Relevance threshold
+     * @param notReciprocal True if we have to avoid recommending reciprocal items.
      */
     public void configure(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U,I> prefData, double threshold, boolean notReciprocal)
     {
@@ -147,14 +146,14 @@ public class AlgorithmSelector<U,I>
     }   
     
     /**
-     * Given a string containing its configuration, obtains a reinforcement learning algorithm.
-     * @param algorithm the string containing the configuration of the algorithm.
-     * @return a reinforcement learning recommender.
-     * @throws es.uam.eps.ir.knnbandit.selector.UnconfiguredException if the grid is not configured.
+     * Given a string containing its configuration, obtains an interactive recommendation algorithm.
+     * @param algorithm The string containing the configuration of the algorithm.
+     * @return an interactive recommender.
+     * @throws es.uam.eps.ir.knnbandit.selector.UnconfiguredException if the experiment is not configured.
      */
     public InteractiveRecommender<U,I> getAlgorithm(String algorithm) throws UnconfiguredException
     {
-        if(!this.configured) throw new UnconfiguredException("The grid is not configured");
+        if(!this.configured) throw new UnconfiguredException("The experiment is not configured");
         cursor = 0;
         if(!algorithm.startsWith("//")) {
             String[] split = algorithm.split("-");
@@ -163,12 +162,12 @@ public class AlgorithmSelector<U,I>
             boolean unknownAlgorithm = false;
             switch (fullAlgorithm.get(0))
             {
-                case AlgorithmIdentifiers.RANDOM: // Random recommendation
+                case AlgorithmIdentifiers.RANDOM: // Random recommendation.
                     cursor++;
                     return !this.contactRec ? new RandomRecommender(uIndex, iIndex, prefData, true)
                             : new RandomRecommender(uIndex, iIndex, prefData, true, notReciprocal);
 
-                case AlgorithmIdentifiers.AVG: // Average rating recommendation
+                case AlgorithmIdentifiers.AVG: // Average rating recommendation.
                     cursor++;
                     if (fullAlgorithm.size() == cursor)
                         ignoreUnknown = false;
@@ -177,12 +176,12 @@ public class AlgorithmSelector<U,I>
                     return !this.contactRec ? new AvgRecommender(uIndex, iIndex, prefData, ignoreUnknown)
                             : new AvgRecommender(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal);
 
-                case AlgorithmIdentifiers.POP: // Relevant popularity recommendation
+                case AlgorithmIdentifiers.POP: // Popularity recommendation.
                     cursor++;
-                    return !this.contactRec ? new PopRecommender(uIndex, iIndex, prefData, true, threshold)
-                            : new PopRecommender(uIndex, iIndex, prefData, true, threshold, notReciprocal);
+                    return !this.contactRec ? new PopularityRecommender(uIndex, iIndex, prefData, true, threshold)
+                            : new PopularityRecommender(uIndex, iIndex, prefData, true, threshold, notReciprocal);
 
-                case AlgorithmIdentifiers.ITEMBANDIT: // Non-personalized bandits
+                case AlgorithmIdentifiers.ITEMBANDIT: // Non-personalized bandits.
                     cursor++;
                     ItemBandit<U, I> itemBandit = this.getItemBandit(fullAlgorithm.subList(1, split.length), prefData.numItems());
                     if (itemBandit == null)
@@ -190,7 +189,7 @@ public class AlgorithmSelector<U,I>
                         unknownAlgorithm = true;
                         break;
                     }
-                    ValueFunction ValFunc = ValueFunctions.identity();
+                    ValueFunction valFunc = ValueFunctions.identity();
 
                     if(fullAlgorithm.size() == cursor)
                     {
@@ -202,8 +201,8 @@ public class AlgorithmSelector<U,I>
                         cursor++;
                     }
 
-                    return !this.contactRec ? new ItemBanditRecommender(uIndex, iIndex, prefData, ignoreUnknown, itemBandit, ValFunc)
-                            : new ItemBanditRecommender(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal, itemBandit, ValFunc);
+                    return !this.contactRec ? new ItemBanditRecommender(uIndex, iIndex, prefData, ignoreUnknown, itemBandit, valFunc)
+                            : new ItemBanditRecommender(uIndex, iIndex, prefData, ignoreUnknown, notReciprocal, itemBandit, valFunc);
 
                 case AlgorithmIdentifiers.USERBASEDKNN: // User-based kNN.
                     cursor++;
@@ -296,8 +295,8 @@ public class AlgorithmSelector<U,I>
     }
 
     /**
-     * Adds a single algorithm to the grid.
-     * @param algorithm the string of the algorithm.
+     * Adds a single algorithm to the selector.
+     * @param algorithm The String name of the algorithm.
      * @throws es.uam.eps.ir.knnbandit.selector.UnconfiguredException
      */
     public void addAlgorithm(String algorithm) throws UnconfiguredException
@@ -313,7 +312,7 @@ public class AlgorithmSelector<U,I>
     
     /**
      * Adds a set of algorithms.
-     * @param file file containing the configuration of the algorithms.
+     * @param file File containing the configuration of the algorithms.
      * @throws IOException
      * @throws es.uam.eps.ir.knnbandit.selector.UnconfiguredException
      */
@@ -342,8 +341,8 @@ public class AlgorithmSelector<U,I>
     
     /**
      * Get an item bandit.
-     * @param split a list containing the configuration.
-     * @param numItems the number of items in the system.
+     * @param split A list containing the configuration.
+     * @param numItems The number of items in the system.
      * @return the corresponding item bandit if everything is ok, null otherwise.
      */
     private ItemBandit<U,I> getItemBandit(List<String> split, int numItems)
@@ -386,7 +385,7 @@ public class AlgorithmSelector<U,I>
 
     /**
      * Obtains a function to update an Epsilon-greedy algorithm.
-     * @param split strings containing the configuration.
+     * @param split Strings containing the configuration.
      * @return the update function if everything is OK, null otherwise.
      */
     private EpsilonGreedyUpdateFunction getUpdateFunction(List<String> split)
@@ -414,7 +413,7 @@ public class AlgorithmSelector<U,I>
 
     /**
      * Obtains a MF Factorizer.
-     * @param split strings containing the configuration.
+     * @param split Strings containing the configuration.
      * @return the factorizer if everything is OK, null otherwise.
      */
     private Factorizer<U, I> getFactorizer(List<String> split)

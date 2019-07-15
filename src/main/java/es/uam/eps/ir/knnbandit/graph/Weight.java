@@ -11,7 +11,7 @@ package es.uam.eps.ir.knnbandit.graph;
 
 
 /**
- * Class for expressing weights
+ * Class for expressing weights.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  * @param <I> The type of the identifier.
@@ -20,18 +20,18 @@ package es.uam.eps.ir.knnbandit.graph;
 public class Weight<I, W>
 {
     /**
-     * Identifier of the weight
+     * Identifier of the weight.
      */
     private final I idx;
     /**
-     * Value of the weight
+     * Value of the weight.
      */
     private final W weight;
     
     /**
      * Constructor.
-     * @param idx identifier.
-     * @param weight value.
+     * @param idx Identifier.
+     * @param weight Value.
      */
     public Weight(I idx, W weight)
     {

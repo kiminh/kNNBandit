@@ -20,12 +20,12 @@ public class BetaDistribution implements UnivariateStatisticalDistribution
 {
     /**
      * First parameter. In case that this distribution is used as a posterior
-     * of a Bernoulli distribution, this value equals to the number of hits - 1
+     * of a Bernoulli distribution, this value equals to the number of hits - 1.
      */
     private double alpha;
     /**
      * Second parameter. In case that this distribution is used as a posterior
-     * of a Bernoulli distribution, this value equals to the number of hits - 1
+     * of a Bernoulli distribution, this value equals to the number of hits - 1.
      */
     private double beta;
 
@@ -36,8 +36,8 @@ public class BetaDistribution implements UnivariateStatisticalDistribution
     
     /**
      * Constructor.
-     * @param alpha initial value of alpha
-     * @param beta initial value of beta
+     * @param alpha Initial value of alpha.
+     * @param beta Initial value of beta.
      */
     public BetaDistribution(double alpha, double beta)
     {
@@ -57,8 +57,8 @@ public class BetaDistribution implements UnivariateStatisticalDistribution
 
     /**
      * Updates the distribution by changing the values of alpha and beta.
-     * @param alpha new value for alpha.
-     * @param beta new value for beta.
+     * @param alpha New value for alpha.
+     * @param beta New value for beta.
      */
     public void update(double alpha, double beta)
     {
@@ -82,8 +82,8 @@ public class BetaDistribution implements UnivariateStatisticalDistribution
 
     /**
      * Updates the distribution by adding some values to the alpha and the beta.
-     * @param incrAlpha alpha increment.
-     * @param incrBeta beta increment.
+     * @param incrAlpha Alpha increment.
+     * @param incrBeta Beta increment.
      */
     public void updateAdd(double incrAlpha, double incrBeta)
     {
@@ -93,7 +93,7 @@ public class BetaDistribution implements UnivariateStatisticalDistribution
 
     /**
      * Updates the distribution by adding some value to the alpha.
-     * @param incr the alpha increment.
+     * @param incr The alpha increment.
      */
     public void updateAddAlpha(double incr)
     {
@@ -102,7 +102,7 @@ public class BetaDistribution implements UnivariateStatisticalDistribution
 
     /**
      * Updates the distribution by adding some value to the beta.
-     * @param incr the beta increment.
+     * @param incr The beta increment.
      */
     public void updateAddBeta(double incr)
     {
@@ -111,7 +111,7 @@ public class BetaDistribution implements UnivariateStatisticalDistribution
 
     /**
      * Updates the distribution by changing the value of alpha.
-     * @param alpha the new value of alpha.
+     * @param alpha The new value of alpha.
      */
     public void updateAlpha(double alpha)
     {
@@ -120,7 +120,7 @@ public class BetaDistribution implements UnivariateStatisticalDistribution
 
     /**
      * Updates the distribution by changing the value of beta.
-     * @param beta the new value of beta.
+     * @param beta The new value of beta.
      */
     public void updateBeta(double beta)
     {

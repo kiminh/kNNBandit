@@ -18,25 +18,25 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import java.util.stream.IntStream;
 
 /**
- * Abstract class for computing basic recommendation algorithms.
+ * Abstract class for basic recommendation algorithms.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the users.
- * @param <I> Type of the items.
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public abstract class AbstractBasicInteractiveRecommender<U,I> extends InteractiveRecommender<U,I>
 {
     /**
-     * Values of each item
+     * Values of each item.
      */
     protected double[] values;
     
     /**
      * Constructor.
-     * @param uIndex user index.
-     * @param iIndex item index.
-     * @param prefData preference data.
-     * @param ignoreUnknown true if (user, item) pairs without training must be ignored.
+     * @param uIndex User index.
+     * @param iIndex Item index.
+     * @param prefData Preference data.
+     * @param ignoreUnknown True if (user, item) pairs without training must be ignored.
      */
     public AbstractBasicInteractiveRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown)
     {
@@ -47,11 +47,11 @@ public abstract class AbstractBasicInteractiveRecommender<U,I> extends Interacti
     
     /**
      * Constructor.
-     * @param uIndex user index.
-     * @param iIndex item index.
-     * @param prefData preference data.
-     * @param ignoreUnknown true if (user, item) pairs without training must be ignored.
-     * @param notReciprocal true if we do not recommend reciprocal social links, false otherwise.
+     * @param uIndex User index.
+     * @param iIndex Item index.
+     * @param prefData Preference data.
+     * @param ignoreUnknown True if (user, item) pairs without training must be ignored.
+     * @param notReciprocal True if we do not recommend reciprocal social links, false otherwise.
      */
     public AbstractBasicInteractiveRecommender(FastUpdateableUserIndex<U> uIndex, FastUpdateableItemIndex<I> iIndex, SimpleFastPreferenceData<U, I> prefData, boolean ignoreUnknown, boolean notReciprocal)
     {

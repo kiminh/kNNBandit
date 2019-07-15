@@ -16,7 +16,7 @@ import java.util.stream.Stream;
  * Interface for undirected weighted graphs.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <V> type of the vertices
+ * @param <V> Type of vertices.
  */
 public interface UndirectedWeightedGraph<V> extends WeightedGraph<V>, UndirectedGraph<V>
 {   

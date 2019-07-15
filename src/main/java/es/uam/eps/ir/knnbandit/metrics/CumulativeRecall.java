@@ -10,21 +10,19 @@
 package es.uam.eps.ir.knnbandit.metrics;
 
 import java.util.Optional;
-
 import es.uam.eps.ir.ranksys.fast.preference.IdxPref;
 import es.uam.eps.ir.ranksys.fast.preference.SimpleFastPreferenceData;
 
-
 /**
- * Cumulative implementation of the global recall of the system.
+ * Cumulative implementation of global recall.
  * @author Javier Sanz-Cruzado Puig (javier.sanz-cruzado@uam.es)
- * @param <U> Type of the users.
- * @param <I> Type of the items.
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public class CumulativeRecall<U,I> implements CumulativeMetric<U,I>
 {
     /**
-     * Number of relevant (user,item) pairs
+     * Number of relevant (user,item) pairs.
      */
     private final int numRel;
     /**
@@ -42,9 +40,9 @@ public class CumulativeRecall<U,I> implements CumulativeMetric<U,I>
     
     /**
      * Constructor.
-     * @param prefData total preference data.
-     * @param numRel number of relevant (user, item) pairs. 
-     * @param threshold relevance threshold.
+     * @param prefData Total preference data.
+     * @param numRel Number of relevant (user, item) pairs. 
+     * @param threshold Relevance threshold.
      */
     public CumulativeRecall(SimpleFastPreferenceData<U,I> prefData, int numRel, double threshold)
     {
@@ -53,7 +51,6 @@ public class CumulativeRecall<U,I> implements CumulativeMetric<U,I>
         this.current = 0.0;
         this.threshold = threshold;
     }
-    
     
     @Override
     public double compute()

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
- * Fast implementation for an unweighted relation of objects with themselves
+ * Fast implementation for an unweighted relation of objects with themselves.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  * @param <W> Type of the weights.
@@ -23,7 +23,7 @@ import java.util.stream.IntStream;
 public class FastUnweightedAutoRelation<W> extends FastUnweightedRelation<W> implements AutoRelation<W>
 {
     /**
-     * Constructor. Builds an empty autorelation
+     * Constructor. Builds an empty autorelation.
      */
     public FastUnweightedAutoRelation()
     {
@@ -32,7 +32,7 @@ public class FastUnweightedAutoRelation<W> extends FastUnweightedRelation<W> imp
     
     /**
      * Constructor. Builds an autorelation from previous information.
-     * @param weightList list of relations and their weights.
+     * @param weightList List of relations and their weights.
      */
     public FastUnweightedAutoRelation(List<List<Integer>> weightList)
     {
@@ -51,10 +51,9 @@ public class FastUnweightedAutoRelation<W> extends FastUnweightedRelation<W> imp
             {
                 this.firstIdxList.get(list.get(j)).add(i);
             }
-            
         }
         
-        // Sorts the lists
+        // Sorts the lists.
         firstIdxList.parallelStream()
                 .filter(l -> l != null)
                 .forEach(l -> l.sort(Comparator.naturalOrder()));
@@ -119,6 +118,7 @@ public class FastUnweightedAutoRelation<W> extends FastUnweightedRelation<W> imp
                     auxFList.add(fList.get(j)-1);
                 }
             });
+            
             this.firstIdxList.set(i, auxFList);
             
             List<Integer>  auxSList = new ArrayList<>();

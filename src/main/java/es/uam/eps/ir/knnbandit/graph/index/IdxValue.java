@@ -12,25 +12,25 @@ package es.uam.eps.ir.knnbandit.graph.index;
 import java.io.Serializable;
 
 /**
- * Class for expressing weights
+ * Class for expressing weights.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <W> type of the weights
+ * @param <W> Type of the weights.
  */
 public class IdxValue<W> implements Comparable<IdxValue>, Serializable, Cloneable
 {
     /**
-     * Identifier
+     * Identifier.
      */
     private final int idx;
     /**
-     * Value of the weight
+     * Value of the weight.
      */
     private final W value;
     
     /**
      * Constructor.
-     * @param idx identifier.
+     * @param idx Identifier.
      * @param value Value of the weight.
      */
     public IdxValue(int idx, W value)
@@ -38,7 +38,6 @@ public class IdxValue<W> implements Comparable<IdxValue>, Serializable, Cloneabl
         this.idx = idx;
         this.value = value;
     }
-    
 
     @Override
     public int compareTo(IdxValue t)

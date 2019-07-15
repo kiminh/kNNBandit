@@ -13,7 +13,7 @@ import es.uam.eps.ir.ranksys.fast.preference.FastPreferenceData;
 import es.uam.eps.ir.ranksys.nn.sim.Similarity;
 
 /**
- * Updateable version of similarity
+ * Updateable version of similarity.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  */
@@ -21,17 +21,17 @@ public interface UpdateableSimilarity extends Similarity
 {
     /**
      * Updates the similarity between two users.
-     * @param uidx identifier of the first user.
-     * @param vidx identifier of the second user.
-     * @param iidx identifier of the item.
-     * @param uval rating of the first user for the item.
-     * @param vval rating of the second user for the item.
+     * @param uidx Identifier of the first user.
+     * @param vidx Identifier of the second user.
+     * @param iidx Identifier of the item.
+     * @param uval Rating of the first user for the item.
+     * @param vval Rating of the second user for the item.
      */
     public void update(int uidx, int vidx, int iidx, double uval, double vval);
 
     /**
      * Updates the similarity.
-     * @param prefData preference data.
+     * @param prefData Preference data.
      */
     public void update(FastPreferenceData<?, ?> prefData);
 }

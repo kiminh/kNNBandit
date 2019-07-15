@@ -18,7 +18,7 @@ public class UnconfiguredException extends Exception
 {
     public UnconfiguredException(String message)
     {
-        super("Class " + message + " has not been configured previously");
+        super("Class " + message + " has not been configured");
     }
 
 }

@@ -28,7 +28,6 @@ import java.util.PriorityQueue;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-
 /**
  * Fast implementation of directed unweighted edges.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)

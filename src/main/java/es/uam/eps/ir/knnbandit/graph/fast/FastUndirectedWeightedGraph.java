@@ -22,11 +22,10 @@ import no.uib.cipr.matrix.sparse.LinkedSparseMatrix;
  * Fast implementation for an Undirected Weighted graph.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> type of the nodes
+ * @param <V> type of the nodes
  */
-public class FastUndirectedWeightedGraph<U> extends FastGraph<U> implements UndirectedWeightedGraph<U>
+public class FastUndirectedWeightedGraph<V> extends FastGraph<V> implements UndirectedWeightedGraph<V>
 {
-
     /**
      * Constructor for an empty graph.
      */
@@ -34,18 +33,16 @@ public class FastUndirectedWeightedGraph<U> extends FastGraph<U> implements Undi
     {
         super(new FastIndex<>(), new FastUndirectedWeightedEdges());
     }
-
  
     @Override
     public DoubleMatrix2D getAdjacencyMatrix(EdgeOrientation direction)
     {
         DoubleMatrix2D matrix = new SparseDoubleMatrix2D(new Long(this.getVertexCount()).intValue(), new Long(this.getVertexCount()).intValue());
-        // Creation of the adjacency matrix
+        // Creation of the adjacency matrix.
         for(int row = 0; row < matrix.rows(); ++row)
         {   
             for(int col = 0; col < matrix.rows(); ++col)
             {
-                
                 if(this.containsEdge(this.vertices.idx2object(col), this.vertices.idx2object(row)) ||
                     this.containsEdge(this.vertices.idx2object(row), this.vertices.idx2object(col)))
                      matrix.setQuick(row, col, 1.0);

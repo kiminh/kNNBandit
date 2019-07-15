@@ -20,7 +20,7 @@ public enum EdgeOrientation
     OUT, IN, UND, MUTUAL;
 
     /**
-     * Given an edge orientation, returns the opposite value.
+     * Given an edge orientation, returns the opposite orientation.
      * @return the opposite orientation.
      */
     public EdgeOrientation invertSelection() 
@@ -41,7 +41,7 @@ public enum EdgeOrientation
     }
     
     /**
-     * Selection for the complementary graph
+     * Selection for the complementary graph.
      * @return the selection for the complementary graph.
      */
     public EdgeOrientation complementarySelection()

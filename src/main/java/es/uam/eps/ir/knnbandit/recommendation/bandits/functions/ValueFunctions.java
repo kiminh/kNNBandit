@@ -17,7 +17,7 @@ package es.uam.eps.ir.knnbandit.recommendation.bandits.functions;
 public class ValueFunctions 
 {
     /**
-     * The value keeps the same.
+     * The value stays the same.
      * @return a function that keeps the value.
      */
     public static ValueFunction identity()

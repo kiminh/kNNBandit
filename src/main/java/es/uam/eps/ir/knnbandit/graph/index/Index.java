@@ -13,23 +13,23 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- * Generic index
+ * Generic index.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <I> The indexed objects
+ * @param <I> The type of indexed objects.
  */
 public interface Index<I> extends ReducedIndex<I>
 {
      /**
-     * Checks if the index contains a given object
-     * @param i The object to check
-     * @return True if the index contains the object, false if not.
+     * Checks whether the index contains a given object.
+     * @param i The object to check.
+     * @return true if the index contains the object, false if not.
      */
     public boolean containsObject(I i);
     
     /**
      * Index size.
-     * @return The number of objects in the index.
+     * @return the number of objects in the index.
      */
     public int numObjects();
     /**
@@ -39,22 +39,22 @@ public interface Index<I> extends ReducedIndex<I>
     public Stream<I> getAllObjects();
     
     /**
-     * A stream of all ids
+     * A stream of all ids.
      * @return all ids.
      */
     public IntStream getAllObjectsIds();
 
     /**
-     * Adds a object to the index
-     * @param i Object to add
-     * @return The index of the added object.
+     * Adds an object to the index.
+     * @param i Object to add.
+     * @return the index of the added object.
      */
     public int addObject(I i);
     
     /**
-     * Removes an object of the index.
-     * @param i the object to remove.
-     * @return The index of the removed object, -1 if it did not exist.
+     * Removes an object from the index.
+     * @param i The object to remove.
+     * @return the index of the removed object, -1 if it did not exist.
      */
     public int removeObject(I i);
 }

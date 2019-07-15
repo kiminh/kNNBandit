@@ -10,19 +10,19 @@
 package es.uam.eps.ir.knnbandit.selector;
 
 /**
- * Identifiers of the algorithms which can be used.
+ * Identifiers of the algorithms that can be used.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  */
 public class AlgorithmIdentifiers 
 {
-    // Simple algorithms
+    // Simple algorithms.
     public static final String RANDOM = "random";
     public static final String AVG = "average";
     public static final String POP = "popularity";
-    // Non-personalized bandits
+    // Non-personalized item-oriented bandits.
     public static final String ITEMBANDIT = "itembandit";
-    // User based
+    // User based.
     public static final String USERBASEDKNN = "ubknn";
     public static final String BANDITKNN = "knnbandit";
     // Matrix factorization.

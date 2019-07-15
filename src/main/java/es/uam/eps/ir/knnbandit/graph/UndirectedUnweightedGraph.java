@@ -14,10 +14,10 @@ import es.uam.eps.ir.knnbandit.graph.edges.EdgeWeight;
 import java.util.stream.Stream;
 
 /**
- * Interface for undirected unweighted graphs
+ * Interface for undirected unweighted graphs.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <V> type of the vertices
+ * @param <V> Type of vertices.
  */
 public interface UndirectedUnweightedGraph<V> extends UnweightedGraph<V>, UndirectedGraph<V>
 {   

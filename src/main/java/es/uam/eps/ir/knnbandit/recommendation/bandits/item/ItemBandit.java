@@ -15,19 +15,18 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import java.util.Random;
 
 /**
- * Bandit in which arms are represented by items.
+ * Bandit in which arms are items.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the users.
- * @param <I> Type of the items.
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public abstract class ItemBandit<U,I>
 {       
     /**
-     * Untie random
+     * Untie random.
      */
     protected final Random untierng;
-    
     /**
      * Constructor.
      */
@@ -37,27 +36,27 @@ public abstract class ItemBandit<U,I>
     }
     
     /**
-     * Selects the next item, given that a selection of them is available.
-     * @param uidx identifier of the user that selects the item.
-     * @param available the selection of available items.
-     * @param ValF a function that determines the effective value of the arm, given a context.
+     * Selects the next item, assuming a selection of them is available.
+     * @param uidx Identifier of the user that selects the item.
+     * @param available The selection of available items.
+     * @param valF A function that determines the effective value of the arm, given a context.
      * @return the next selected item.
      */
-    public abstract int next(int uidx, int[] available, ValueFunction ValF);
+    public abstract int next(int uidx, int[] available, ValueFunction valF);
     
     /**
      * Selects the next item, given that a selection of them is available.
-     * @param uidx identifier of the user that selects the item.
-     * @param available the selection of available items.
-     * @param ValF a function that determines the effective value of the arm, given a context.
+     * @param uidx Identifier of the user that selects the item.
+     * @param available The selection of available items.
+     * @param valF A function that determines the effective value of the arm, given a context.
      * @return the next selected item.
      */
-    public abstract int next(int uidx, IntList available, ValueFunction ValF);
+    public abstract int next(int uidx, IntList available, ValueFunction valF);
     
     /**
      * Updates the corresponding item, given the reward.
-     * @param iidx the item to update.
-     * @param value the reward.
+     * @param iidx The item to update.
+     * @param value The reward.
      */
     public abstract void update(int iidx, double value);
 }

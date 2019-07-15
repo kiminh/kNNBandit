@@ -19,11 +19,11 @@ public interface EpsilonGreedyUpdateFunction
 {
     /**
      * Constructor.
-     * @param oldValue old arm value.
-     * @param reward the obtained reward.
-     * @param oldSum the sum of all the arms.
-     * @param increment the sum of the increments of all arms.
-     * @param numTimes number of times the arm has been selected.
+     * @param oldValue Old arm value.
+     * @param reward The obtained reward.
+     * @param oldSum The sum of all the arms.
+     * @param increment The sum of the increments of all arms.
+     * @param numTimes Number of times the arm has been selected.
      * @return the new value of the arm.
      */
     public double apply(double oldValue, double reward, double oldSum, double increment, double numTimes);

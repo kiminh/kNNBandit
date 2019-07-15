@@ -23,9 +23,9 @@ import no.uib.cipr.matrix.sparse.LinkedSparseMatrix;
  * Fast implementation for a directed unweighted graph. This implementation does not allow removing edges.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the nodes
+ * @param <V> Type of the vertices.
  */
-public class FastDirectedUnweightedGraph<U> extends FastGraph<U> implements DirectedUnweightedGraph<U>
+public class FastDirectedUnweightedGraph<V> extends FastGraph<V> implements DirectedUnweightedGraph<V>
 {
     /**
      * Constructor.

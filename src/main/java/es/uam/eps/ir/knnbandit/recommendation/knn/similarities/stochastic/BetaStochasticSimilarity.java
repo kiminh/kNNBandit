@@ -8,11 +8,9 @@
  * 
  */
 package es.uam.eps.ir.knnbandit.recommendation.knn.similarities.stochastic;
-import java.util.Random;
 import java.util.function.IntToDoubleFunction;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 import es.uam.eps.ir.knnbandit.stats.BetaDistribution;
 import es.uam.eps.ir.ranksys.fast.preference.FastPreferenceData;
 import org.ranksys.core.util.tuples.Tuple2id;
@@ -20,6 +18,7 @@ import org.ranksys.core.util.tuples.Tuple2id;
 /**
  * Stochastic similarity that uses a Beta distribution to estimate the similarity.
  * @author Javier Sanz-Cruzado Puig (javier.sanz-cruzado@uam.es)
+ * @author Pablo Castells (pablo.castells@uam.es)
  */
 public class BetaStochasticSimilarity implements StochasticUpdateableSimilarity
 {
@@ -35,7 +34,6 @@ public class BetaStochasticSimilarity implements StochasticUpdateableSimilarity
      * Number of users.
      */
     private final int numUsers;
-
     /**
      * Initial alpha.
      */
@@ -56,9 +54,9 @@ public class BetaStochasticSimilarity implements StochasticUpdateableSimilarity
 
     /**
      * Constructor.
-     * @param numUsers number of users.
-     * @param alpha the alpha parameter (number of successes + 1)
-     * @param beta the beta parameter (number of failures + 1)
+     * @param numUsers Number of users.
+     * @param alpha The alpha parameter (number of successes + 1).
+     * @param beta The beta parameter (number of failures + 1).
      */
     public BetaStochasticSimilarity(int numUsers, double alpha, double beta)
     {
@@ -79,7 +77,7 @@ public class BetaStochasticSimilarity implements StochasticUpdateableSimilarity
 
     /**
      * Constructor. Sets alpha and beta to 1.
-     * @param numUsers number of users
+     * @param numUsers Number of users.
      */
     public BetaStochasticSimilarity(int numUsers)
     {
@@ -141,15 +139,14 @@ public class BetaStochasticSimilarity implements StochasticUpdateableSimilarity
 
     /**
      * Samples from a Beta distribution.
-     * @param alpha the alpha value of the Beta.
-     * @param beta the beta value of the Beta
+     * @param alpha The alpha value of the Beta.
+     * @param beta The beta value of the Beta.
      * @return the sampled value.
      */
     public double betaSample(double alpha, double beta)
     {
         BetaDistribution b = new BetaDistribution(alpha, beta);
         return b.sample();
-
     }
     
     @Override

@@ -41,7 +41,7 @@ public abstract class FastEdges implements Edges
     /**
      * Constructor.
      * @param weights The weights of the edges.
-     * @param types The types of the edges
+     * @param types The types of the edges.
      */
     public FastEdges(AutoRelation<Double> weights, AutoRelation<Integer> types)
     {
@@ -100,7 +100,6 @@ public abstract class FastEdges implements Edges
         }
         return false;
     }
-    
 
     @Override
     public long getIncidentCount(int node)

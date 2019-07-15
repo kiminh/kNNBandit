@@ -20,10 +20,9 @@ import java.util.stream.IntStream;
  */
 public interface AutoRelation<W> extends Relation<W>
 {
-    
     /**
-     * Gets the total number of elements of the first item in the relation
-     * @return The number of different elements of the first item in the relation
+     * Gets the total number of elements of the first item in the relation.
+     * @return The number of different elements of the first item in the relation.
      */
     @Override
     public default int numSecond()
@@ -33,8 +32,8 @@ public interface AutoRelation<W> extends Relation<W>
     
     /**
      * Gets the total number of elements of the second item related to a first item.
-     * @param firstIdx Identifier of the first item
-     * @return The second item count
+     * @param firstIdx Identifier of the first item.
+     * @return the second item count.
      */
     @Override
     public default int numSecond(int firstIdx)
@@ -43,15 +42,14 @@ public interface AutoRelation<W> extends Relation<W>
     }
     
     /**
-     * Gets all the elements of the second type
-     * @return A stream containing all the elements.
+     * Gets all the elements of the second type.
+     * @return a stream containing all the elements.
      */
     @Override
     public default Stream<Integer> getAllSecond()
     {
         return this.getAllFirst();
     }
-    
 
     @Override
     public default boolean addSecondItem(int secondIdx)
@@ -62,21 +60,21 @@ public interface AutoRelation<W> extends Relation<W>
     /**
      * Removes an element. The identifiers of all remaining elements will
      * be reduced by 1.
-     * @param idx the identifier of the element.
+     * @param idx The identifier of the element.
      * @return true if everything went OK, false otherwise.
      */
     public boolean remove(int idx);
     
     /**
-     * Obtains those elements in an autorelation which are related to none.
+     * Obtains the elements in an autorelation which are related to none.
      * @return an int stream containing the indexes of the items which are related to none.
      */
     public IntStream getIsolated();
     
     /**
      * Checks whether an element is related to someone or not.
-     * @param idx the identifier of the element
-     * @return true if the node is isolated, false otherwise
+     * @param idx The identifier of the element.
+     * @return true if the node is isolated, false otherwise.
      */
     public default boolean isIsolated(int idx)
     {

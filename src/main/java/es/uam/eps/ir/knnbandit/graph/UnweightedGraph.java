@@ -16,14 +16,14 @@ import java.util.stream.Stream;
  * Interface for directed graphs.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <V> type of the vertices
+ * @param <V> Type of vertices.
  */
 public interface UnweightedGraph<V> extends Graph<V>
 {
     /**
      * Given a node, finds all the nodes u such that the edge (u to node) is in the graph.
      * @param node The node.
-     * @return A stream of the incident nodes.
+     * @return a stream of the incident nodes.
      */
     @Override
     public default Stream<Weight<V,Double>> getIncidentNodesWeights(V node)
@@ -33,8 +33,8 @@ public interface UnweightedGraph<V> extends Graph<V>
     
     /**
      * Given a node, finds all the nodes u such that the edge (node to u) is in the graph.
-     * @param node The node
-     * @return A stream containing the adjacent nodes.
+     * @param node The node.
+     * @return a stream containing the adjacent nodes.
      */
     @Override
     public default Stream<Weight<V, Double>> getAdjacentNodesWeights(V node)
@@ -44,8 +44,8 @@ public interface UnweightedGraph<V> extends Graph<V>
     
     /**
      * Given a node, finds all the nodes u so that either (node to u) or (u to node) are in the graph.
-     * @param node The node
-     * @return A stream containing all the nodes in the neighbourhood.
+     * @param node The node.
+     * @return a stream containing all the nodes in the neighbourhood.
      */
     @Override
     public default Stream<Weight<V, Double>> getNeighbourNodesWeights(V node)
@@ -53,10 +53,10 @@ public interface UnweightedGraph<V> extends Graph<V>
         return this.getNeighbourNodes(node).map((inc) -> new Weight<>(inc, EdgeWeight.getDefaultValue()));
     }
     
-        /**
+     /**
      * Given a node, finds all the nodes u so that either (node to u) or (u to node) are in the graph.
-     * @param node The node
-     * @return A stream containing all the nodes in the neighbourhood.
+     * @param node The node.
+     * @return a stream containing all the nodes in the neighbourhood.
      */
     @Override
     public default Stream<Weight<V, Double>> getMutualNodesWeights(V node)
@@ -64,9 +64,9 @@ public interface UnweightedGraph<V> extends Graph<V>
         return this.getMutualNodes(node).map((inc) -> new Weight<>(inc, EdgeWeight.getDefaultValue()));
     }
     
-        /**
+     /**
      * Given a node, finds all the nodes u so that either (node to u) or (u to node) are in the graph.
-     * @param node The node
+     * @param node The node.
      * @return A stream containing all the nodes in the neighbourhood.
      */
     @Override
@@ -77,8 +77,8 @@ public interface UnweightedGraph<V> extends Graph<V>
     
     /**
      * Given a node, finds all the nodes u so that either (node to u) or (u to node) are in the graph.
-     * @param node The node
-     * @return A stream containing all the nodes in the neighbourhood.
+     * @param node The node.
+     * @return a stream containing all the nodes in the neighbourhood.
      */
     @Override
     public default Stream<Weight<V, Double>> getIncidentMutualNodesWeights(V node)

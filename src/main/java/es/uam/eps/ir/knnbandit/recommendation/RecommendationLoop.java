@@ -18,8 +18,8 @@ import java.util.*;
 
 /**
  * Class for simulating the recommendation loop.
- * @param <U> Type of the users.
- * @param <I> Type of the items.
+ * @param <U> User type.
+ * @param <I> Item type.
  *
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
@@ -59,7 +59,7 @@ public class RecommendationLoop<U,I>
      */
     private int iteration;
     /**
-     * Total number of iterations
+     * Total number of iterations.
      */
     private final int nIter;
 
@@ -68,8 +68,8 @@ public class RecommendationLoop<U,I>
      * @param userIndex Index containing the users.
      * @param itemIndex Index containing the items.
      * @param recommender The incremental recommendation algorithm.
-     * @param metrics the map of metrics.
-     * @param nIter total number of iterations. 0 for iterating until no more recommendations can be done.
+     * @param metrics The map of metrics.
+     * @param nIter Total number of iterations. 0 for iterating until no more recommendations can be done.
      */
     public RecommendationLoop(FastUserIndex<U> userIndex, FastItemIndex<I> itemIndex, InteractiveRecommender<U,I> recommender, Map<String, CumulativeMetric<U,I>> metrics, int nIter)
     {
@@ -90,8 +90,8 @@ public class RecommendationLoop<U,I>
      * @param userIndex Index containing the users.
      * @param itemIndex Index containing the items.
      * @param recommender The incremental recommendation algorithm.
-     * @param metrics the map of metrics.
-     * @param nIter total number of iterations. 0 for iterating until no more recommendations can be done.
+     * @param metrics The map of metrics.
+     * @param nIter Total number of iterations. 0 for iterating until no more recommendations can be done.
      * @param rngSeed seed for a random number generator.
      */
     public RecommendationLoop(FastUserIndex<U> userIndex, FastItemIndex<I> itemIndex, InteractiveRecommender<U,I> recommender, Map<String, CumulativeMetric<U,I>> metrics, int nIter, int rngSeed)
@@ -150,7 +150,6 @@ public class RecommendationLoop<U,I>
         // We cannot continue.
         if(this.numUsers == 0)
             return null;
-
 
         // Select user and item for this iteration.
         boolean cont = false;

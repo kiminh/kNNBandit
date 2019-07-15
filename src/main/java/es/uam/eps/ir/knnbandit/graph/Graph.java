@@ -250,35 +250,35 @@ public interface Graph<V> extends Serializable, ReducedIndex<V>
 
     /**
      * Gets all the nodes in the neighbourhood of a node given by a direction.
-     * @param node The node
-     * @param direction The direction of the links
+     * @param node The node.
+     * @param direction The direction of the links.
      * @return A stream containing the corresponding neighbourhood.
      */
     public int getNeighbourhoodSize(V node, EdgeOrientation direction);
 
     /**
      * Calculates the number of incident edges of a node (not necessarily equal to the in-degree).
-     * @param node The node
+     * @param node The node.
      * @return the number of incident neighbours of the node if it is contained in the graph, -1 if not.
      */
     public int getIncidentEdgesCount(V node);
     /**
      * Calculates the number of adjacent edges of a node (not necessarily equal to the out-degree).
-     * @param node The node
+     * @param node The node.
      * @return the degree of the node if it is contained in the graph, -1 if not.
      */
     public int getAdjacentEdgesCount(V node);
     /**
      * Calculates the total number of edges which reach a node or start from it (not necessarily equal to the degree).
-     * @param node The node
+     * @param node The node.
      * @return the degree of the node if it is contained in the graph, -1 if not.
      */
     public int getNeighbourEdgesCount(V node);
     
     /**
      * Calculates the total number of adjacent edges of a node such that there is an
-     * incident reciprocal link towards the node
-     * @param node The node
+     * incident reciprocal link towards the node.
+     * @param node The node.
      * @return the number of reciprocal links starting from the node.
      *
      */
@@ -340,28 +340,28 @@ public interface Graph<V> extends Serializable, ReducedIndex<V>
     
     /**
      * Given a node, finds the weights of the edges towards the nodes u such that the edge (node to u) is in the graph.
-     * @param node The node
+     * @param node The node.
      * @return A stream containing the adjacent nodes and weights.
      */ 
     public Stream<Weight<V,Double>> getAdjacentNodesWeights(V node);
     
     /**
      * Given a node, finds the weights of the edges from the nodes u such that the edge (node to u) or the edge (u to node) are in the graph.
-     * @param node The node
+     * @param node The node.
      * @return A stream containing all the nodes in the neighbourhood and weights.
      */
     public Stream<Weight<V,Double>> getNeighbourNodesWeights(V node);
     
     /**
      * Given a node, finds the weights of the edges towards the nodes u such that the edge (node to u) and the edge (u to node) are in the graph.
-     * @param node The node
+     * @param node The node.
      * @return A stream containing all the nodes in the neighbourhood and weights.
      */
     public Stream<Weight<V, Double>> getAdjacentMutualNodesWeights(V node);
     
     /**
      * Given a node, finds the weights of the edges from the nodes u such that the edge (node to u) and the edge (u to node) are in the graph.
-     * @param node The node
+     * @param node The node.
      * @return A stream containing all the nodes in the neighbourhood and weights.
      */
     public Stream<Weight<V, Double>> getIncidentMutualNodesWeights(V node);
@@ -369,7 +369,7 @@ public interface Graph<V> extends Serializable, ReducedIndex<V>
     /**
      * Given a node, finds the weights of the edges towards and from the nodes u such that the edge (node to u) and the edge (u to node) are in the graph.
      * It finds the average value of the outgoing and incoming links.
-     * @param node The node
+     * @param node The node.
      * @return A stream containing all the nodes in the neighbourhood and weights.
      */
     public Stream<Weight<V, Double>> getMutualNodesWeights(V node);
@@ -377,7 +377,7 @@ public interface Graph<V> extends Serializable, ReducedIndex<V>
     /**
      * Gets all the weights of the edges in the neighbourhood of a node given by a direction.
      * In the mutual case, just returns the average of the edge weights.
-     * @param node The node
+     * @param node The node.
      * @param direction The direction of the links
      * @return A stream containing the corresponding neighbourhood and weights.
      */
@@ -400,28 +400,28 @@ public interface Graph<V> extends Serializable, ReducedIndex<V>
     
     /**
      * Given a node, finds the types of the edges towards the nodes u such that the edge (node to u) is in the graph.
-     * @param node The node
+     * @param node The node.
      * @return A stream containing the adjacent nodes and types.
      */ 
     public Stream<Weight<V,Integer>> getAdjacentNodesTypes(V node);
     
     /**
      * Given a node, finds the types of the edges from the nodes u such that the edge (node to u) or the edge (u to node) are in the graph.
-     * @param node The node
+     * @param node The node.
      * @return A stream containing all the nodes in the neighbourhood and types.
      */
     public Stream<Weight<V,Integer>> getNeighbourNodesTypes(V node);
     
      /**
      * Given a node, finds the types of the edges towards the nodes u such that the edge (node to u) and the edge (u to node) are in the graph.
-     * @param node The node
+     * @param node The node.
      * @return A stream containing all the nodes in the neighbourhood and types.
      */
     public Stream<Weight<V, Integer>> getAdjacentMutualNodesTypes(V node);
 
     /**
      * Given a node, finds the types of the edges from the nodes u such that the edge (node to u) and the edge (u to node) are in the graph.
-     * @param node The node
+     * @param node The node.
      * @return A stream containing all the nodes in the neighbourhood and types.
      */
     public Stream<Weight<V, Integer>> getIncidentMutualNodesTypes(V node);
@@ -430,8 +430,8 @@ public interface Graph<V> extends Serializable, ReducedIndex<V>
      * Gets all the types of the edges in the neighbourhood of a node given by a direction.
      * In the mutual case, it does not work (types are categorical values), so an empty
      * stream is returned.
-     * @param node The node
-     * @param direction The direction of the links
+     * @param node The node.
+     * @param direction The direction of the links.
      * @return A stream containing the corresponding neighbourhood.
      */
     public Stream<Weight<V,Integer>> getNeighbourhoodTypes(V node, EdgeOrientation direction);
@@ -477,7 +477,7 @@ public interface Graph<V> extends Serializable, ReducedIndex<V>
     
     /**
      * Gets the adjacency matrix.
-     * @param direction The direction of the edges
+     * @param direction The direction of the edges.
      * @return the matrix (MTJ Package).
      */
     public Matrix getAdjacencyMatrixMTJ(EdgeOrientation direction);
@@ -489,7 +489,7 @@ public interface Graph<V> extends Serializable, ReducedIndex<V>
     public Stream<V> getIsolatedNodes();
     
     /**
-     * Obtains the set of nodes with edges in 
+     * Obtains the set of nodes with edges in a particular direction.
      * @param direction
      * @return 
      */
@@ -517,8 +517,8 @@ public interface Graph<V> extends Serializable, ReducedIndex<V>
     public Stream<V> getNodesWithMutualEdges();
         
     /**
-     * Checks if the user has adjacent edges or not
-     * @param u the user.
+     * Checks if the user has adjacent edges or not.
+     * @param u The user.
      * @return true if the user has adjacent edges, false if it is a sink or isolated node.
      */
     public boolean hasAdjacentEdges(V u);
@@ -529,14 +529,14 @@ public interface Graph<V> extends Serializable, ReducedIndex<V>
      */
     public boolean hasIncidentEdges(V u);
     /**
-     * Checks if the user shares at least an edge with other user
-     * @param u the user
+     * Checks if the user shares at least an edge with other user.
+     * @param u The user.
      * @return true if the user is not isolated, false otherwise.
      */
     public boolean hasEdges(V u);
     /**
      * Checks if the user has mutual edges.
-     * @param u the user
+     * @param u The user.
      * @return true if the user has mutual edges, false otherwise.
      */
     public boolean hasMutualEdges(V u);

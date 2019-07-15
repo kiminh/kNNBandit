@@ -16,16 +16,16 @@ import it.unimi.dsi.fastutil.longs.Long2IntOpenHashMap;
 import java.util.stream.IntStream;
 
 /**
- * Cumulative version of the Gini coefficient diversity metric.
+ * Cumulative version of the Gini index.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the users.
- * @param <I> Type of the items.
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public class CumulativeGini<U,I> implements CumulativeMetric<U,I>
 {
     /**
-     * For each item in the collection, stores the number of time it has been recommended.
+     * For each item in the collection, stores the number of times it has been recommended.
      */
     private final Int2LongMap frequencies;
     /**
@@ -45,13 +45,13 @@ public class CumulativeGini<U,I> implements CumulativeMetric<U,I>
      */
     private final int numItems;
     /**
-     * The main term of the Gini coefficient.
+     * The main term of the Gini index.
      */
     private double numSum;
     
     /**
      * Constructor.
-     * @param numItems the number of items.
+     * @param numItems The number of items.
      */
     public CumulativeGini(int numItems)
     {
@@ -62,15 +62,13 @@ public class CumulativeGini<U,I> implements CumulativeMetric<U,I>
         this.mins = new Long2IntOpenHashMap();
         this.maxs = new Long2IntOpenHashMap();
         
-        // To begin, initialize the minimums and the maximums. Only the zero has appeared.
+        // To start, initialize the minimums and the maximums. Only the zero has appeared.
         this.mins.put(0L, 1);
         this.maxs.put(0L, numItems);
         
-        // 
         this.frequencies = new Int2LongOpenHashMap();
         IntStream.range(0, numItems).forEach(iidx -> frequencies.put(iidx, 0L));
     }
-    
     
     @Override
     public double compute()
@@ -84,8 +82,8 @@ public class CumulativeGini<U,I> implements CumulativeMetric<U,I>
     public void update(int uidx, int iidx)
     {
         this.freqSum += 1.0;
-        // Update the value of numsum
-        // First, get the frequency of item iidx:
+        // Update the value of numSum.
+        // First, get the frequency of item iidx.
         long freq = this.frequencies.get(iidx);
         this.frequencies.put(iidx, freq + 1);
         
@@ -95,12 +93,12 @@ public class CumulativeGini<U,I> implements CumulativeMetric<U,I>
         // Obtain the minimum index for the new value.
         int minNewFreq = this.mins.getOrDefault(freq + 1L, maxFreq);
         
-        // Compute the increment
+        // Compute the increment.
         double increment = (numItems + 1 - 2*maxFreq)*freq;
         if(minNewFreq == maxFreq) increment += (2*maxFreq - numItems - 1)*(freq+1);
         else increment += (2*minNewFreq - numItems - 3)*(freq+1);
         
-        // Update the minimum and maximum indexes:
+        // Update the minimum and maximum indexes.
         this.numSum += increment;
         if(minFreq == maxFreq)
         {

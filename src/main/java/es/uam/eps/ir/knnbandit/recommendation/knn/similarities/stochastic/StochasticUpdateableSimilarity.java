@@ -23,15 +23,15 @@ public interface StochasticUpdateableSimilarity extends UpdateableSimilarity
 {
     /**
      * Obtains a function that finds the exact similarities (without stochastic calculations) between an element and the rest of them.
-     * @param idx the identifier of the element.
+     * @param idx The identifier of the element.
      * @return the function for obtaining similarities with the rest of elements.
      */
     public IntToDoubleFunction exactSimilarity(int idx);
 
     /**
      * Obtains the exact similarity (without stochastic calculations) between two elements.
-     * @param idx identifier of the first element.
-     * @param idx2 identifier of the second element.
+     * @param idx Identifier of the first element.
+     * @param idx2 Identifier of the second element.
      * @return the similarity.
      */
     public default double exactSimilarity(int idx, int idx2)
@@ -41,7 +41,7 @@ public interface StochasticUpdateableSimilarity extends UpdateableSimilarity
 
     /**
      * Obtains similar items (without stochastic calculations) for an element.
-     * @param idx the identifier of the element.
+     * @param idx The identifier of the element.
      * @return an stream containing the set of similar elements and their exact similarity value.
      */
     public Stream<Tuple2id> exactSimilarElems(int idx);

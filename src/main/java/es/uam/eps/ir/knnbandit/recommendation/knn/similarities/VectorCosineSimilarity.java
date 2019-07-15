@@ -12,7 +12,6 @@ package es.uam.eps.ir.knnbandit.recommendation.knn.similarities;
 import java.util.function.IntToDoubleFunction;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 import es.uam.eps.ir.ranksys.fast.preference.FastPreferenceData;
 import org.ranksys.core.util.tuples.Tuple2id;
 
@@ -35,10 +34,8 @@ public class VectorCosineSimilarity implements UpdateableSimilarity
      * The number of users.
      */
     private final int numUsers;
-    
     private int lastUser;
     private int lastItem;
-    
     
     public VectorCosineSimilarity(int numUsers)
     {

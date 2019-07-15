@@ -18,8 +18,8 @@ import java.util.Random;
  * Variable Epsilon-Greedy item bandit.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the users.
- * @param <I> Type of the items.
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public class EpsilonTGreedyItemBandit<U,I> extends ItemBandit<U,I>
 {
@@ -32,7 +32,7 @@ public class EpsilonTGreedyItemBandit<U,I> extends ItemBandit<U,I>
      */
     double[] values;
     /**
-     * Number of times a bandit has been selected.
+     * Number of times an arm has been selected.
      */
     double[] numTimes;
     /**
@@ -47,7 +47,6 @@ public class EpsilonTGreedyItemBandit<U,I> extends ItemBandit<U,I>
      * Number of iterations.
      */
     private int numIter;
-
     /**
      * Random number generator.
      */
@@ -59,9 +58,9 @@ public class EpsilonTGreedyItemBandit<U,I> extends ItemBandit<U,I>
     
     /**
      * Constructor.
-     * @param alpha parameter for indicating how many ratings we must have for obtaining the maximum value for  
+     * @param alpha 
      * @param numItems 
-     * @param updateFunction an update function.
+     * @param updateFunction
      */
     public EpsilonTGreedyItemBandit(double alpha, int numItems, EpsilonGreedyUpdateFunction updateFunction)
     {
@@ -76,7 +75,7 @@ public class EpsilonTGreedyItemBandit<U,I> extends ItemBandit<U,I>
     }
     
     @Override
-    public int next(int uidx, int[] available, ValueFunction ValF)
+    public int next(int uidx, int[] available, ValueFunction valF)
     {
         if(available == null || available.length == 0)
             return -1;
@@ -99,7 +98,7 @@ public class EpsilonTGreedyItemBandit<U,I> extends ItemBandit<U,I>
                 
                 for(int i : available)
                 {
-                    double val = ValF.apply(uidx, i, values[i], numTimes[i]);
+                    double val = valF.apply(uidx, i, values[i], numTimes[i]);
                     if(val > max)
                     {
                         max = val;
@@ -129,7 +128,7 @@ public class EpsilonTGreedyItemBandit<U,I> extends ItemBandit<U,I>
     }
     
     @Override
-    public int next(int uidx, IntList available, ValueFunction ValF)
+    public int next(int uidx, IntList available, ValueFunction valF)
     {
         if(available == null || available.isEmpty())
             return -1;
@@ -152,7 +151,7 @@ public class EpsilonTGreedyItemBandit<U,I> extends ItemBandit<U,I>
                 
                 for(int i : available)
                 {
-                    double val = ValF.apply(uidx, i, values[i], numTimes[i]);
+                    double val = valF.apply(uidx, i, values[i], numTimes[i]);
                     if(val > max)
                     {
                         max = val;

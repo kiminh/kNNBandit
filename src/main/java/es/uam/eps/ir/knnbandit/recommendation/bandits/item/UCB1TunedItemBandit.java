@@ -14,24 +14,24 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 
 /**
- * Item bandit which uses the UCB1-tuned algorithm.
+ * Item bandit using the UCB1-tuned algorithm.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the users.
- * @param <I> Type of the items.
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public class UCB1TunedItemBandit<U,I> extends ItemBandit<U,I>
 {
     /**
-     * The values for each arm
+     * The values for each arm.
      */
     double[] values;
     /**
-     * The variances of each arm
+     * The variances of each arm.
      */
     double[] variances;
     /**
-     * The number of times each item has been selected
+     * The number of times each item has been selected.
      */
     double[] numTimes;
     /**
@@ -39,7 +39,7 @@ public class UCB1TunedItemBandit<U,I> extends ItemBandit<U,I>
      */
     int numIter;
     /**
-     * The number of items
+     * The number of items.
      */
     int numItems;
     
@@ -56,7 +56,7 @@ public class UCB1TunedItemBandit<U,I> extends ItemBandit<U,I>
     }
     
     @Override
-    public int next(int uidx, int[] available, ValueFunction ValF)
+    public int next(int uidx, int[] available, ValueFunction valF)
     {
         if(available == null || available.length == 0)
             return -1;
@@ -78,7 +78,7 @@ public class UCB1TunedItemBandit<U,I> extends ItemBandit<U,I>
                 else
                 {
                     double ucb = this.variances[i] - values[i]*values[i] + Math.sqrt(2*Math.log(numIter+1)/(numTimes[i]));
-                    val = ValF.apply(uidx, i,values[i] + Math.sqrt((Math.log(numIter+1)/numTimes[i]) * Math.min(0.25, ucb)), numTimes[i]);
+                    val = valF.apply(uidx, i,values[i] + Math.sqrt((Math.log(numIter+1)/numTimes[i]) * Math.min(0.25, ucb)), numTimes[i]);
                 }
                 
                 if(val > max)
@@ -102,7 +102,7 @@ public class UCB1TunedItemBandit<U,I> extends ItemBandit<U,I>
     }
     
     @Override
-    public int next(int uidx, IntList available, ValueFunction ValF)
+    public int next(int uidx, IntList available, ValueFunction valF)
     {
         if(available == null || available.isEmpty())
             return -1;
@@ -124,7 +124,7 @@ public class UCB1TunedItemBandit<U,I> extends ItemBandit<U,I>
                 else
                 {
                     double ucb = this.variances[i] - values[i]*values[i] + Math.sqrt(2*Math.log(numIter+1)/(numTimes[i]));
-                    val = ValF.apply(uidx, i,values[i] + Math.sqrt((Math.log(numIter+1)/numTimes[i]) * Math.min(0.25, ucb)), numTimes[i]);
+                    val = valF.apply(uidx, i,values[i] + Math.sqrt((Math.log(numIter+1)/numTimes[i]) * Math.min(0.25, ucb)), numTimes[i]);
                 }
                 
                 if(val > max)

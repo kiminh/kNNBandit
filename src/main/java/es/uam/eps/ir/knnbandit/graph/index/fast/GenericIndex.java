@@ -22,7 +22,7 @@ import java.util.stream.Stream;
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
  * @author Saúl Vargas (saul.vargas@uam.es)
- * @param <T> type of the element
+ * @param <T> Type of the element.
  */
 public class GenericIndex<T> implements Serializable 
 {
@@ -36,7 +36,7 @@ public class GenericIndex<T> implements Serializable
     private final List<T> i2tmap;
     
     /**
-     * Constructor
+     * Constructor.
      */
     public GenericIndex()
     {
@@ -48,7 +48,7 @@ public class GenericIndex<T> implements Serializable
     /**
      * Adds an element to the structure, if it is not in the 
      * @param t The element to add.
-     * @return The index for the corresponding element.
+     * @return the index for the corresponding element.
      */
     public int add(T t)
     {
@@ -63,9 +63,9 @@ public class GenericIndex<T> implements Serializable
     }
     
     /**
-     * Gets the index of the object
-     * @param t The object
-     * @return The index of the object if exists, -1 if not.
+     * Gets the index of the object.
+     * @param t The object.
+     * @return the index of the object if it exists, -1 if not.
      */
     public int getIdx(T t)
     {
@@ -73,9 +73,9 @@ public class GenericIndex<T> implements Serializable
     }
     
     /**
-     * Gets the object corresponding to the given index
-     * @param idx The index
-     * @return The object in that index.
+     * Gets the object corresponding to the given index.
+     * @param idx The index.
+     * @return the object in that index.
      */
     public T getObject(int idx)
     {
@@ -84,7 +84,7 @@ public class GenericIndex<T> implements Serializable
     
     /**
      * Checks if the corresponding object is included in the index.
-     * @param t The object
+     * @param t The object.
      * @return true if it exists, false if not.
      */
     public boolean containsId(T t)
@@ -93,8 +93,8 @@ public class GenericIndex<T> implements Serializable
     }
     
     /**
-     * Gets the size of the index
-     * @return the size of the index
+     * Gets the size of the index,
+     * @return the size of the index.
      */
     public int size()
     {
@@ -103,7 +103,7 @@ public class GenericIndex<T> implements Serializable
     
     /**
      * Gets a stream of objects in the index
-     * @return The stream
+     * @return the stream.
      */
     public Stream<T> getIds()
     {

@@ -25,14 +25,14 @@ import java.util.stream.Stream;
  * Fast implementation of a graph. 
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the users.
+ * @param <V> Type of the vertices.
  */
-public abstract class FastGraph<U> implements Graph<U>, Serializable
+public abstract class FastGraph<V> implements Graph<V>, Serializable
 {
     /**
      * Index of vertices.
      */
-    protected final Index<U> vertices;
+    protected final Index<V> vertices;
     /**
      * Edges in the network.
      */
@@ -40,17 +40,17 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     
     /**
      * Constructor.
-     * @param vertices A index for the vertices of the graph
-     * @param edges Edges 
+     * @param vertices An index for the vertices of the graph.
+     * @param edges Edges. 
      */
-    public FastGraph(Index<U> vertices, Edges edges)
+    public FastGraph(Index<V> vertices, Edges edges)
     {
         this.vertices = vertices;
         this.edges = edges;
     }
     
     @Override
-    public boolean addNode(U node)
+    public boolean addNode(V node)
     {
         if(vertices.containsObject(node))
             return false;
@@ -64,7 +64,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
         
     @Override
-    public boolean addEdge(U nodeA, U nodeB, double weight, int type, boolean insertNodes)
+    public boolean addEdge(V nodeA, V nodeB, double weight, int type, boolean insertNodes)
     {
         if(insertNodes)
         {
@@ -80,13 +80,13 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
 
     @Override
-    public Stream<U> getAllNodes()
+    public Stream<V> getAllNodes()
     {
         return this.vertices.getAllObjects();
     }
     
     @Override
-    public Stream<U> getIncidentNodes(U node)
+    public Stream<V> getIncidentNodes(V node)
     {
         if(this.containsVertex(node))
             return this.edges.getIncidentNodes(this.vertices.object2idx(node)).map(n -> this.vertices.idx2object(n));
@@ -94,7 +94,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
 
     @Override
-    public Stream<U> getAdjacentNodes(U node)
+    public Stream<V> getAdjacentNodes(V node)
     {
         if(this.containsVertex(node))
             return this.edges.getAdjacentNodes(this.vertices.object2idx(node)).map(n -> this.vertices.idx2object(n));   
@@ -102,7 +102,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
 
     @Override
-    public Stream<U> getNeighbourNodes(U node)
+    public Stream<V> getNeighbourNodes(V node)
     {
         if(this.containsVertex(node))
             return this.edges.getNeighbourNodes(this.vertices.object2idx(node)).map(n -> this.vertices.idx2object(n));
@@ -110,7 +110,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
     @Override
-    public Stream<U> getMutualNodes(U node)
+    public Stream<V> getMutualNodes(V node)
     {
         if(this.containsVertex(node))
             return this.edges.getMutualNodes(this.vertices.object2idx(node)).map(n -> this.vertices.idx2object(n));
@@ -118,7 +118,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
     @Override
-    public Stream<U> getNeighbourhood(U node, EdgeOrientation direction)
+    public Stream<V> getNeighbourhood(V node, EdgeOrientation direction)
     {
         switch (direction)
         {
@@ -134,7 +134,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
     @Override
-    public int getIncidentEdgesCount(U node)
+    public int getIncidentEdgesCount(V node)
     {
         if(this.containsVertex(node))
             return (int) this.edges.getIncidentCount(this.vertices.object2idx(node));
@@ -142,7 +142,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
     @Override
-    public int getAdjacentEdgesCount(U node)
+    public int getAdjacentEdgesCount(V node)
     {
         if(this.containsVertex(node))
             return (int) this.edges.getAdjacentCount(this.vertices.object2idx(node));
@@ -150,7 +150,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
         
     @Override
-    public int getMutualEdgesCount(U node)
+    public int getMutualEdgesCount(V node)
     {
         if(this.containsVertex(node))
             return (int) this.edges.getMutualCount(this.vertices.object2idx(node));
@@ -158,13 +158,13 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
     @Override
-    public boolean containsVertex(U node)
+    public boolean containsVertex(V node)
     {
         return this.vertices.containsObject(node);
     }
     
     @Override
-    public boolean containsEdge(U nodeA, U nodeB)
+    public boolean containsEdge(V nodeA, V nodeB)
     {
         if(this.containsVertex(nodeA) && this.containsVertex(nodeB))            
             return this.edges.containsEdge(this.vertices.object2idx(nodeA), this.vertices.object2idx(nodeB));
@@ -172,19 +172,19 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }    
 
     @Override
-    public double getEdgeWeight(U nodeA, U nodeB)
+    public double getEdgeWeight(V nodeA, V nodeB)
     {
         return this.edges.getEdgeWeight(this.vertices.object2idx(nodeA), this.vertices.object2idx(nodeB));
     }
     
     @Override
-    public boolean updateEdgeWeight(U nodeA, U nodeB, double weight)
+    public boolean updateEdgeWeight(V nodeA, V nodeB, double weight)
     {
         return this.edges.updateEdgeWeight(this.vertices.object2idx(nodeA),this.vertices.object2idx(nodeB), weight);
     }
 
     @Override
-    public Stream<Weight<U,Double>> getIncidentNodesWeights(U node)
+    public Stream<Weight<V,Double>> getIncidentNodesWeights(V node)
     {
         if(this.containsVertex(node))
             return this.edges.getIncidentWeights(this.vertices.object2idx(node))
@@ -193,7 +193,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
 
     @Override
-    public Stream<Weight<U,Double>> getAdjacentNodesWeights(U node)
+    public Stream<Weight<V,Double>> getAdjacentNodesWeights(V node)
     {
         if(this.containsVertex(node))
             return this.edges.getAdjacentWeights(this.vertices.object2idx(node))
@@ -202,7 +202,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
     @Override
-    public Stream<Weight<U,Double>> getNeighbourNodesWeights(U node)
+    public Stream<Weight<V,Double>> getNeighbourNodesWeights(V node)
     {
         if(this.containsVertex(node))
             return this.edges.getNeighbourWeights(this.vertices.object2idx(node))
@@ -211,7 +211,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
     @Override
-    public Stream<Weight<U,Double>> getAdjacentMutualNodesWeights(U node)
+    public Stream<Weight<V,Double>> getAdjacentMutualNodesWeights(V node)
     {
         if(!this.containsVertex(node))
             return this.edges.getMutualAdjacentWeights(this.vertices.object2idx(node))
@@ -220,7 +220,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
 
     @Override
-    public Stream<Weight<U,Double>> getIncidentMutualNodesWeights(U node)
+    public Stream<Weight<V,Double>> getIncidentMutualNodesWeights(V node)
     {
         if(!this.containsVertex(node))
             return this.edges.getMutualIncidentWeights(this.vertices.object2idx(node))
@@ -229,7 +229,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
     @Override
-    public Stream<Weight<U,Double>> getMutualNodesWeights(U node)
+    public Stream<Weight<V,Double>> getMutualNodesWeights(V node)
     {
         if(!this.containsVertex(node))
             return this.edges.getMutualWeights(this.vertices.object2idx(node))
@@ -238,13 +238,13 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
 
     @Override
-    public int getEdgeType(U nodeA, U nodeB)
+    public int getEdgeType(V nodeA, V nodeB)
     {
         return this.edges.getEdgeType(this.vertices.object2idx(nodeA), this.vertices.object2idx(nodeB));
     }
 
     @Override
-    public Stream<Weight<U,Integer>> getIncidentNodesTypes(U node)
+    public Stream<Weight<V,Integer>> getIncidentNodesTypes(V node)
     {
         if(this.containsVertex(node))
             return this.edges.getIncidentTypes(this.vertices.object2idx(node))
@@ -253,7 +253,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
 
     @Override
-    public Stream<Weight<U,Integer>> getAdjacentNodesTypes(U node)
+    public Stream<Weight<V,Integer>> getAdjacentNodesTypes(V node)
     {
         if(this.containsVertex(node))
             return this.edges.getAdjacentTypes(this.vertices.object2idx(node))
@@ -262,7 +262,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
 
     @Override
-    public Stream<Weight<U,Integer>> getNeighbourNodesTypes(U node)
+    public Stream<Weight<V,Integer>> getNeighbourNodesTypes(V node)
     {
         if(this.containsVertex(node))
             return this.edges.getNeighbourTypes(this.vertices.object2idx(node))
@@ -271,7 +271,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
 
     @Override
-    public Stream<Weight<U,Integer>> getAdjacentMutualNodesTypes(U node)
+    public Stream<Weight<V,Integer>> getAdjacentMutualNodesTypes(V node)
     {
         if(this.containsVertex(node))
             return this.edges.getMutualAdjacentTypes(this.vertices.object2idx(node))
@@ -280,7 +280,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
      @Override
-    public Stream<Weight<U,Integer>> getIncidentMutualNodesTypes(U node)
+    public Stream<Weight<V,Integer>> getIncidentMutualNodesTypes(V node)
     {
         if(this.containsVertex(node))
             return this.edges.getMutualIncidentTypes(this.vertices.object2idx(node))
@@ -301,7 +301,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
     @Override
-    public boolean removeEdge(U orig, U dest)
+    public boolean removeEdge(V orig, V dest)
     {
         int origIdx = this.vertices.object2idx(orig);
         int destIdx = this.vertices.object2idx(dest);
@@ -309,7 +309,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
     @Override
-    public boolean removeNode(U u)
+    public boolean removeNode(V u)
     {
         int uidx = this.vertices.object2idx(u);
         if(this.edges.removeNode(uidx))
@@ -323,13 +323,13 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
 
     @Override
-    public int object2idx(U u)
+    public int object2idx(V u)
     {
         return this.vertices.object2idx(u);
     }
     
     @Override
-    public U idx2object(int idx)
+    public V idx2object(int idx)
     {
         return this.vertices.idx2object(idx);
     }
@@ -338,7 +338,7 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
      * Obtains the index for the vertices.
      * @return the index for the vertices.
      */
-    public Index<U> getIndex()
+    public Index<V> getIndex()
     {
         return this.vertices;
     }
@@ -347,7 +347,6 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     {
         return this.edges.getEdgeWeight(uidx, vidx);
     }
-    
     
     public Stream<Integer> getNeighborhood(int uidx, EdgeOrientation orientation)
     {
@@ -362,8 +361,8 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
             default:
                 return this.edges.getNeighbourNodes(uidx);
         }
-        
     }
+    
     public Stream<IdxPref> getNeighborhoodWeights(int uidx, EdgeOrientation orientation)
     {
         switch (orientation)
@@ -406,24 +405,23 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     
     /**
      * Uncontrolled edge addition method, using ids.
-     * @param nodeA identifier of the first user
-     * @param nodeB identifier of the second user
-     * @param weight weight of the link
-     * @param type type of the link
-     * @return true if everything went ok, false otherwise
+     * @param nodeA Identifier of the first node.
+     * @param nodeB Identifier of the second node.
+     * @param weight Weight of the link.
+     * @param type Type of the link.
+     * @return true if everything went ok, false otherwise.
      */
     public boolean addEdge(int nodeA, int nodeB, double weight, int type)
     {
         return this.edges.addEdge(nodeA, nodeB, weight, type);
     }
-    
         
     /**
      * Uncontrolled edge update method, using ids.
-     * @param nodeA identifier of the first user
-     * @param nodeB identifier of the second user
-     * @param weight weight of the link
-     * @return true if everything went ok, false otherwise
+     * @param nodeA Identifier of the first node.
+     * @param nodeB Identifier of the second node.
+     * @param weight Weight of the link.
+     * @return true if everything went ok, false otherwise.
      */
     public boolean updateEdgeWeight(int nodeA, int nodeB, double weight)
     {
@@ -431,13 +429,13 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
     @Override
-    public Stream<U> getIsolatedNodes() 
+    public Stream<V> getIsolatedNodes() 
     {
         return this.edges.getIsolatedNodes().mapToObj(i -> this.idx2object(i));
     }
 
     @Override
-    public Stream<U> getNodesWithEdges(EdgeOrientation direction) 
+    public Stream<V> getNodesWithEdges(EdgeOrientation direction) 
     {
         switch (direction) 
         {
@@ -457,46 +455,46 @@ public abstract class FastGraph<U> implements Graph<U>, Serializable
     }
     
     @Override
-    public Stream<U> getNodesWithAdjacentEdges()
+    public Stream<V> getNodesWithAdjacentEdges()
     {
         return this.getNodesWithEdges(EdgeOrientation.OUT);
     }
     
     @Override
-    public Stream<U> getNodesWithIncidentEdges()
+    public Stream<V> getNodesWithIncidentEdges()
     {
         return this.getNodesWithEdges(EdgeOrientation.IN);
     }
     
     @Override
-    public Stream<U> getNodesWithEdges()
+    public Stream<V> getNodesWithEdges()
     {
         return this.getNodesWithEdges(EdgeOrientation.UND);
     }
     
     @Override
-    public Stream<U> getNodesWithMutualEdges()
+    public Stream<V> getNodesWithMutualEdges()
     {
         return this.getNodesWithEdges(EdgeOrientation.MUTUAL);
     }
     
     @Override
-    public boolean hasAdjacentEdges(U u)
+    public boolean hasAdjacentEdges(V u)
     {
         return this.edges.hasAdjacentEdges(this.object2idx(u));
     }
     @Override
-    public boolean hasIncidentEdges(U u)
+    public boolean hasIncidentEdges(V u)
     {
          return this.edges.hasIncidentEdges(this.object2idx(u));
     }
     @Override
-    public boolean hasEdges(U u)
+    public boolean hasEdges(V u)
     {
         return this.edges.hasEdges(this.object2idx(u));
     }
     @Override
-    public boolean hasMutualEdges(U u)
+    public boolean hasMutualEdges(V u)
     {
         return this.edges.hasMutualEdges(this.object2idx(u));
     }

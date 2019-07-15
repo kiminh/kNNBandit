@@ -14,11 +14,11 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 
 /**
- * Item bandit which uses the Thompson sampling algorithm.
+ * Item bandit using the Thompson sampling algorithm.
  * @author Javier Sanz-Cruzado (javier.sanz-cruzado@uam.es)
  * @author Pablo Castells (pablo.castells@uam.es)
- * @param <U> Type of the users.
- * @param <I> Type of the items.
+ * @param <U> User type.
+ * @param <I> Item type.
  */
 public class ThompsonSamplingItemBandit<U,I> extends ItemBandit<U,I>
 {
@@ -29,7 +29,7 @@ public class ThompsonSamplingItemBandit<U,I> extends ItemBandit<U,I>
 
     /**
      * Constructor.
-     * @param numItems the number of items. 
+     * @param numItems The number of items. 
      */
     public ThompsonSamplingItemBandit(int numItems)
     {
@@ -39,9 +39,9 @@ public class ThompsonSamplingItemBandit<U,I> extends ItemBandit<U,I>
     
     /**
      * Constructor.
-     * @param numItems number of items.
-     * @param initialAlpha the initial value for the alpha parameter of Beta distributions.
-     * @param initialBeta the initial value for the beta parameter of the Beta distributions.
+     * @param numItems Number of items.
+     * @param initialAlpha The initial value for the alpha parameter of Beta distributions.
+     * @param initialBeta The initial value for the beta parameter of the Beta distributions.
      */
     public ThompsonSamplingItemBandit(int numItems, double initialAlpha, double initialBeta)
     {
@@ -51,9 +51,9 @@ public class ThompsonSamplingItemBandit<U,I> extends ItemBandit<U,I>
     
     /**
      * Constructor.
-     * @param numItems number of items.
-     * @param initialAlphas the initial values for the alpha parameters of Beta distributions.
-     * @param initialBetas the initial values for the beta parameters of Beta distributions.
+     * @param numItems Number of items.
+     * @param initialAlphas The initial values for the alpha parameters of Beta distributions.
+     * @param initialBetas The initial values for the beta parameters of Beta distributions.
      */
     public ThompsonSamplingItemBandit(int numItems, double[] initialAlphas, double[] initialBetas)
     {
@@ -62,7 +62,7 @@ public class ThompsonSamplingItemBandit<U,I> extends ItemBandit<U,I>
     }
     
     @Override
-    public int next(int uidx, int[] available, ValueFunction ValF)
+    public int next(int uidx, int[] available, ValueFunction valF)
     {
         if(available == null || available.length == 0)
             return -1;
@@ -74,7 +74,7 @@ public class ThompsonSamplingItemBandit<U,I> extends ItemBandit<U,I>
             IntList top = new IntArrayList();
             for(int i : available)
             {
-                double val = ValF.apply(uidx, i, this.betas[i].sample(),0);
+                double val = valF.apply(uidx, i, this.betas[i].sample(),0);
                 if(val > max)
                 {
                     max = val;
@@ -94,7 +94,7 @@ public class ThompsonSamplingItemBandit<U,I> extends ItemBandit<U,I>
     }
     
     @Override
-    public int next(int uidx, IntList available, ValueFunction ValF)
+    public int next(int uidx, IntList available, ValueFunction valF)
     {
         if(available == null || available.isEmpty())
             return -1;
@@ -106,7 +106,7 @@ public class ThompsonSamplingItemBandit<U,I> extends ItemBandit<U,I>
             IntList top = new IntArrayList();
             for(int i : available)
             {
-                double val = ValF.apply(uidx, i, this.betas[i].sample(),0);
+                double val = valF.apply(uidx, i, this.betas[i].sample(),0);
                 if(val > max)
                 {
                     max = val;

@@ -24,11 +24,11 @@ import java.util.stream.Stream;
 public abstract class FastUnweightedRelation<W> implements Relation<W>
 {
     /**
-     * Links from the first kind of objects to the second. Indexed by the second. Ej: Incident edges.
+     * Links from the first kind of objects to the second. Indexed by the second. E.g. incident edges.
      */
     protected final List<List<Integer>> firstIdxList;
     /**
-     * Links from the second kind of objects to the first. Indexed by the first. Ej: Adjacent edges.
+     * Links from the second kind of objects to the first. Indexed by the first. E.g. outgoing edges.
      */
     protected final List<List<Integer>> secondIdxList;
     
@@ -43,8 +43,8 @@ public abstract class FastUnweightedRelation<W> implements Relation<W>
     
     /**
      * Constructor.
-     * @param firstIdxList Links from the first kind of objects to the second. Indexed by the second. Ej: Incident edges.
-     * @param secondIdxList Links from the second kind of objects to the first. Indexed by the first. Ej: Adjacent edges.
+     * @param firstIdxList Links from the first kind of objects to the second. Indexed by the second. E.g. incident edges.
+     * @param secondIdxList Links from the second kind of objects to the first. Indexed by the first. E.g. outgoing edges.
      */
     public FastUnweightedRelation(List<List<Integer>> firstIdxList, List<List<Integer>> secondIdxList)
     {
@@ -140,7 +140,6 @@ public abstract class FastUnweightedRelation<W> implements Relation<W>
     {
         return null;
     }
-
     
     @Override
     public boolean containsPair(int firstIdx, int secondIdx)
@@ -162,7 +161,7 @@ public abstract class FastUnweightedRelation<W> implements Relation<W>
             return false;
         else if(value >= 0)
             return true;
-        else // the relation has to be created
+        else // the relation has to be created.
         {
             int idx = Math.abs(value + 1);
             this.firstIdxList.get(secondIdx).add(idx, firstIdx);
@@ -192,9 +191,9 @@ public abstract class FastUnweightedRelation<W> implements Relation<W>
 
     /**
      * Given a pair (firstIdx, secondIdx), finds it in the graph using binary search.
-     * @param firstIdx the first element.
-     * @param secondIdx the second element.
-     * @param firstList true if the element has to be found on the list of first elements,
+     * @param firstIdx The first element.
+     * @param secondIdx The second element.
+     * @param firstList True if the element has to be found on the list of first elements,
      * false if it has to be found on the list of second elements.
      * @return the index of the element if it exists, - (insertpoint - 1) if it does not,
      * where insertpoint is the corresponding point where the element should be added.
