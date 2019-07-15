@@ -64,7 +64,7 @@ public class InteractiveContactRecommendation
      *     <li>Algorithms: configuration file for the algorithms</li>
      *     <li>Input: preference data</li>
      *     <li>Output: folder in which to store the output</li>
-     *     <li>Num. Iter: Number of iterations. 0 if we want to apply until full coverage.</li>
+     *     <li>Num. Iter: number of iterations. 0 if we want to apply until full coverage.</li>
      *     <li>Directed: true if the graph is directed, false otherwise</li>
      *     <li>Resume: true if we want to retrieve data from previous executions, false to overwrite</li>
      *     <li>Not reciprocal: true if we don't want to recommend reciprocal edges, false otherwise</li>
@@ -76,12 +76,12 @@ public class InteractiveContactRecommendation
     {
         if(args.length < 7)
         {
-            System.err.println("ERROR: Invalid arguments");
+            System.err.println("ERROR:iInvalid arguments");
             System.err.println("Usage:");
-            System.err.println("\tAlgorithms: Reinforcement learning algorithms list");
-            System.err.println("\tInput: Preference data input");
-            System.err.println("\tOutput: Folder in which to store the output");
-            System.err.println("\tNum. Iter.: Number of iterations. 0 if we want to run until we run out of recommendable items");
+            System.err.println("\tAlgorithms: reinforcement learning algorithms list");
+            System.err.println("\tInput: preference data input");
+            System.err.println("\tOutput: folder in which to store the output");
+            System.err.println("\tNum. Iter.: number of iterations. 0 if we want to run until we run out of recommendable items");
             System.err.println("\tDirected: true if the graph is directed, false otherwise");
             System.err.println("\tresume: true if we want to resume previous executions, false if we want to overwrite");
             System.err.println("\tNot Reciprocal: true if we want to recommend reciprocal edges, false otherwise");
